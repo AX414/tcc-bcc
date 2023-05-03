@@ -28,20 +28,25 @@ def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
     
 	# Pegando os dados da mensagem recebida e separando eles
-	# para apresentar na mensagem formatada
-        dados = re.findall(r"[\w']+", msg.payload.decode())
-        data_atual = date(int(dados[0]),int(dados[1]),int(dados[2]))       
-        hora_atual = time(int(dados[3]),int(dados[4]),int(dados[5]))
-        temperatura = dados[6]
-        pluviometro = dados[7]
-        vel_vento = dados[8]
-        dir_vento = dados[9]
+	# para apresentar na mensagem formatada r"[\w']+"
+	
+        aux = msg.payload.decode()
+        dados = aux.split(",")
+        data_atual = dados[0]     
+        hora_atual = dados[1]
+        latitude = dados[2]
+        longitude = dados[3]
+        temperatura = dados[4]
+        pluviometro = dados[5]
+        vel_vento = dados[6]
+        dir_vento = dados[7]
         # Apresentando os dados
-        # print(dados)
 	
         msg = f"\n-------------------------------------"
         msg+= f"\nData atual: {data_atual}"
         msg+= f"\nHora: {hora_atual}"
+        msg+= f"\nLatitude: {latitude}"
+        msg+= f"\nLongitude: {longitude}"
         msg+= f"\nTemperatura: {temperatura} ºC"
         msg+= f"\nPluviometro: {pluviometro} mm"
         msg+= f"\nVelocidade do vento: {vel_vento} m/s"
