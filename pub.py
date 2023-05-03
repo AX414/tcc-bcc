@@ -28,10 +28,10 @@ def publish(client):
     msg_count = 1
     while True:
         time.sleep(1)
-        # Preparando dados simulados	 
+        # Preparando dados simulados
         data_atual = date.today()
         hora_atual = time.strftime('%H:%M:%S', time.localtime())
-        
+
         # Localização por Latitude e Longitude
         try:
             location = geolocator.geocode("R. José Ramos Júnior, 27-50 - Jardim Tropical, Presidente Epitácio - SP, 19470-000") 
@@ -43,15 +43,15 @@ def publish(client):
         except GeocoderTimedOut:
             latitude = longitude = 0
             print("Um erro de timeout ocorreu.")
-        
+
         temperatura = random.randint(27, 35)
         pluviometro = random.randint(13.00, 17.00)
         vel_vento = random.randint(20, 46)
         dir_vento = random.randint(0,355)
-        
+
         msg = f"\n-------------------------------------"
         msg+= f"\nData atual: {data_atual}"
-        msg+= f"\nHora: {hora_atual}"
+        msg+= f"\nHora atual: {hora_atual}"
         msg+= f"\nLatitude: {latitude}"
         msg+= f"\nLongitude: {longitude}"
         msg+= f"\nTemperatura: {temperatura} ºC"
