@@ -1,5 +1,5 @@
 # EMA simulada utilizando protocolo MQTT e Mosquitto:
-Um projeto de uma estação meteorológica automática simulada utilizando o protocolo mqtt e o broker mosquitto.
+Um projeto de uma estação meteorológica automática simulada utilizando o protocolo mqtt e o broker mosquitto. Vale ressaltar que utilizei o Linux durante seu desenvolvimento (porém é possível utilizar o windows também), por isso os comandos a seguir são do linux.
 
 ## Instalações necessárias:
 sudo apt-get install mosquitto
