@@ -4,6 +4,7 @@ Um projeto de uma estação meteorológica automática simulada utilizando o pro
 ## Instalações necessárias:
 - sudo apt-get install mosquitto
 - sudo apt-get install mosquitto-clients
+- pip install mysql-connector-python
 - pip install geopy
 
 ## Configurações do mosquitto.conf:
