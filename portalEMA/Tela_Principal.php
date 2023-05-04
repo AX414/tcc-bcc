@@ -1,5 +1,5 @@
 <?php
-    include('./session_controller.php');
+require './functions/geral.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -68,8 +68,18 @@
         }
     </style>
     <body class="text-center">
-        <h3>Bem-vindo! <?php echo $_SESSION['nome_login'];?></h3>
+        <h3>Bem-vindo! <?php echo $_SESSION['email']; ?></h3>
         <br>
-        <button class="btn btn-lg btn-danger btn-block" type="submit">Logout</button>
+        <?php  
+            if (estaLogado()) {
+                
+                echo "
+                    <button class='btn btn-lg btn-danger btn-block' type='submit'>
+                <a class = 'nav-link' href = './controllers/controller_login.php?acao=logout'>
+                Logout
+                </a>
+                </button>";
+            }
+            ?>
     </body>
 </html>
