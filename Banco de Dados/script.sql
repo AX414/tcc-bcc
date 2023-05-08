@@ -39,7 +39,7 @@ SELECT * FROM emas;
 -- -----------------------------------------------------
 -- Table relatorio
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS relatorio ;
+DROP TABLE IF EXISTS relatorios ;
 
 CREATE TABLE IF NOT EXISTS relatorios (
   idrelatorio INT NOT NULL AUTO_INCREMENT,
