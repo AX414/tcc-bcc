@@ -26,6 +26,11 @@ allow_anonymous true
 listener 1883
 ```
 
+## Comandos para rodar o kafka:
+É necessário estar na pasta do kafka que foi baixado, no meu caso utilizei o kafka 3.4.0, você pode baixá-lo a partir de [aqui](https://kafka.apache.org/downloads).
+- bin/zookeeper-server-start.sh config/zookeeper.properties
+- bin/kafka-server-start.sh config/server.properties
+
 OBS.: Aconselho ligar e desligar o serviço do mosquito para toda configuração efetuada aqui, inclusive logo após sua instalação com:
 sudo service mosquitto stop -> sudo service mosquitto start -> sudo service mosquitto status 
 
