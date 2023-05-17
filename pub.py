@@ -4,8 +4,10 @@ from queue import Queue
 from datetime import date
 from paho.mqtt import client as mqtt_client
 from geopy.geocoders import Nominatim
+from pykafka import KafkaClient
 
-broker = '10.117.67.238'
+#DEVO UTILIZAR O KAFKA E O MOSQUITTO, PRIMEIRO A MENSAGEM UTILIZA O MOSQUITTO, MAS A PUBLICAÇÃO PASSA PARA O KAFKA
+broker = 'localhost'
 port = 1883
 topic = "EMA/mqtt"
 geolocator = Nominatim(user_agent="geolocalização")
@@ -67,24 +69,15 @@ def captar_Dados():
     dados.append(msg)
     dados.append(f"{data_atual},{hora_atual},{latitude},{longitude},{temperatura},{pluviometro},{vel_vento},{dir_vento}")
     return dados
-
-def publicar_dados_fila(client):
-    # Deve enviar a mensagem armazenada e armazenar a mensagem nova ao mesmo tempo
-    while(fila.empty() is False):
-        # Envia as mensagens que ficaram armazenadas enquanto a conexão estava fora
-        print(f"Há elementos {fila.qsize()} na fila para enviar");
-        dados = fila.get()
+    
+def enviar_fila(client):
+    if(client is None):
+        time.sleep(1)
+        dados = captar_Dados()
         aux = dados[1].split(',')
-        result = client.publish(topic, dados[1])
-        result: [0, 1]
-        status = result[0]
-        if status == 0:
-            print(f"\nEnviando a mensagem armazenada na fila em {aux[1]} para o tópico {topic}:{dados[0]}\n")
-        elif(fila.empty() is True):
-            print("\nNão há mensagens armazenadas na fila para enviar.\n")
-        else:
-            print(f"\nO envio da mensagem para o tópico {topic} falhou.\n")
-            return
+        fila.put(dados)
+        print(f"\nArmazenando mensagem de {aux[1]}  para posteriormente enviar ao tópico {topic}:{dados[0]}\n")
+        return fila     
             
 def publicar_dado_atual(client):
     while True:
@@ -103,35 +96,14 @@ def publicar_dado_atual(client):
             
 def publish(client):
     if(client is not None):
-        publicar_dados_fila(client)
         publicar_dado_atual(client)
-        
-            
-
-def enviar_fila(client):
-    if(client is None):
-        time.sleep(1)
-        dados = captar_Dados()
-        aux = dados[1].split(',')
-        fila.put(dados)
-        print(f"\nArmazenando mensagem {aux[1]}  para posteriormente enviar ao tópico {topic}:{dados[0]}\n")
-        return fila
-        
-    	
 
 def run():
-    msg_count = 1
     while True:
         client = connect_mqtt()
-        if(client is None):
-    	    print("Não foi possível conectar ao broker, enviando dados para uma fila enquanto o problema persistir.")
-    	    enviar_fila(client)
-        elif(client is not None):
+        if(client is not None):
             client.loop_start()
             publish(client)
-        
-    	
-
 
 if __name__ == '__main__':
     run()

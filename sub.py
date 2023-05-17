@@ -6,7 +6,7 @@ from datetime import date
 from datetime import time
 from paho.mqtt import client as mqtt_client
 
-
+# O broker daqui provavelmente vai acabar sendo o kafka
 broker = 'localhost'
 port = 1883
 topic = "EMA/mqtt"
@@ -92,9 +92,6 @@ def subscribe(client: mqtt_client):
     client.subscribe(topic)
     client.on_message = on_message
     
-    
-
-
 def run():
     client = connect_mqtt()
     subscribe(client)
