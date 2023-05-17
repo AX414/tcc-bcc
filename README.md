@@ -2,6 +2,7 @@
 Um projeto de uma estação meteorológica automática simulada utilizando o protocolo mqtt, o broker mosquitto e o Kafka. Vale ressaltar que utilizei o Linux durante seu desenvolvimento (porém é possível utilizar o windows também), por isso os comandos a seguir são do linux.
 
 # 1. Instalações necessárias:
+Estes comandos devem ser executados no terminal do Linux, vale ressaltar que a minha máquina possui o ```Python v3.10.6``` e o ```pip v23.0.1```.
 - sudo apt-get install mosquitto
 - sudo apt-get install mosquitto-clients
 - pip install mysql-connector-python
