@@ -27,9 +27,10 @@ listener 1883
 ```
 
 ## Comandos para rodar o kafka:
-É necessário estar na pasta do kafka que foi baixado, no meu caso utilizei o kafka 3.4.0, você pode baixá-lo a partir de [aqui](https://kafka.apache.org/downloads).
-- bin/zookeeper-server-start.sh config/zookeeper.properties
-- bin/kafka-server-start.sh config/server.properties
+É necessário estar na pasta do kafka que foi baixado, no meu caso utilizei o kafka 3.4.0, você pode baixá-lo a partir de [aqui](https://kafka.apache.org/downloads). Após isso, extraia o arquivo e dentro da pasta do kafka que foi baixado, utilize estes comandos:
+Inicializar o zookeeper: ```bin/zookeeper-server-start.sh config/zookeeper.properties```
+Inicializar o kafka: ```bin/kafka-server-start.sh config/server.properties```
+Para visualizar as mensagens que chegam em um tópico do kafka e apresentar todas as mensagens deste tópico: ```bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic nome_do_topico --from-beginning```
 
 OBS.: Aconselho ligar e desligar o serviço do mosquito para toda configuração efetuada aqui, inclusive logo após sua instalação com:
 sudo service mosquitto stop -> sudo service mosquitto start -> sudo service mosquitto status 

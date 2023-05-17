@@ -6,7 +6,6 @@ from paho.mqtt import client as mqtt_client
 from geopy.geocoders import Nominatim
 from pykafka import KafkaClient
 
-#DEVO UTILIZAR O KAFKA E O MOSQUITTO, PRIMEIRO A MENSAGEM UTILIZA O MOSQUITTO, MAS A PUBLICAÇÃO PASSA PARA O KAFKA
 broker = 'localhost'
 port = 1883
 topic = "EMA/mqtt"
