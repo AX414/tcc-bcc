@@ -42,7 +42,8 @@ Inicializar o kafka: ```bin/kafka-server-start.sh config/server.properties```.
 Para visualizar as mensagens que chegam em um tópico do kafka e apresentar todas as mensagens deste tópico: ```bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic nome_do_topico --from-beginning```.
 
 
-# 4. Como funciona:
+# 4. Como os programas funcionam:
+A seguir eu explico como cada um dos programas funcionam, como é possível ver eu tenho 2 exemplos até o momento, um é o caso de publisher/subscriber com o uso do MQTT e o outro exemplo é o exato mesmo caso, porém após o protocolo receber a mensagem, ele irá enviar a um tópico do kafka.
 
 ## 4.1 pub.py e sub.py:
 Estes dois códigos foram códigos de teste para realizar a comunicação entre máquinas por meio do protocolo MQTT, os testes ocorreram conforme o esperado e pude fazer com que dois dispositivos da mesma rede, se comunicassem, no caso, um seria o ```publisher``` e o outro foi o ```subscriber```.
