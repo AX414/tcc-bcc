@@ -1,11 +1,12 @@
-# Estação Meteorológica Automática (EMA) simulada utilizando protocolo MQTT e Mosquitto:
-Um projeto de uma estação meteorológica automática simulada utilizando o protocolo mqtt e o broker mosquitto. Vale ressaltar que utilizei o Linux durante seu desenvolvimento (porém é possível utilizar o windows também), por isso os comandos a seguir são do linux.
+# Estação Meteorológica Automática (EMA) simulada utilizando protocolo MQTT, broker Mosquitto e Kafka:
+Um projeto de uma estação meteorológica automática simulada utilizando o protocolo mqtt, o broker mosquitto e o Kafka. Vale ressaltar que utilizei o Linux durante seu desenvolvimento (porém é possível utilizar o windows também), por isso os comandos a seguir são do linux.
 
 ## Instalações necessárias:
 - sudo apt-get install mosquitto
 - sudo apt-get install mosquitto-clients
 - pip install mysql-connector-python
 - pip install geopy
+- pip install kafka-python
 
 ## Configurações do mosquitto.conf:
 ```
@@ -24,6 +25,7 @@ include_dir /etc/mosquitto/conf.d
 allow_anonymous true
 listener 1883
 ```
+
 OBS.: Aconselho ligar e desligar o serviço do mosquito para toda configuração efetuada aqui, inclusive logo após sua instalação com:
 sudo service mosquitto stop -> sudo service mosquitto start -> sudo service mosquitto status 
 
