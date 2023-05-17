@@ -1,7 +1,7 @@
 # Estação Meteorológica Automática (EMA) simulada utilizando protocolo MQTT, broker Mosquitto e Kafka:
 Um projeto de uma estação meteorológica automática simulada utilizando o protocolo mqtt, o broker mosquitto e o Kafka. Vale ressaltar que utilizei o Linux durante seu desenvolvimento (porém é possível utilizar o windows também), por isso os comandos a seguir são do linux.
 
-## 1. Instalações necessárias:
+# 1. Instalações necessárias:
 - sudo apt-get install mosquitto
 - sudo apt-get install mosquitto-clients
 - pip install mysql-connector-python
@@ -9,7 +9,9 @@ Um projeto de uma estação meteorológica automática simulada utilizando o pro
 - pip install kafka-python
 - pip install pykafka
 
-## 2. Configurações do mosquitto.conf:
+# 2. Configurações do mosquitto.conf:
+Após instalar o mosquitto, é necessário configurar ele, geralmente ele ficará localizado na pasta ```etc```, porém, se não encontrá-lo, utilize o comando ```whereis mosquitto```, este comando deve ajudar a encontrar a pasta do broker baixado. Dentro da pasta dele, deve haver um arquivo de configuração chamado ```conf.d```, altere ele para que ele se assemelhe ao conteúdo abaixo.
+
 ```
 # Place your local configuration in /etc/mosquitto/conf.d/
 #
@@ -29,7 +31,7 @@ listener 1883
 OBS.: Aconselho ligar e desligar o serviço do mosquito para toda configuração efetuada aqui, inclusive logo após sua instalação com:
 sudo service mosquitto stop -> sudo service mosquitto start -> sudo service mosquitto status.
 
-## 3. Comandos para rodar o kafka:
+# 3. Comandos para rodar o kafka:
 É necessário estar na pasta do kafka que foi baixado, no meu caso utilizei o kafka 3.4.0, você pode baixá-lo a partir de [aqui](https://kafka.apache.org/downloads). Após isso, extraia o arquivo e dentro da pasta do kafka que foi baixado, utilize estes comandos:
 
 Inicializar o zookeeper: ```bin/zookeeper-server-start.sh config/zookeeper.properties```.
