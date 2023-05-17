@@ -7,6 +7,7 @@ Um projeto de uma estação meteorológica automática simulada utilizando o pro
 - pip install mysql-connector-python
 - pip install geopy
 - pip install kafka-python
+- pip install pykafka
 
 ## Configurações do mosquitto.conf:
 ```
@@ -41,13 +42,13 @@ Para visualizar as mensagens que chegam em um tópico do kafka e apresentar toda
 # Como funciona:
 
 ## pub.py e sub.py:
-Os códigos funcionam da seguinte forma, o pub.py envia a mensagem utilizando o protocolo MQTT, nele, é indicado o broker, o endereço para onde a mensagem está sendo enviada, neste caso, pode ser o ip de onde o "mosquitto" está instalado. 
+O código do arquivo 'pub.py' envia a mensagem utilizando o protocolo MQTT, nele, é indicado o broker, o endereço para onde a mensagem está sendo enviada, neste caso, pode ser o ip de onde o "mosquitto" está instalado. 
 
-O código de sub receberá a mensagem por meio do protocolo, nele, o endereço do broker será "localhost" pois é nela onde o mosquitto se encontrará instalado, este código pode ser utilizado entre dispositivos, como por exemplo uma placa de raspberry pi.
+O código do arquivo sub.py receberá a mensagem por meio do protocolo, nele, o endereço do broker será "localhost" pois é nela onde o mosquitto se encontrará instalado, este código pode ser utilizado entre dispositivos, como por exemplo uma placa de raspberry pi.
 
 ## mqtt_kafka_producer.py e mqtt_kafka_consumer.py:
 Estes dois códigos são um teste de integração que estou efetuando, basicamente funcionam da mesma forma que os códigos de pub e sub, porém são menores devido a serem apenas um teste.
 
-O código do producer irá publicar mensagens em um tópico especificado nele, ele irá utilizar o Mosquitto como broker.
+O código do arquivo 'mqtt_kafka_producer.py' irá publicar mensagens em um tópico especificado nele, ele irá utilizar o Mosquitto como broker.
 
-O código de consumer irá assinar as mensagens do MQTT e publicá-las para um tópico no kafka.
+O código do arquivo 'mqtt_kafka_consumer.py' irá assinar as mensagens do MQTT e publicá-las para um tópico no kafka.
