@@ -1,5 +1,5 @@
 # Estação Meteorológica Automática (EMA) simulada utilizando protocolo MQTT, broker Mosquitto e Kafka:
-Um projeto de uma estação meteorológica automática simulada utilizando o protocolo mqtt, o broker mosquitto e o Kafka. Vale ressaltar que utilizei o Linux durante seu desenvolvimento (porém é possível utilizar o windows também), por isso os comandos a seguir são do linux.
+Um projeto de uma estação meteorológica automática simulada utilizando o protocolo mqtt, o broker Mosquitto e o Kafka. Vale ressaltar que utilizei o ```Linux(Ubuntu v22.04)``` durante seu desenvolvimento (porém é possível utilizar o windows também).
 
 # 1. Instalações necessárias:
 Estes comandos devem ser executados no terminal do Linux, vale ressaltar que a minha máquina possui o ```Python v3.10.6``` e o ```pip v23.0.1```.
@@ -45,11 +45,17 @@ Para visualizar as mensagens que chegam em um tópico do kafka e apresentar toda
 # 4. Como funciona:
 
 ## 4.1 pub.py e sub.py:
-O código do arquivo ```pub.py``` envia a mensagem utilizando o protocolo MQTT, nele, é indicado o broker, o endereço para onde a mensagem está sendo enviada, neste caso, pode ser o ip de onde o "mosquitto" está instalado. 
+Estes dois códigos foram códigos de teste para realizar a comunicação entre máquinas por meio do protocolo MQTT, os testes ocorreram conforme o esperado e pude fazer com que dois dispositivos da mesma rede, se comunicassem, no caso, um seria o ```publisher``` e o outro foi o ```subscriber```.
+
+O código do arquivo ```pub.py``` envia a mensagem utilizando o protocolo MQTT, nele, é indicado o broker (o endereço IP para onde a mensagem está sendo enviada) neste caso, pode ser o IP de onde o "Mosquitto" está instalado. 
 
 O código do arquivo ```sub.py``` receberá a mensagem por meio do protocolo, nele, o endereço do broker será "localhost" pois é nela onde o mosquitto se encontrará instalado, este código pode ser utilizado entre dispositivos, como por exemplo uma placa de raspberry pi.
 
+Caso o ```Mosquitto``` estiver na mesma máquina onde os arquivos estejam, pode simplesmente colocar o endereços do ```pub.py``` e do ```sub.py``` como "localhost". 
+
 ## 4.2 mqtt_kafka_producer.py e mqtt_kafka_consumer.py:
+Devido ao teste dos últimos dois códigos ter sido um sucesso, conforme o solicitado pelo meu orientador, eu integrei o Kafka aos programas, para que após o MQTT publicasse e assinasse uma mensagem, o Kafka iria inserir o dado em um de seus tópicos.
+
 Estes dois códigos são um teste de integração que estou efetuando, basicamente funcionam da mesma forma que os códigos de pub e sub, porém são menores devido a serem apenas um teste.
 
 O código do arquivo ```mqtt_kafka_producer.py``` irá publicar mensagens em um tópico especificado nele, ele irá utilizar o Mosquitto como broker.
