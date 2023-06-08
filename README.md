@@ -35,6 +35,8 @@ sudo service mosquitto stop -> sudo service mosquitto start -> sudo service mosq
 # 3. Comandos para rodar o Kafka:
 É necessário estar na pasta do kafka que foi baixado, no meu caso utilizei o kafka 3.4.0, você pode baixá-lo a partir de [aqui](https://kafka.apache.org/downloads). Após isso, extraia o arquivo e dentro da pasta do kafka que foi baixado, utilize estes comandos:
 
+Entre como super usuário: ```sudo su```
+
 Inicializar o zookeeper: ```bin/zookeeper-server-start.sh config/zookeeper.properties```.
 
 Inicializar o kafka: ```bin/kafka-server-start.sh config/server.properties```.

@@ -86,7 +86,7 @@ def publicar_dado_atual(client):
         # Captando os dados atuais
         dados = captar_Dados()
         aux = dados[1].split(',')
-        result = client.publish(topic, dados[1])
+        result = client.publish(topic, dados[1], qos=0, retain=True)
         result: [0, 1]
         status = result[0]
         if status == 0:
