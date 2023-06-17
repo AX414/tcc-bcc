@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
+<script defer>
+        // Função para recarregar a página a cada 1 segundo
+        setInterval(function() {
+            location.reload();
+        }, 1000);
+    </script>
     <div class="container">
         <h1 style="margin-top: 20px">Lista de Dados da EMA 01</h1>
         <form method="POST" action="">
@@ -42,6 +48,7 @@
                         <th>Pluviômetro</th>
                         <th>Velocidade do Vento</th>
                         <th>Direção do Vento</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -101,6 +108,11 @@
                             echo '<td>' . $row['pluviometro'] . '</td>';
                             echo '<td>' . $row['vel_vento'] . '</td>';
                             echo '<td>' . $row['dir_vento'] . '</td>';
+                            echo '<td>';
+                            echo '<button type="button" class="btn btn-danger btn-sm" onclick="excluirRelatorio(' . $row['idrelatorio'] . ')">';
+                            echo '<i class="fas fa-trash"></i>';
+                            echo '</button>';
+                            echo '</td>';
                             echo '</tr>';
                         }
                     } else {
@@ -114,5 +126,34 @@
             </table>
         </div>
     </div>
+
+    <script>
+        function excluirRelatorio(id) {
+            if (confirm("Tem certeza de que deseja excluir o relatório?")) {
+                // Enviar a requisição para excluir o relatório usando AJAX
+                fetch('excluir_relatorio.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'id=' + id,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Processar a resposta do servidor
+                    if (data.success) {
+                        // Excluir a linha da tabela
+                        var row = document.getElementById('row-' + id);
+                        row.parentNode.removeChild(row);
+                    } else {
+                        alert('Erro ao excluir o relatório.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+            }
+        }
+    </script>
 </body>
 </html>

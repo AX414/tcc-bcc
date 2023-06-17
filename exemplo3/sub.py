@@ -1,7 +1,7 @@
 import random
 import re
-####import mysql.connector
-####from mysql.connector import Error
+import mysql.connector
+from mysql.connector import Error
 from datetime import date
 from datetime import time
 from paho.mqtt import client as mqtt_client
@@ -16,10 +16,10 @@ topic = "EMA01"
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 100)}'
 
-####connection = mysql.connector.connect(host='localhost',
-####                                             database='awsmqtt',
-####                                             user='root',
-####                                             password='root')
+connection = mysql.connector.connect(host='localhost',
+                                             database='awsmqtt',
+                                             user='root',
+                                             password='root')
                                              
                                              
 #Configurações do Kafka
@@ -40,7 +40,7 @@ def connect_database():
             cursor.execute("select database();")
             record = cursor.fetchone()
             print(f"Conectado ao banco de dados {record}")
-    except Error as e:
+    except Exception as e:
         print(f"Erro: {e}")
 
 def disconnect_database():
@@ -99,8 +99,8 @@ def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
     
     	#### Conectando ao banco de dados
-        #### connect_database()
-        #### cursor = connection.cursor()
+        connect_database()
+        cursor = connection.cursor()
     	
 	# Pegando os dados da mensagem recebida e separando eles
         aux = msg.payload.decode()
@@ -131,17 +131,17 @@ def subscribe(client: mqtt_client):
 	#### aqui vou enviar apenas do MQTT para o Kafka, depois será 
 	#### receber a mensagem do kafka e mandar para o MySQL
         #### Enviando para o banco de dados
-        #### query = 'INSERT INTO relatorios(data,hora,temperatura,pluviometro,vel_vento,dir_vento,emas_idema,emas_usuarios_idusuario) '
-        #### query+= f'VALUES("{data_atual}","{hora_atual}",{temperatura},{pluviometro},{vel_vento},{dir_vento},1,1)'
-        #### cursor.execute(query)
-        #### connection.commit() # Altera o banco
+        query = 'INSERT INTO relatorios(data,hora,temperatura,pluviometro,vel_vento,dir_vento,emas_idema,emas_usuarios_idusuario) '
+        query+= f'VALUES("{data_atual}","{hora_atual}",{temperatura},{pluviometro},{vel_vento},{dir_vento},1,1)'
+        cursor.execute(query)
+        connection.commit() # Altera o banco
         
         
         
         kafka_producer.produce(msg.encode())
         print(f"\nKafka publicou para o tópico {kafka_topic}\n {msg}")
 
-    client.subscribe(topic)
+    client.subscribe(topic, qos=1)
     client.on_message = on_message
     
     

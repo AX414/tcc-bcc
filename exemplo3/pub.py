@@ -21,7 +21,7 @@ def connect_mqtt():
         else:
             print("Conexão falhou, código: %d\n", rc)
     try:
-        client = mqtt_client.Client(client_id)
+        client = mqtt_client.Client(client_id, clean_session=True)
         client.on_connect = on_connect
         client.connect(broker, port)
         return client
@@ -86,7 +86,7 @@ def publicar_dado_atual(client):
         # Captando os dados atuais
         dados = captar_Dados()
         aux = dados[1].split(',')
-        result = client.publish(topic, dados[1], qos=0, retain=True)
+        result = client.publish(topic, dados[1], qos=1, retain=True)
         result: [0, 1]
         status = result[0]
         if status == 0:
