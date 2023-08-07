@@ -1,26 +1,25 @@
 import random
-import re
-import mysql.connector
-from mysql.connector import Error
+import json
 from datetime import date, time
 from paho.mqtt import client as mqtt_client
+from pymongo import MongoClient
 from pykafka import KafkaClient
 from kafka import KafkaConsumer
 from kafka.admin import KafkaAdminClient, NewTopic 
 
-# O broker daqui provavelmente vai acabar sendo o kafka
 broker = 'localhost'
 port = 1883
 topic = "EMA01"
-# generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 100)}'
 
-connection = mysql.connector.connect(host='localhost',
-                                             database='awsmqtt',
-                                             user='root',
-                                             password='root')
-                                             
-                                             
+mongo_uri = "mongodb://localhost:27017/"
+database_name = "awsmqtt"
+collection_name = "relatorios"
+
+mongo_client = MongoClient(mongo_uri)
+mongo_db = mongo_client[database_name]
+mongo_collection = mongo_db[collection_name]
+
 #Configurações do Kafka
 admin_client = KafkaAdminClient(bootstrap_servers=['localhost:9092'])
 
@@ -32,22 +31,22 @@ kafka_producer = kafka_topic.get_sync_producer()
 
 def connect_database():
     try:
-        if connection.is_connected():
-            db_info = connection.get_server_info()
-            print(f"\nConectado ao MySQL Server {db_info}")
-            cursor = connection.cursor()
-            cursor.execute("select database();")
-            record = cursor.fetchone()
-            print(f"Conectado ao banco de dados {record}")
+        if mongo_client.server_info():
+            print(f"\nConectado ao MongoDB Server.")
+            return True
     except Exception as e:
-        print(f"Erro: {e}")
+        print(f"Erro ao conectar com o MongoDB: {e}")
+        return False
 
 def disconnect_database():
-    cursor = connection.cursor()
-    if connection.is_connected():
-        cursor.close()
-        connection.close()
-        print("Conexão encerrada")
+    try:
+        if mongo_client is not None:
+            mongo_client.close()
+            print("Conexão encerrada")
+        else:
+            print("Não há conexão ativa para encerrar.")
+    except Exception as e:
+        print(f"Erro ao encerrar conexão com o MongoDB: {e}")
             
 def connect_mqtt() -> mqtt_client:
     def on_connect(client, userdata, flags, rc):
@@ -96,12 +95,10 @@ def deletar_topico(topico):
         
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
-    
-    	#### Conectando ao banco de dados
+        #### Conectando ao banco de dados
         connect_database()
-        cursor = connection.cursor()
-    	
-	# Pegando os dados da mensagem recebida e separando eles
+            
+        # Pegando os dados da mensagem recebida e separando eles
         aux = msg.payload.decode()
         dados = aux.split(",")
         data_atual = dados[0]     
@@ -112,36 +109,39 @@ def subscribe(client: mqtt_client):
         pluviometro = dados[5]
         vel_vento = dados[6]
         dir_vento = dados[7]
-	
+
         msg = f"\n-------------------------------------"
-        msg+= f"\nData atual: {data_atual}"
-        msg+= f"\nHora: {hora_atual}"
-        msg+= f"\nLatitude: {latitude}"
-        msg+= f"\nLongitude: {longitude}"
-        msg+= f"\nTemperatura: {temperatura} ºC"
-        msg+= f"\nPluviometro: {pluviometro} mm"
-        msg+= f"\nVelocidade do vento: {vel_vento} m/s"
-        msg+= f"\nDireção do vento: {dir_vento}º"
-        msg+= f"\n-------------------------------------"
+        msg += f"\nData atual: {data_atual}"
+        msg += f"\nHora: {hora_atual}"
+        msg += f"\nLatitude: {latitude}"
+        msg += f"\nLongitude: {longitude}"
+        msg += f"\nTemperatura: {temperatura} ºC"
+        msg += f"\nPluviometro: {pluviometro} mm"
+        msg += f"\nVelocidade do vento: {vel_vento} m/s"
+        msg += f"\nDireção do vento: {dir_vento}º"
+        msg += f"\n-------------------------------------"
+
         print(f"Mensagem recebida pelo tópico {topic}:{msg}\n")
-        
-        #### Os dados devem ser enviados pelo banco depois apenas, 
-	#### aqui vou enviar apenas do MQTT para o Kafka, depois será 
-	#### receber a mensagem do kafka e mandar para o MySQL
-        #### Enviando para o banco de dados
-        query = 'INSERT INTO relatorios(data,hora,temperatura,pluviometro,vel_vento,dir_vento,emas_idema,emas_usuarios_idusuario) '
-        query+= f'VALUES("{data_atual}","{hora_atual}",{temperatura},{pluviometro},{vel_vento},{dir_vento},1,1)'
-        cursor.execute(query)
-        connection.commit() # Altera o banco
-        
-        
-        
+
+        # Insere dados no mongoDB
+        data = {
+            "data": str(data_atual),
+            "hora": hora_atual,
+            "latitude": latitude,
+            "longitude": longitude,
+            "temperatura": temperatura,
+            "pluviometro": pluviometro,
+            "vel_vento": vel_vento,
+            "dir_vento": dir_vento
+        }
+        mongo_collection.insert_one(data)
+
         kafka_producer.produce(msg.encode())
         print(f"\nKafka publicou para o tópico {kafka_topic}\n {msg}")
 
     client.subscribe(topic, qos=1)
     client.on_message = on_message
-    
+
     
 def run():
     client = connect_mqtt()
@@ -149,6 +149,6 @@ def run():
     client.loop_forever()
     
 
-
 if __name__ == '__main__':
     run()
+

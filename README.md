@@ -5,10 +5,7 @@ Um projeto de uma estação meteorológica automática simulada utilizando o pro
 Estes comandos devem ser executados no terminal do Linux, vale ressaltar que a minha máquina possui o ```Python v3.10.6``` e o ```pip v23.0.1```.
 - sudo apt-get install mosquitto
 - sudo apt-get install mosquitto-clients
-- pip install mysql-connector-python
-- pip install geopy
-- pip install kafka-python
-- pip install pykafka
+- pip install paho-mqtt mysql-connector-python geopy pykafka kafka-python pymongo
 
 # 2. Configurações do mosquitto.conf:
 Após instalar o broker ```Mosquitto```, é necessário configurar ele, geralmente ele ficará localizado na pasta ```etc```, porém, se não encontrá-lo, utilize o comando ```whereis mosquitto```, este comando deve ajudar a encontrar a pasta do broker baixado. Dentro da pasta dele, deve haver um arquivo de configuração chamado ```conf.d```, altere ele para que ele se assemelhe ao conteúdo abaixo.
@@ -64,3 +61,9 @@ Estes dois códigos são um teste de integração que estou efetuando, basicamen
 O código do arquivo ```mqtt_kafka_producer.py``` irá publicar mensagens em um tópico especificado nele, ele irá utilizar o Mosquitto como broker.
 
 O código do arquivo ```mqtt_kafka_consumer.py``` irá assinar as mensagens do MQTT e publicá-las para um tópico no kafka.
+
+## 4.3. Exemplo 3 - pub.py e sub.py:
+Aqui estou integrando os códigos para realizar a troca de mensagens, os dados chegam por meio do MQTT, são repassados para o Kafka e por sua vez, são persistidos no banco de dados MySQL.
+
+## 4.4. Exemplo 4 - pub.py e sub.py:
+Aqui é uma versão atualizada do código anterior, neste caso troquei o banco de dados MySQL para o MongoDB visto que nem toda estação terá os mesmos sensores e ainda é necessário pensar em como a estação irá receber os dados se ela utilizar outros protocolos e qual é o formato das mensagens.

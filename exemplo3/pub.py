@@ -4,7 +4,6 @@ from queue import Queue
 from datetime import date
 from paho.mqtt import client as mqtt_client
 from geopy.geocoders import Nominatim
-from pykafka import KafkaClient
 
 broker = 'localhost'
 port = 1883
