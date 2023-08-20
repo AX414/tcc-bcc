@@ -64,6 +64,3 @@ O código do arquivo ```mqtt_kafka_consumer.py``` irá assinar as mensagens do M
 
 ## 4.3. Exemplo 3 - pub.py e sub.py:
 Aqui estou integrando os códigos para realizar a troca de mensagens, os dados chegam por meio do MQTT, são repassados para o Kafka e por sua vez, são persistidos no banco de dados MySQL.
-
-## 4.4. Exemplo 4 - pub.py e sub.py:
-Aqui é uma versão atualizada do código anterior, neste caso troquei o banco de dados MySQL para o MongoDB visto que nem toda estação terá os mesmos sensores e ainda é necessário pensar em como a estação irá receber os dados se ela utilizar outros protocolos e qual é o formato das mensagens.
