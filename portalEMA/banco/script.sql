@@ -26,15 +26,18 @@ DROP TABLE IF EXISTS emas ;
 
 CREATE TABLE IF NOT EXISTS emas (
   idema INT NOT NULL AUTO_INCREMENT,
-  latitude VARCHAR(45) NULL,
-  longitude VARCHAR(45) NULL,
+  nome VARCHAR(45) NOT NULL,
+  ip VARCHAR(45) NOT NULL,
+  publica INT NOT NULL,
+  latitude VARCHAR(45) NOT NULL,
+  longitude VARCHAR(45) NOT NULL,
   usuarios_idusuario INT NOT NULL,
   PRIMARY KEY (idema, usuarios_idusuario),
     FOREIGN KEY (usuarios_idusuario)
     REFERENCES usuarios (idusuario))
 ENGINE = InnoDB;
 
-INSERT INTO emas VALUES (1, "-21.78526685","-52.111628826598704", 1);
+INSERT INTO emas VALUES (1, "Morrigan 1","192.168.0.1",1,"-21.78526685","-52.111628826598704", 1);
 SELECT * FROM emas;
 -- -----------------------------------------------------
 -- Table relatorio

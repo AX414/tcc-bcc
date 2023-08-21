@@ -56,7 +56,7 @@
                     // Configurações do banco de dados
                     $host = 'localhost';
                     $user = 'root';
-                    $password = 'root';
+                    $password = 'ifsp';
                     $database = 'awsmqtt';
 
                     // Conectando ao banco de dados
