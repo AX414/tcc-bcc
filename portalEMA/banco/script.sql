@@ -12,12 +12,12 @@ CREATE TABLE IF NOT EXISTS usuarios (
   nome_usuario VARCHAR(45) NOT NULL,
   nome_login VARCHAR(45) NOT NULL,
   email VARCHAR(45) NOT NULL,
-  senha VARCHAR(45) NOT NULL,
+  senha VARCHAR(100) NOT NULL,
   nivel_acesso INT NOT NULL,
   PRIMARY KEY (idusuario))
 ENGINE = InnoDB;
 
-INSERT INTO usuarios VALUES(1,"JP","J.Porcel","joao@hotmail.com","123porcel",1);
+INSERT INTO usuarios VALUES(1,"JP","J.Porcel","joao@hotmail.com","$argon2id$v=19$m=65536,t=4,p=1$VE5reS96WFliNmZNSEw2eA$0nz5adtjMYNOsLnEmko/XGclUZWqZ+TNDx8HeUPV6n8",1);
 SELECT * FROM usuarios;
 -- -----------------------------------------------------
 -- Table emas

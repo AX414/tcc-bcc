@@ -20,7 +20,7 @@ function menu_tela_principal() {
                             Usuários
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Cadastrar</a>
+                            <a class="dropdown-item" href="../portalEMA/Tela_Cadastro_Usuario.php">Cadastrar</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Visualizar</a>
                         </div>
