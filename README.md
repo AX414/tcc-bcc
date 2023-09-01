@@ -1,7 +1,7 @@
 # Desenvolvimento e implementação de um sistema distribuído aberto para gerenciamento de estações meteorológicas
 Este é o repositório do meu Trabalho de Conclusão de Curso que realizei durante meu curso de Bacharelado de Ciência da Computação. Nele é possível ver alguns exemplos em python de uma arquitetura que desenvolvi que é utilizada para tratar dos dados recebidos de estações meteorológicas automáticas, a pasta contém alguns exemplos em python e um sistema feito em PHP. Eu utilizei o protocolo MQTT, o broker Mosquitto e o Kafka durante este desenvolvimento. A primeiro momento eu desenvolvi em um sistema Linux e posteriormente em um Windows, devido a isso, segue em anexo sobre a configuração e instalação que realizei nestes sistemas durante os meus testes.
 
-#Linux:
+# Linux:
 
 ## 1. Instalações necessárias para o teste:
 Estes comandos devem ser executados no terminal do Linux, vale ressaltar que a minha máquina possui o ```Python v3.10.6``` e o ```pip v23.0.1```.
@@ -42,7 +42,7 @@ Inicializar o kafka: ```bin/kafka-server-start.sh config/server.properties```.
 
 Para visualizar as mensagens que chegam em um tópico do kafka e apresentar todas as mensagens deste tópico: ```bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic nome_do_topico --from-beginning```.
 
-#Windows:
+# Windows:
 
 ## 1. Como rodar o Mosquitto no Windows:
 Após sua instalação, vá até sua pasta e execute cada um desses comandos para testar:
