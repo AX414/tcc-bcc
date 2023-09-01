@@ -32,7 +32,7 @@ OBS.: Aconselho ligar e desligar o serviço do mosquito para toda configuração
 sudo service mosquitto stop -> sudo service mosquitto start -> sudo service mosquitto status.
 
 ## 3. Comandos para rodar o Kafka no Linux:
-É necessário estar na pasta do kafka que foi baixado, no meu caso utilizei o kafka 3.4.0, você pode baixá-lo a partir de [aqui](https://kafka.apache.org/downloads). Após isso, extraia o arquivo e dentro da pasta do kafka que foi baixado, utilize estes comandos:
+É necessário estar na pasta do kafka que foi baixado, no meu caso utilizei o kafka 3.5.1, você pode baixá-lo a partir de [aqui](https://kafka.apache.org/downloads). Após isso, extraia o arquivo e dentro da pasta do kafka que foi baixado, utilize estes comandos:
 
 Entre como super usuário: ```sudo su```
 
@@ -47,23 +47,20 @@ Para visualizar as mensagens que chegam em um tópico do kafka e apresentar toda
 ## 1. Como rodar o Mosquitto no Windows:
 Após sua instalação, vá até sua pasta e execute cada um desses comandos para testar:
 
-```
-Inicializar o sub: mosquito_sub -t topico -h localhost
+Inicializar o sub: ```mosquito_sub -t topico -h localhost```
 
-Inicializar o pub e enviar a mensagem por um outro terminal: mosquito_pub -t topico -h localhost -m "temperatura: 30"
-```
+Inicializar o pub e enviar a mensagem por um outro terminal: ```mosquito_pub -t topico -h localhost -m "temperatura: 30"```
 
 ## 2. Como rodar o Kafka no Windows:
 Após sua instalação, vá até sua pasta e execute cada um desses comandos para testar:
 
-```
-Iniciar zookeeper: zookeeper-server-start.bat ..\..\config\zookeeper.properties
 
-Iniciar servidor kafka: kafka-server-start.bat ..\..\config\server.properties
+Iniciar zookeeper: ```zookeeper-server-start.bat ..\..\config\zookeeper.properties```
 
-Criar um tópico no kafka: kafka-topics.bat --create --topic my-topic --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3
+Iniciar servidor kafka: ```kafka-server-start.bat ..\..\config\server.properties```
 
-Enviar mensagem para o tópico: kafka-console-producer.bat --broker-list localhost:9092 --topic my-topic
+Criar um tópico no kafka: ```kafka-topics.bat --create --topic my-topic --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3```
 
-Visualizar mensagens do tópico: kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic my-topic --from-beginning
-```
+Enviar mensagem para o tópico: ```kafka-console-producer.bat --broker-list localhost:9092 --topic my-topic```
+
+Visualizar mensagens do tópico: ```kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic my-topic --from-beginning```
