@@ -1,13 +1,15 @@
-# Estação Meteorológica Automática (EMA) simulada utilizando protocolo MQTT, broker Mosquitto e Kafka:
-Um projeto de uma estação meteorológica automática simulada utilizando o protocolo mqtt, o broker Mosquitto e o Kafka. Vale ressaltar que utilizei o ```Linux(Ubuntu v22.04)``` durante seu desenvolvimento (porém é possível utilizar o windows também).
+# Desenvolvimento e implementação de um sistema distribuído aberto para gerenciamento de estações meteorológicas
+Este é o repositório do meu Trabalho de Conclusão de Curso que realizei durante meu curso de Bacharelado de Ciência da Computação. Nele é possível ver alguns exemplos em python de uma arquitetura que desenvolvi que é utilizada para tratar dos dados recebidos de estações meteorológicas automáticas, a pasta contém alguns exemplos em python e um sistema feito em PHP. Eu utilizei o protocolo MQTT, o broker Mosquitto e o Kafka durante este desenvolvimento. A primeiro momento eu desenvolvi em um sistema Linux e posteriormente em um Windows, devido a isso, segue em anexo sobre a configuração e instalação que realizei nestes sistemas durante os meus testes.
 
-# 1. Instalações necessárias:
+#Linux:
+
+## 1. Instalações necessárias para o teste:
 Estes comandos devem ser executados no terminal do Linux, vale ressaltar que a minha máquina possui o ```Python v3.10.6``` e o ```pip v23.0.1```.
 - sudo apt-get install mosquitto
 - sudo apt-get install mosquitto-clients
 - pip install paho-mqtt mysql-connector-python geopy pykafka kafka-python pymongo
 
-# 2. Configurações do mosquitto.conf:
+## 2. Configurações do mosquitto.conf:
 Após instalar o broker ```Mosquitto```, é necessário configurar ele, geralmente ele ficará localizado na pasta ```etc```, porém, se não encontrá-lo, utilize o comando ```whereis mosquitto```, este comando deve ajudar a encontrar a pasta do broker baixado. Dentro da pasta dele, deve haver um arquivo de configuração chamado ```conf.d```, altere ele para que ele se assemelhe ao conteúdo abaixo.
 
 ```
@@ -29,7 +31,7 @@ listener 1883
 OBS.: Aconselho ligar e desligar o serviço do mosquito para toda configuração efetuada aqui, inclusive logo após sua instalação com:
 sudo service mosquitto stop -> sudo service mosquitto start -> sudo service mosquitto status.
 
-# 3. Comandos para rodar o Kafka:
+## 3. Comandos para rodar o Kafka no Linux:
 É necessário estar na pasta do kafka que foi baixado, no meu caso utilizei o kafka 3.4.0, você pode baixá-lo a partir de [aqui](https://kafka.apache.org/downloads). Após isso, extraia o arquivo e dentro da pasta do kafka que foi baixado, utilize estes comandos:
 
 Entre como super usuário: ```sudo su```
@@ -40,27 +42,28 @@ Inicializar o kafka: ```bin/kafka-server-start.sh config/server.properties```.
 
 Para visualizar as mensagens que chegam em um tópico do kafka e apresentar todas as mensagens deste tópico: ```bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic nome_do_topico --from-beginning```.
 
+#Windows:
 
-# 4. Como os programas funcionam:
-A seguir eu explico como cada um dos programas funcionam, como é possível ver eu tenho 2 exemplos até o momento, um é o caso de publisher/subscriber com o uso do MQTT e o outro exemplo é o exato mesmo caso, porém após o protocolo receber a mensagem, ele irá enviar a um tópico do kafka.
+## 1. Como rodar o Mosquitto no Windows:
+Após sua instalação, vá até sua pasta e execute cada um desses comandos para testar:
 
-## 4.1. Exemplo 1 - pub.py e sub.py:
-Estes dois códigos foram códigos de teste para realizar a comunicação entre máquinas por meio do protocolo MQTT, os testes ocorreram conforme o esperado e pude fazer com que dois dispositivos da mesma rede, se comunicassem, no caso, um seria o ```publisher``` e o outro foi o ```subscriber```.
+```
+Inicializar o sub: mosquito_sub -t topico -h localhost
 
-O código do arquivo ```pub.py``` envia a mensagem utilizando o protocolo MQTT, nele, é indicado o broker (o endereço IP para onde a mensagem está sendo enviada) neste caso, pode ser o IP de onde o "Mosquitto" está instalado. 
+Inicializar o pub e enviar a mensagem por um outro terminal: mosquito_pub -t topico -h localhost -m "temperatura: 30"
+```
 
-O código do arquivo ```sub.py``` receberá a mensagem por meio do protocolo, nele, o endereço do broker será "localhost" pois é nela onde o mosquitto se encontrará instalado, este código pode ser utilizado entre dispositivos, como por exemplo uma placa de raspberry pi.
+## 2. Como rodar o Kafka no Windows:
+Após sua instalação, vá até sua pasta e execute cada um desses comandos para testar:
 
-Caso o ```Mosquitto``` estiver na mesma máquina onde os arquivos estejam, pode simplesmente colocar o endereços do ```pub.py``` e do ```sub.py``` como "localhost". 
+```
+Iniciar zookeeper: zookeeper-server-start.bat ..\..\config\zookeeper.properties
 
-## 4.2. Exemplo 2 - mqtt_kafka_producer.py e mqtt_kafka_consumer.py:
-Devido ao teste dos últimos dois códigos ter sido um sucesso, conforme o solicitado pelo meu orientador, eu integrei o Kafka aos programas, para que após o MQTT publicasse e assinasse uma mensagem, o Kafka iria inserir o dado em um de seus tópicos.
+Iniciar servidor kafka: kafka-server-start.bat ..\..\config\server.properties
 
-Estes dois códigos são um teste de integração que estou efetuando, basicamente funcionam da mesma forma que os códigos de pub e sub, porém são menores devido a serem apenas um teste.
+Criar um tópico no kafka: kafka-topics.bat --create --topic my-topic --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3
 
-O código do arquivo ```mqtt_kafka_producer.py``` irá publicar mensagens em um tópico especificado nele, ele irá utilizar o Mosquitto como broker.
+Enviar mensagem para o tópico: kafka-console-producer.bat --broker-list localhost:9092 --topic my-topic
 
-O código do arquivo ```mqtt_kafka_consumer.py``` irá assinar as mensagens do MQTT e publicá-las para um tópico no kafka.
-
-## 4.3. Exemplo 3 - pub.py e sub.py:
-Aqui estou integrando os códigos para realizar a troca de mensagens, os dados chegam por meio do MQTT, são repassados para o Kafka e por sua vez, são persistidos no banco de dados MySQL.
+Visualizar mensagens do tópico: kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic my-topic --from-beginning
+```
