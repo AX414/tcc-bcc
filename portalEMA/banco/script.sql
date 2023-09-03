@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
 ENGINE = InnoDB;
 
 INSERT INTO usuarios VALUES(1,"JP","J.Porcel","joao@hotmail.com","$argon2id$v=19$m=65536,t=4,p=1$VE5reS96WFliNmZNSEw2eA$0nz5adtjMYNOsLnEmko/XGclUZWqZ+TNDx8HeUPV6n8",1);
+INSERT INTO usuarios VALUES(2,"Dark","Dark","d","$argon2id$v=19$m=65536,t=4,p=1$VE5reS96WFliNmZNSEw2eA$0nz5adtjMYNOsLnEmko/XGclUZWqZ+TNDx8HeUPV6n8",2);
 SELECT * FROM usuarios;
 -- -----------------------------------------------------
 -- Table emas
@@ -38,6 +39,7 @@ CREATE TABLE IF NOT EXISTS emas (
 ENGINE = InnoDB;
 
 INSERT INTO emas VALUES (1, "Morrigan 1","192.168.0.1",1,"-21.78526685","-52.111628826598704", 1);
+INSERT INTO emas VALUES (2, "Morrigan 2","192.168.0.1",0,"-21.78","-52.13", 2);
 SELECT * FROM emas;
 -- -----------------------------------------------------
 -- Table relatorio
@@ -49,12 +51,14 @@ CREATE TABLE IF NOT EXISTS relatorios (
   data DATE NOT NULL,
   hora TIME NOT NULL,
   temperatura INT NOT NULL,
-  pluviometro FLOAT NOT NULL,
-  vel_vento FLOAT NOT NULL,
-  dir_vento INT NOT NULL,
-  emas_idema INT NOT NULL,
-  emas_usuarios_idusuario INT NOT NULL,
-  PRIMARY KEY (idrelatorio, emas_idema, emas_usuarios_idusuario),
+  chuva_intensidade FLOAT,
+  chuva_probabilidade INT,
+  vento_velocidade FLOAT,
+  vento_direcao VARCHAR(50),
+  dados_nao_previstos JSON NULL,
+  emas_idema INT,
+  emas_usuarios_idusuario INT,
+ PRIMARY KEY (idrelatorio, emas_idema, emas_usuarios_idusuario),
     FOREIGN KEY (emas_idema , emas_usuarios_idusuario)
     REFERENCES emas (idema , usuarios_idusuario))
 ENGINE = InnoDB;

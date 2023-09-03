@@ -1,21 +1,25 @@
 <?php
+
 session_start();
-require '../functions/banco.php';
+
+require(__DIR__ . '/../functions/banco.php');
 
 $conexao = conectarBanco();
 
-$idUsuario = $_SESSION['idusuario'];
-$sql = "SELECT idema, nome, ip, publica, latitude, longitude, usuarios_idusuario FROM emas WHERE usuarios_idusuario = ?";
-$stmt = $conexao->prepare($sql);
-$stmt->bind_param("i", $idUsuario); // "i" significa que é um valor inteiro
-$stmt->execute();
+if ($_SESSION['idusuario']!=null) {
+    $idUsuario = $_SESSION['idusuario'];
+    $sql = "SELECT idema, nome, ip, publica, latitude, longitude, usuarios_idusuario FROM emas WHERE usuarios_idusuario = ?";
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("i", $idUsuario); // "i" significa que é um valor inteiro
+    $stmt->execute();
 
-$result = $stmt->get_result();
+    $result = $stmt->get_result();
 
-$locations = array();
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $locations[] = $row;
+    $locations = array();
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $locations[] = $row;
+        }
     }
 }
 

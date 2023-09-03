@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <?php
 require '../portalEMA/functions/geral.php';
-session_start();
 ?>
 <html>
     <head>
@@ -33,7 +32,7 @@ session_start();
             <h1>Lista de Usuários</h1>
             <form method="POST" action="">
                 <div>
-                    <label for="dataInicial">Nome do usuário</label>
+                    <label for="nome_usuario">Nome do usuário</label>
                     <input type="text" name="nome_usuario" class="form-control">
                 </div>
             </form>
@@ -52,11 +51,50 @@ session_start();
                     </thead>
                     <tbody>
                         <?php
-                        require '../portalEMA/functions/listar_usuario.php';
+                        require '../portalEMA/controllers/controller_usuario.php';
+                        listarUsuarios();
                         ?>
                     </tbody>
                 </table>
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function excluirUsuario(idusuario) {
+                if (confirm('Tem certeza de que deseja excluir este usuário?')) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '../portalEMA/controllers/controller_usuario.php',
+                        data: {idusuario: idusuario},
+                        success: function (response) {
+                            alert(response);
+                            // Recarregar a página ou atualizar a tabela de usuários após a exclusão
+                            location.reload();
+                        },
+                        error: function () {
+                            alert('Erro ao excluir o usuário.');
+                        }
+                    });
+                }
+            }
+
+            function visualizarUsuario(idusuario) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '../portalEMA/controllers/controller_usuario.php',
+                    data: {idusuario: idusuario},
+                    success: function (response) {
+                        alert(response);
+                        // Recarregar a página ou atualizar a tabela de usuários após a exclusão
+                        location.reload();
+                    },
+                    error: function () {
+                        alert('Erro ao visualizar os dados do usuário.');
+                    }
+                });
+
+            }
+        </script>
     </body>
 </html>

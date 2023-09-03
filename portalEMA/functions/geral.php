@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 function estalogado() {
     if (isset($_SESSION['nome_login'])) {
         return true;
@@ -14,8 +14,9 @@ function menu() {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
+                <ul class="navbar-nav mr-auto">';
+                if($_SESSION['nivel_acesso'] == "1" ){ 
+                    echo'<li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Usuários
                         </a>
@@ -24,8 +25,9 @@ function menu() {
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="../portalEMA/Tela_Listar_Usuarios.php">Listar Usuários</a>
                         </div>
-                    </li>
-                    <li class="nav-item dropdown">
+                    </li>';
+                }
+                echo'    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             EMAs
                         </a>
@@ -40,7 +42,7 @@ function menu() {
                         </div>
                     </li>
                <li class="nav-item">
-                <form action="../portalEMA/functions/logoff.php">
+                <form action="../portalEMA/functions/logout.php">
                     <button style="position: absolute; top: 20%; right: 10px; width:8%;" class="btn btn-danger" type="submit"><i style="padding-right: 3%;" class="fas fa-sign-out"></i>Logout</button>
                 </form>
                 </li>
