@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require(__DIR__ . '/../functions/banco.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -47,13 +47,13 @@ function cadastrarUsuario() {
             }
         }
 
-        mysqli_close($conexao);
+        $conexao->close();
     }
 }
 
 function listarUsuarios() {
     $conexao = conectarBanco();
-// Verifica se o formulário foi enviado
+    // Verifica se o formulário foi enviado
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Obtém os valores dos campos de filtro
         $nome_usuario = $_POST['nome_usuario'];
@@ -95,10 +95,18 @@ function listarUsuarios() {
                 echo '<i class="fas fa-trash"></i>';
                 echo '</button>';
             }
+            /*
             echo '<button type="button" class="btn btn-warning btn-sm" onclick="alterarUsuario(' . $row['idusuario'] . ')">';
             echo '<i class="fas fa-pencil"></i>';
             echo '</button>';
             echo '<button type="button" class="btn btn-primary btn-sm" onclick="visualizarUsuario(' . $row['idusuario'] . ')">';
+            echo '<i class="fas fa-eye"></i>';
+            echo '</button>';
+            */
+            echo '<button type="button" class="btn btn-warning btn-sm" onclick="">';
+            echo '<i class="fas fa-pencil"></i>';
+            echo '</button>';
+            echo '<button type="button" class="btn btn-primary btn-sm" onclick="">';
             echo '<i class="fas fa-eye"></i>';
             echo '</button>';
             echo '</td>';
@@ -145,4 +153,7 @@ function visualizarUsuario() {
     }
 }
 
+function alterarUsuario(){
+    
+}
 ?>

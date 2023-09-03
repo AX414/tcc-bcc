@@ -32,9 +32,9 @@ function menu() {
                             EMAs
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Cadastrar EMA</a>
+                            <a class="dropdown-item" href="../portalEMA/Tela_Cadastro_EMA.php">Cadastrar EMA</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Apresentar EMAs</a>
+                            <a class="dropdown-item" href="../portalEMA/Tela_Listar_EMAs.php">Apresentar EMAs</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Efetuar Diagnóstico</a>
                             <div class="dropdown-divider"></div>

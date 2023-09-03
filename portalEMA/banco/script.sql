@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
   PRIMARY KEY (idusuario))
 ENGINE = InnoDB;
 
-INSERT INTO usuarios VALUES(1,"JP","J.Porcel","joao@hotmail.com","$argon2id$v=19$m=65536,t=4,p=1$VE5reS96WFliNmZNSEw2eA$0nz5adtjMYNOsLnEmko/XGclUZWqZ+TNDx8HeUPV6n8",1);
-INSERT INTO usuarios VALUES(2,"Dark","Dark","d","$argon2id$v=19$m=65536,t=4,p=1$VE5reS96WFliNmZNSEw2eA$0nz5adtjMYNOsLnEmko/XGclUZWqZ+TNDx8HeUPV6n8",2);
+INSERT INTO usuarios VALUES(1,"JP","J.Porcel","adm","$argon2id$v=19$m=65536,t=4,p=1$VE5reS96WFliNmZNSEw2eA$0nz5adtjMYNOsLnEmko/XGclUZWqZ+TNDx8HeUPV6n8",1);
+INSERT INTO usuarios VALUES(2,"Dark","Dark","cli","$argon2id$v=19$m=65536,t=4,p=1$VE5reS96WFliNmZNSEw2eA$0nz5adtjMYNOsLnEmko/XGclUZWqZ+TNDx8HeUPV6n8",2);
 SELECT * FROM usuarios;
 -- -----------------------------------------------------
 -- Table emas
@@ -33,13 +33,14 @@ CREATE TABLE IF NOT EXISTS emas (
   latitude VARCHAR(45) NOT NULL,
   longitude VARCHAR(45) NOT NULL,
   usuarios_idusuario INT NOT NULL,
+  certificado_ssl BLOB NULL,
   PRIMARY KEY (idema, usuarios_idusuario),
     FOREIGN KEY (usuarios_idusuario)
     REFERENCES usuarios (idusuario))
 ENGINE = InnoDB;
 
-INSERT INTO emas VALUES (1, "Morrigan 1","192.168.0.1",1,"-21.78526685","-52.111628826598704", 1);
-INSERT INTO emas VALUES (2, "Morrigan 2","192.168.0.1",0,"-21.78","-52.13", 2);
+INSERT INTO emas VALUES (1, "Morrigan 1","192.168.0.1",1,"-21.78526685","-52.111628826598704", 1, "");
+INSERT INTO emas VALUES (2, "Morrigan 2","192.168.0.1",0,"-21.78","-52.13", 2,"");
 SELECT * FROM emas;
 -- -----------------------------------------------------
 -- Table relatorio

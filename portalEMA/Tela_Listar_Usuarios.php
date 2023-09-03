@@ -78,23 +78,25 @@ require '../portalEMA/functions/geral.php';
                 }
             }
 
-            function visualizarUsuario(idusuario) {
-
-                $.ajax({
-                    type: 'POST',
-                    url: '../portalEMA/controllers/controller_usuario.php',
-                    data: {idusuario: idusuario},
-                    success: function (response) {
-                        alert(response);
-                        // Recarregar a página ou atualizar a tabela de usuários após a exclusão
-                        location.reload();
-                    },
-                    error: function () {
-                        alert('Erro ao visualizar os dados do usuário.');
-                    }
-                });
-
-            }
+            /*
+             function visualizarUsuario(idusuario) {
+             
+             $.ajax({
+             type: 'POST',
+             url: '../portalEMA/controllers/controller_usuario.php',
+             data: {idusuario: idusuario},
+             success: function (response) {
+             alert(response);
+             // Recarregar a página ou atualizar a tabela de usuários após a exclusão
+             location.reload();
+             },
+             error: function () {
+             alert('Erro ao visualizar os dados do usuário.');
+             }
+             });
+             
+             } 
+             */
         </script>
     </body>
 </html>
