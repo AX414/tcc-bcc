@@ -1,5 +1,4 @@
 <?php
-session_start();
 require(__DIR__ . '/../functions/banco.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

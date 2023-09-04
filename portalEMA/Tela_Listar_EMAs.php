@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+session_start();
 require '../portalEMA/functions/geral.php';
 ?>
 <html>
@@ -45,7 +46,8 @@ require '../portalEMA/functions/geral.php';
                             <th>Nome</th>
                             <th>IP</th>
                             <th>Pública/Privada</th>
-                            <th>Latitude, Logitude</th>
+                            <th>Latitude</th> 
+                            <th>Logitude</th>
                             <th>Nome do Dono</th>
                             <th>Certificado SSL</th>
                             <th>Ações</th>

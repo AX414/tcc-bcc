@@ -45,7 +45,7 @@ function listarEMAs() {
         // Monta a consulta SQL com base nos filtros
         $sql = "SELECT * FROM emas WHERE 1 = 1";
 
-        if (!empty($nome_usuario)) {
+        if (!empty($nome)) {
             $sql .= " AND nome LIKE '%$nome%'";
         }
 
@@ -63,10 +63,35 @@ function listarEMAs() {
             echo '<td>' . $row['idema'] . '</td>';
             echo '<td>' . $row['nome'] . '</td>';
             echo '<td>' . $row['ip'] . '</td>';
-            echo '<td>' . $row['publica'] . '</td>';
+            if ($row['publica'] == 0) {
+                echo '<td>Não</td>';
+            } else {
+                echo'<td>Sim</td>';
+            }
             echo '<td>' . $row['latitude'] . '</td>';
             echo '<td>' . $row['longitude'] . '</td>';
-            echo '<td>' . $row['usuarios_idusuario'] . '</td>';
+
+            $iddono = $row['usuarios_idusuario'];
+            $query = "SELECT nome_usuario FROM usuarios WHERE idusuario = '$iddono'";
+            $resultado = $conexao->query($query);
+            if (!$resultado) {
+                die("Erro na consulta: " . $conexao->error);
+            }else if ($resultado) {
+                // Verifique se a consulta foi bem-sucedida
+                $rowDono = $resultado->fetch_assoc(); // Obtenha a linha do resultado como um array associativo
+
+                if ($rowDono) {
+                    $nome_dono = $rowDono['nome_usuario'];
+                    echo '<td>' . $nome_dono . '</td>';
+                } else {
+                    // Caso o dono não seja encontrado
+                    echo '<td>Não encontrado</td>';
+                }
+            } else {
+                // Caso ocorra um erro na consulta
+                echo '<td>Erro na consulta</td>';
+            }
+
             echo '<td>' . $row['certificado_ssl'] . '</td>';
             echo '<td>';
             echo '<button name="btn-excluir" type="button" class="btn btn-danger btn-sm" onclick="">';

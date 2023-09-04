@@ -11,7 +11,7 @@ function gerarCertificadoSSL($nome) {
     ]);
 
     if (!$chavePrivada) {
-        die("Erro ao gerar a chave privada.");
+        die("Erro ao gerar a chave privada." . openssl_error_string());
     }
 
     // Gere um certificado autoassinado

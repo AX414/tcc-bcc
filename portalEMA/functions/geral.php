@@ -1,5 +1,4 @@
 <?php
-session_start();
 function estalogado() {
     if (isset($_SESSION['nome_login'])) {
         return true;
