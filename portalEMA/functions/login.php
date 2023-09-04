@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require(__DIR__ . '/../functions/banco.php');
 
 if (isset($_POST['email']) && isset($_POST['senha']) && isset($_POST['nivel_acesso'])) {
@@ -14,7 +16,6 @@ if (isset($_POST['email']) && isset($_POST['senha']) && isset($_POST['nivel_aces
         $row = mysqli_fetch_assoc($result);
 
         if ($row && password_verify($senhaDigitada, $row['senha'])) {
-            session_start();
             $_SESSION["idusuario"] = $row['idusuario'];
             $_SESSION["nome_usuario"] = $row['nome_usuario'];
             $_SESSION["nome_login"] = $row['nome_login'];

@@ -1,9 +1,13 @@
 <?php
-session_start();
+
+if(session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
 require(__DIR__ . '/../functions/banco.php');
 require(__DIR__ . '/../functions/gerar_certificado_ssl.php');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['btn-cadastro-ema'])) {
     cadastrarEMA();
 }
 
@@ -16,19 +20,19 @@ function cadastrarEMA() {
         $latitude = $_POST['latitude'];
         $longitude = $_POST['longitude'];
         $id_dono = $_SESSION['idusuario'];
-        $certificado_ssl = gerarCertificadoSSL($nome);
+        //$certificado_ssl = gerarCertificadoSSL($nome);
 
         $conexao = conectarBanco();
 
-        $query = "INSERT INTO emas(nome, ip, publica, latitude, longitude, usuarios_idusuario, certificado_ssl) "
-                . "VALUES ('$nome', '$ip', '$publica', '$latitude', '$longitude', '$id_dono', '$certificado_ssl')";
+        $query = "INSERT INTO emas(nome, ip, publica, latitude, longitude, usuarios_idusuario) "
+                . "VALUES ('$nome', '$ip', '$publica', '$latitude', '$longitude', '$id_dono')";
         $insert = mysqli_query($conexao, $query);
 
         if ($insert) {
             echo "<script>alert('Estação Cadastrada com Sucesso!');window.location.href='../Tela_Cadastro_EMA.php';</script>";
         } else {
-            echo mysqli_errno($conexao);
-            echo "<script>alert('Não foi possível cadastrar essa estação, algo deu errado.');window.location.href='../Tela_Cadastro_EMA.php';</script>";
+            echo "Erro do mysqli:" . mysqli_errno($conexao);
+            echo "<script>alert('Não foi possível cadastrar essa estação, algo deu errado.');!');window.location.href='../Tela_Cadastro_EMA.php';</script>";
         }
 
         $conexao->close();

@@ -1,4 +1,9 @@
 <?php
+
+if(session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
 function estalogado() {
     if (isset($_SESSION['nome_login'])) {
         return true;
@@ -14,8 +19,8 @@ function menu() {
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">';
-                if($_SESSION['nivel_acesso'] == "1" ){ 
-                    echo'<li class="nav-item dropdown">
+        if ($_SESSION['nivel_acesso'] == "1") {
+            echo'<li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Usuários
                         </a>
@@ -25,8 +30,8 @@ function menu() {
                             <a class="dropdown-item" href="../portalEMA/Tela_Listar_Usuarios.php">Listar Usuários</a>
                         </div>
                     </li>';
-                }
-                echo'    <li class="nav-item dropdown">
+        }
+        echo'    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             EMAs
                         </a>

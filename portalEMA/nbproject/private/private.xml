@@ -3,12 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/portalEMA/Tela_Listar_EMAs.php</file>
+            <file>file:/C:/xampp/htdocs/portalEMA/functions/geral.php</file>
+            <file>file:/C:/xampp/htdocs/portalEMA/functions/plotar_mapa.php</file>
             <file>file:/C:/xampp/htdocs/portalEMA/functions/gerar_certificado_ssl.php</file>
-            <file>file:/C:/xampp/htdocs/portalEMA/banco/script.sql</file>
-            <file>file:/C:/xampp/htdocs/portalEMA/Tela_Cadastro_EMA.php</file>
-            <file>file:/C:/xampp/htdocs/portalEMA/controllers/controller_usuario.php</file>
-            <file>file:/C:/xampp/htdocs/portalEMA/controllers/controller_ema.php</file>
+            <file>file:/C:/xampp/htdocs/portalEMA/Tela_Principal.php</file>
+            <file>file:/C:/xampp/htdocs/portalEMA/Tela_Listar_Usuarios.php</file>
+            <file>file:/C:/xampp/htdocs/portalEMA/functions/banco.php</file>
+            <file>file:/C:/xampp/htdocs/portalEMA/functions/login.php</file>
+            <file>file:/C:/xampp/htdocs/portalEMA/functions/logout.php</file>
         </group>
     </open-files>
 </project-private>

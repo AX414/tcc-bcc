@@ -1,7 +1,12 @@
 <?php
+
+if(session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
 require(__DIR__ . '/../functions/banco.php');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['btn-cadastro-usuario'])) {
     cadastrarUsuario();
 }
 

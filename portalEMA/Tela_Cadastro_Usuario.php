@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-session_start();
 require '../portalEMA/functions/geral.php';
+
 ?>
 <html>
     <head>
@@ -81,7 +81,7 @@ require '../portalEMA/functions/geral.php';
                             </select>
                         </div>
                         <br>
-                        <button name="btn-cadastro" style="width: 100%" class="btn btn-primary btn-block" type="submit"><i style="padding-right: 1%;" class="fas fa-circle-plus"></i>Cadastrar</button>
+                        <button name="btn-cadastro-usuario" style="width: 100%" class="btn btn-primary btn-block" type="submit"><i style="padding-right: 1%;" class="fas fa-circle-plus"></i>Cadastrar</button>
                     </div>
                 </form>
             </div>

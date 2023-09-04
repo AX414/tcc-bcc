@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-session_start();
 require '../portalEMA/functions/geral.php';
+require '../portalEMA/controllers/controller_ema.php';
 ?>
 <html>
     <head>
@@ -55,7 +55,7 @@ require '../portalEMA/functions/geral.php';
                     </thead>
                     <tbody>
                         <?php
-                        require '../portalEMA/controllers/controller_ema.php';
+                        
                         listarEMAs();
                         ?>
                     </tbody>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <?php
-session_start();
 require '../portalEMA/functions/geral.php';
 ?>
 <html>
