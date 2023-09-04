@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
   PRIMARY KEY (idusuario))
 ENGINE = InnoDB;
 
-INSERT INTO usuarios VALUES(1,"JP","J.Porcel","adm","$argon2id$v=19$m=65536,t=4,p=1$VE5reS96WFliNmZNSEw2eA$0nz5adtjMYNOsLnEmko/XGclUZWqZ+TNDx8HeUPV6n8",1);
-INSERT INTO usuarios VALUES(2,"Dark","Dark","cli","$argon2id$v=19$m=65536,t=4,p=1$VE5reS96WFliNmZNSEw2eA$0nz5adtjMYNOsLnEmko/XGclUZWqZ+TNDx8HeUPV6n8",2);
+INSERT INTO usuarios VALUES(1,"JP","J.Porcel","adm","$argon2id$v=19$m=65536,t=4,p=1$anpJLmVTUDBhQ0xKVWIxdQ$x5XpaCmcJojWWcLn8Cy9z8Xxn9MvRlmyIycPSad/ZR8",1);
+INSERT INTO usuarios VALUES(2,"Dark","Dark","cli","$argon2id$v=19$m=65536,t=4,p=1$UTAyaWhkbjVJQzlFYjlPVA$EvIWZJh+o5Wp4cqOm6l2nYCocAJYq78nFwUp/BHoGzI",2);
 SELECT * FROM usuarios;
 -- -----------------------------------------------------
 -- Table emas
@@ -34,13 +34,15 @@ CREATE TABLE IF NOT EXISTS emas (
   longitude VARCHAR(45) NOT NULL,
   usuarios_idusuario INT NOT NULL,
   certificado_ssl BLOB NULL,
+  ativa INT NOT NULL,
+  topico_kafka VARCHAR (45) NOT NULL,
   PRIMARY KEY (idema, usuarios_idusuario),
     FOREIGN KEY (usuarios_idusuario)
     REFERENCES usuarios (idusuario))
 ENGINE = InnoDB;
 
-INSERT INTO emas VALUES (1, "Morrigan 1","192.168.0.1",1,"-21.78526685","-52.111628826598704", 1, "");
-INSERT INTO emas VALUES (2, "Morrigan 2","192.168.0.1",0,"-21.78","-52.13", 2,"");
+INSERT INTO emas VALUES (1, "Morrigan 1","192.168.0.1",1,"-21.78526685","-52.111628826598704", 1, "",1,"morrigan-1");
+INSERT INTO emas VALUES (2, "Morrigan 2","192.168.0.1",0,"-21.78","-52.13", 2,"",1,"morrigan-2");
 SELECT * FROM emas;
 -- -----------------------------------------------------
 -- Table relatorio

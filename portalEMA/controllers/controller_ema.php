@@ -20,12 +20,13 @@ function cadastrarEMA() {
         $latitude = $_POST['latitude'];
         $longitude = $_POST['longitude'];
         $id_dono = $_SESSION['idusuario'];
+        //Ainda tenho que configurar o certificado ssl e tenho que criar um tópico no kafka novo para cada ema.
         //$certificado_ssl = gerarCertificadoSSL($nome);
 
         $conexao = conectarBanco();
 
-        $query = "INSERT INTO emas(nome, ip, publica, latitude, longitude, usuarios_idusuario) "
-                . "VALUES ('$nome', '$ip', '$publica', '$latitude', '$longitude', '$id_dono')";
+        $query = "INSERT INTO emas(nome, ip, publica, latitude, longitude, usuarios_idusuario, certificado_ssl, ativa, topico_kafka) "
+                . "VALUES ('$nome', '$ip', '$publica', '$latitude', '$longitude', '$id_dono', '', 1, '')";
         $insert = mysqli_query($conexao, $query);
 
         if ($insert) {
@@ -74,7 +75,7 @@ function listarEMAs() {
             }
             echo '<td>' . $row['latitude'] . '</td>';
             echo '<td>' . $row['longitude'] . '</td>';
-
+            
             $iddono = $row['usuarios_idusuario'];
             $query = "SELECT nome_usuario FROM usuarios WHERE idusuario = '$iddono'";
             $resultado = $conexao->query($query);

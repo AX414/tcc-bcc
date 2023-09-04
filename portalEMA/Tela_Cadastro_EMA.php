@@ -31,7 +31,6 @@ require '../portalEMA/functions/geral.php';
             top: 0;
             width: 100%;
             height: 10%;
-            background-color: #28b498;
             z-index: 2;
             filter: drop-shadow(2px 2px 2px grey);
         }

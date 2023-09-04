@@ -20,7 +20,6 @@ require '../portalEMA/controllers/controller_ema.php';
             top: 0;
             width: 100%;
             height: 10%;
-            background-color: #28b498;
             z-index: 2;
             filter: drop-shadow(2px 2px 2px grey);
         }
@@ -55,7 +54,6 @@ require '../portalEMA/controllers/controller_ema.php';
                     </thead>
                     <tbody>
                         <?php
-                        
                         listarEMAs();
                         ?>
                     </tbody>

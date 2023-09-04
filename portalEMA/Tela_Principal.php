@@ -32,7 +32,6 @@ require '../portalEMA/functions/geral.php';
             top: 0;
             width: 100%;
             height: 10%;
-            background-color: #28b498;
             z-index: 2;
             filter: drop-shadow(2px 2px 2px grey);
         }
@@ -64,9 +63,9 @@ require '../portalEMA/functions/geral.php';
                         var location = locations[i];
                         var popupContent = "";
                         if (location.publica == "1") {
-                            popupContent += "<br><b>Esta é uma estação Pública</b>";
-                        }else{
-                            popupContent += "<br><b>Esta não é uma estação Pública</b>";
+                            popupContent += "<br><b style='color: blue;'>Esta é uma estação Pública</b>";
+                        } else {
+                            popupContent += "<br><b style='color: red;'>Esta estação é sua</b>";
                         }
                         popupContent += "<br><b>Nome: </b>" + location.nome;
                         popupContent += "<br><b>Latitude: </b> " + location.latitude;
@@ -76,12 +75,14 @@ require '../portalEMA/functions/geral.php';
 
                         var LeafIcon = L.Icon.extend({
                             options: {
-                                iconAnchor: [30, 95],
-                                popupAnchor: [-3, -76]
-                            }
+                                    iconSize: [48, 48], // Tamanho do ícone
+                                    iconAnchor: [16, 37], // Ponto de ancoragem do ícone
+                                    popupAnchor: [8, -34], // Ponto de ancoragem do popup
+                                    shadowSize: [41, 41]  // Tamanho da sombra (se aplicável)
+                                }
                         });
-                        var greenIcon = new LeafIcon({iconUrl: 'green.png'});
-                        var redIcon = new LeafIcon({iconUrl: 'red.png'});
+                        var greenIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/blue.png'});
+                        var redIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/red.png'});
 
                         if (location.publica == "1") {
                             L.marker([location.latitude, location.longitude], {icon: greenIcon}).bindPopup(popupContent).addTo(map);

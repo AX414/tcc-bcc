@@ -12,7 +12,7 @@ function estalogado() {
 
 function menu() {
     if (estalogado()) {
-        echo '<nav class="navbar navbar-expand-lg">
+        echo '<nav class="navbar navbar-expand-lg bg-light">
             <a class="navbar-brand" style="margin-left: 2%" href="../portalEMA/Tela_Principal.php">Bem vindo, ' . $_SESSION['nome_login'] . '!</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -54,7 +54,7 @@ function menu() {
             </div>
         </nav>';
     } else {
-        echo '<nav class="navbar navbar-expand-lg">
+        echo '<nav class="navbar navbar-expand-lg bg-light">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -62,7 +62,7 @@ function menu() {
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                 <form action="../portalEMA/Tela_Login.php">
-                    <button style="position: absolute; top: 20%; right: 10px; width:8%;" class="btn btn-outline-light" type="submit"><i style="padding-right: 3%;" class="fas fa-sign-in"></i>Login</button>
+                    <button style="position: absolute; top: 20%; right: 10px; width:8%;" class="btn btn-outline-primary" type="submit"><i style="padding-right: 3%;" class="fas fa-sign-in"></i>Login</button>
                 </form>
                 </li>
                 </ul>
