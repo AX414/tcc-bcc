@@ -61,7 +61,7 @@ require '../portalEMA/functions/geral.php';
                             <input name="nome_usuario" type="text" class="form-control" placeholder="Nome do Usuário">
 
                             <label>Nome de Login</label>
-                            <input name="nome_login" type="text" class="form-control" placeholder="Nome do Usuário">
+                            <input name="nome_login" type="text" class="form-control" placeholder="Nome de Login">
 
                             <label>Email</label>
                             <input name="email" type="text" class="form-control" placeholder="Email">

@@ -11,6 +11,14 @@ if (isset($_POST['btn-cadastro-ema'])) {
     cadastrarEMA();
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    excluirEMA();
+}
+
+if (isset($_POST['btn-alterar-ema'])) {
+    alterarEMA();
+}
+
 function cadastrarEMA() {
     if (isset($_POST['nome']) && isset($_POST['ip']) && isset($_POST['publica']) && isset($_POST['latitude']) && isset($_POST['longitude'])
     ) {
@@ -30,7 +38,7 @@ function cadastrarEMA() {
         $insert = mysqli_query($conexao, $query);
 
         if ($insert) {
-            echo "<script>alert('Estação Cadastrada com Sucesso!');window.location.href='../Tela_Cadastro_EMA.php';</script>";
+            echo "<script>alert('Estação cadastrada com Sucesso!');window.location.href='../Tela_Listar_EMAs.php';</script>";
         } else {
             echo "Erro do mysqli:" . mysqli_errno($conexao);
             echo "<script>alert('Não foi possível cadastrar essa estação, algo deu errado.');!');window.location.href='../Tela_Cadastro_EMA.php';</script>";
@@ -42,13 +50,10 @@ function cadastrarEMA() {
 
 function listarEMAs() {
     $conexao = conectarBanco();
-    // Verifica se o formulário foi enviado
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Obtém os valores dos campos de filtro
         $nome = $_POST['nome'];
-
-        // Monta a consulta SQL com base nos filtros
-        $sql = "SELECT * FROM emas WHERE 1 = 1";
+        
+        $sql = "SELECT * FROM emas WHERE 1 = 1 AND ativa = 1";
 
         if (!empty($nome)) {
             $sql .= " AND nome LIKE '%$nome%'";
@@ -56,12 +61,10 @@ function listarEMAs() {
 
         $result = $conexao->query($sql);
     } else {
-        // Consulta SQL para obter todos os dados
-        $sql = 'SELECT * FROM emas';
+        $sql = 'SELECT * FROM emas WHERE ativa = 1';
         $result = $conexao->query($sql);
     }
 
-    // Verifica se há resultados e exibe na tabela
     if ($result->num_rows >= 0) {
         while ($row = $result->fetch_assoc()) {
             echo '<tr id="row-' . $row['idema'] . '">';
@@ -82,32 +85,29 @@ function listarEMAs() {
             if (!$resultado) {
                 die("Erro na consulta: " . $conexao->error);
             }else if ($resultado) {
-                // Verifique se a consulta foi bem-sucedida
-                $rowDono = $resultado->fetch_assoc(); // Obtenha a linha do resultado como um array associativo
-
+                $rowDono = $resultado->fetch_assoc(); 
+                
                 if ($rowDono) {
                     $nome_dono = $rowDono['nome_usuario'];
                     echo '<td>' . $nome_dono . '</td>';
                 } else {
-                    // Caso o dono não seja encontrado
                     echo '<td>Não encontrado</td>';
                 }
             } else {
-                // Caso ocorra um erro na consulta
                 echo '<td>Erro na consulta</td>';
             }
 
             echo '<td>' . $row['certificado_ssl'] . '</td>';
             echo '<td>';
-            echo '<button name="btn-excluir" type="button" class="btn btn-danger btn-sm" onclick="">';
+            echo '<button name="btn-excluir-ema" type="button" class="btn btn-danger btn-sm" onclick="excluirEMA(' . $row['idema'] . ')">';
             echo '<i class="fas fa-trash"></i>';
             echo '</button>';
-            echo '<button type="button" class="btn btn-warning btn-sm" onclick="">';
+            echo '<a href="Tela_Alterar_EMA.php?idema=' . $row['idema'] . '"><button name="btn-alterar-ema" type="button" class="btn btn-warning btn-sm" onclick="">';
             echo '<i class="fas fa-pencil"></i>';
             echo '</button>';
-            echo '<button type="button" class="btn btn-primary btn-sm" onclick="">';
+            echo '<a href="Tela_Visualizar_EMA.php?idema=' . $row['idema'] . '"><button name="btn-visualizar-ema" type="button" class="btn btn-primary btn-sm" onclick="">';
             echo '<i class="fas fa-eye"></i>';
-            echo '</button>';
+            echo '</button></a>';
             echo '</td>';
             echo '</tr>';
         }
@@ -115,7 +115,67 @@ function listarEMAs() {
         echo '<tr><td colspan="7">Nenhum dado encontrado.</td></tr>';
     }
 
-    // Fecha a conexão com o banco de dados
+    $conexao->close();
+}
+
+function excluirEMA() {
+    if (isset($_POST['idema'])) {
+        $idema = $_POST['idema'];
+
+        $conexao = conectarBanco();
+
+        $query = "UPDATE emas SET ativa = 0 WHERE idema = '$idema'";
+        $exclusaoLogica = mysqli_query($conexao, $query);
+
+        if ($exclusaoLogica) {
+            echo 'EMA excluída com sucesso!';
+        } else {
+            echo 'Erro ao excluir EMA.';
+        }
+
+        $conexao->close();
+    }
+}
+
+function alterarEMA() {
+    if (isset($_POST['btn-alterar-ema'])) {
+        $emaId = $_GET['idema'];
+        $novoNome = $_POST['nome'];
+        $novoIP = $_POST['ip'];
+        $novaLatitude = $_POST['latitude'];
+        $novaLongitude = $_POST['longitude'];
+        $publica = $_POST['publica'];
+
+        $conexao = conectarBanco();
+
+        $query = "UPDATE emas SET nome = '$novoNome', ip = '$novoIP', latitude = '$novaLatitude', longitude = '$novaLongitude', publica = '$publica' WHERE idema = '$emaId'";
+        $update = mysqli_query($conexao, $query);
+
+        if ($update) {
+            echo "<script>alert('Estação alterada com sucesso!');window.location.href='../Tela_Listar_EMAs.php';</script>";
+        } else {
+            echo "<script>alert('Erro ao alterar a estação.');window.location.href='../Tela_Alterar_EMA.php';</script>";
+        }
+
+        $conexao->close();
+    }
+}
+
+function buscarEMAPorID($idema) {
+    $conexao = conectarBanco();
+
+    $idema = mysqli_real_escape_string($conexao, $idema);
+
+    $query = "SELECT * FROM emas WHERE idema = '$idema'";
+    $resultado = mysqli_query($conexao, $query);
+
+    if ($resultado && mysqli_num_rows($resultado) > 0) {
+        $usuario = mysqli_fetch_assoc($resultado);
+        return $usuario;
+    } else {
+        return false;
+    }
+
     $conexao->close();
 }
 

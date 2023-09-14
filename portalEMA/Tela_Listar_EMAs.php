@@ -28,7 +28,7 @@ require '../portalEMA/controllers/controller_ema.php';
         <?php
         menu();
         ?>
-        <div class="container">
+        <div class="container" style="margin-top: 5%;">
             <h1>Lista de EMAs</h1>
             <form method="POST" action="">
                 <div>
@@ -62,7 +62,23 @@ require '../portalEMA/controllers/controller_ema.php';
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            //Excluir, e tauz
+                  function excluirEMA(idema) {
+                if (confirm('Tem certeza de que deseja excluir esta estação?')) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '../portalEMA/controllers/controller_ema.php',
+                        data: {idema: idema},
+                        success: function (response) {
+                            alert(response);
+                            // Recarregar a página ou atualizar a tabela das estações após a exclusão
+                            location.reload();
+                        },
+                        error: function () {
+                            alert('Erro ao excluir a estação.');
+                        }
+                    });
+                }
+            }
         </script>
     </body>
 </html>

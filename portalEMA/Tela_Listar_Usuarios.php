@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
 require '../portalEMA/functions/geral.php';
+require '../portalEMA/controllers/controller_usuario.php';
 ?>
 <html>
     <head>
@@ -27,7 +28,7 @@ require '../portalEMA/functions/geral.php';
         <?php
         menu();
         ?>
-        <div class="container">
+        <div class="container" style="margin-top: 5%;">
             <h1>Lista de Usuários</h1>
             <form method="POST" action="">
                 <div>
@@ -50,7 +51,6 @@ require '../portalEMA/functions/geral.php';
                     </thead>
                     <tbody>
                         <?php
-                        require '../portalEMA/controllers/controller_usuario.php';
                         listarUsuarios();
                         ?>
                     </tbody>
@@ -76,26 +76,6 @@ require '../portalEMA/functions/geral.php';
                     });
                 }
             }
-
-            /*
-             function visualizarUsuario(idusuario) {
-             
-             $.ajax({
-             type: 'POST',
-             url: '../portalEMA/controllers/controller_usuario.php',
-             data: {idusuario: idusuario},
-             success: function (response) {
-             alert(response);
-             // Recarregar a página ou atualizar a tabela de usuários após a exclusão
-             location.reload();
-             },
-             error: function () {
-             alert('Erro ao visualizar os dados do usuário.');
-             }
-             });
-             
-             } 
-             */
         </script>
     </body>
 </html>

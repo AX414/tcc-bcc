@@ -50,7 +50,7 @@ require '../portalEMA/functions/geral.php';
 
         <div class="card col-6">
             <div class="card-header">
-                <i style="padding-right: 1%;" class="fas fa-user"></i><b>Cadastro da EMA</b>
+                <i style="padding-right: 1%;" class="fas fa-microchip"></i><b>Cadastro da EMA</b>
             </div>
             <div class="card-body">
                 <form method="POST" action="../portalEMA/controllers/controller_ema.php">

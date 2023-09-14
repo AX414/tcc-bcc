@@ -1,6 +1,6 @@
 <?php
 
-if(session_status() !== PHP_SESSION_ACTIVE) {
+if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
@@ -14,11 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     excluirUsuario();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    visualizarUsuario();
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['btn-alterar-usuario'])) {
     alterarUsuario();
 }
 
@@ -45,7 +41,7 @@ function cadastrarUsuario() {
             $insert = mysqli_query($conexao, $query);
 
             if ($insert) {
-                echo "<script>alert('Usuário cadastrado com sucesso!');window.location.href='../Tela_Cadastro_Usuario.php';</script>";
+                echo "<script>alert('Usuário cadastrado com sucesso!');window.location.href='../Tela_Visualizar_Usuario.php';</script>";
             } else {
                 echo "<script>alert('Não foi possível cadastrar esse usuário');window.location.href='../Tela_Cadastro_Usuario.php';</script>";
             }
@@ -57,13 +53,11 @@ function cadastrarUsuario() {
 
 function listarUsuarios() {
     $conexao = conectarBanco();
-    // Verifica se o formulário foi enviado
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Obtém os valores dos campos de filtro
         $nome_usuario = $_POST['nome_usuario'];
 
-        // Monta a consulta SQL com base nos filtros
-        $sql = "SELECT * FROM usuarios WHERE 1 = 1";
+        $sql = "SELECT * FROM usuarios WHERE 1 = 1 AND ativo = 1";
 
         if (!empty($nome_usuario)) {
             $sql .= " AND nome_usuario LIKE '%$nome_usuario%'";
@@ -71,12 +65,10 @@ function listarUsuarios() {
 
         $result = $conexao->query($sql);
     } else {
-        // Consulta SQL para obter todos os dados
-        $sql = 'SELECT * FROM usuarios';
+        $sql = 'SELECT * FROM usuarios WHERE ativo = 1';
         $result = $conexao->query($sql);
     }
 
-// Verifica se há resultados e exibe na tabela
     if ($result->num_rows >= 0) {
         while ($row = $result->fetch_assoc()) {
             echo '<tr id="row-' . $row['idusuario'] . '">';
@@ -99,20 +91,12 @@ function listarUsuarios() {
                 echo '<i class="fas fa-trash"></i>';
                 echo '</button>';
             }
-            /*
-            echo '<button type="button" class="btn btn-warning btn-sm" onclick="alterarUsuario(' . $row['idusuario'] . ')">';
+            echo '<a href="Tela_Alterar_Usuario.php?idusuario=' . $row['idusuario'] . '"><button type="button" class="btn btn-warning btn-sm")">';
             echo '<i class="fas fa-pencil"></i>';
-            echo '</button>';
-            echo '<button type="button" class="btn btn-primary btn-sm" onclick="visualizarUsuario(' . $row['idusuario'] . ')">';
+            echo '</button></a>';
+            echo '<a href="Tela_Visualizar_Usuario.php?idusuario=' . $row['idusuario'] . '"><button type="button" class="btn btn-primary btn-sm")">';
             echo '<i class="fas fa-eye"></i>';
-            echo '</button>';
-            */
-            echo '<button type="button" class="btn btn-warning btn-sm" onclick="">';
-            echo '<i class="fas fa-pencil"></i>';
-            echo '</button>';
-            echo '<button type="button" class="btn btn-primary btn-sm" onclick="">';
-            echo '<i class="fas fa-eye"></i>';
-            echo '</button>';
+            echo '</button></a>';
             echo '</td>';
             echo '</tr>';
         }
@@ -120,7 +104,6 @@ function listarUsuarios() {
         echo '<tr><td colspan="7">Nenhum dado encontrado.</td></tr>';
     }
 
-    // Fecha a conexão com o banco de dados
     $conexao->close();
 }
 
@@ -130,10 +113,10 @@ function excluirUsuario() {
 
         $conexao = conectarBanco();
 
-        $query = "DELETE FROM usuarios WHERE idusuario = '$idusuario'";
-        $delete = mysqli_query($conexao, $query);
+        $query = "UPDATE usuarios SET ativo = 0 WHERE idusuario = '$idusuario'";
+        $exclusaoLogica = mysqli_query($conexao, $query);
 
-        if ($delete) {
+        if ($exclusaoLogica) {
             echo 'Usuário excluído com sucesso!';
         } else {
             echo 'Erro ao excluir o usuário.';
@@ -143,21 +126,45 @@ function excluirUsuario() {
     }
 }
 
-function visualizarUsuario() {
-    if (isset($_POST['idusuario'])) {
-        $idusuario = $_POST['idusuario'];
+function alterarUsuario() {
+    if (isset($_POST['btn-alterar-usuario'])) {
+        $userId = $_GET['idusuario'];
+        $novoNome = $_POST['nome_usuario'];
+        $novoLogin = $_POST['nome_login'];
+        $novoEmail = $_POST['email'];
 
         $conexao = conectarBanco();
 
-        $query = "SELECT * FROM usuarios WHERE idusuario = '$idusuario'";
-        $select = mysqli_query($conexao, $query);
+        $query = "UPDATE usuarios SET nome_usuario = '$novoNome', nome_login = '$novoLogin', email = '$novoEmail' WHERE idusuario = '$userId'";
+        $update = mysqli_query($conexao, $query);
 
+        if ($update) {
+            echo "<script>alert('Usuário alterado com sucesso!');window.location.href='../Tela_Listar_Usuario.php';</script>";
+            $_SESSION["nome_login"] = $novoLogin;
+        } else {
+            echo "<script>alert('Erro ao alterar o usuário.');window.location.href='../Tela_Alterar_Usuario.php';</script>";
+        }
 
         $conexao->close();
     }
 }
 
-function alterarUsuario(){
-    
+function buscarUsuarioPorID($idusuario) {
+    $conexao = conectarBanco();
+
+    $idusuario = mysqli_real_escape_string($conexao, $idusuario);
+
+    $query = "SELECT * FROM usuarios WHERE idusuario = '$idusuario'";
+    $resultado = mysqli_query($conexao, $query);
+
+    if ($resultado && mysqli_num_rows($resultado) > 0) {
+        $usuario = mysqli_fetch_assoc($resultado);
+        return $usuario;
+    } else {
+        return false;
+    }
+
+    $conexao->close();
 }
+
 ?>
