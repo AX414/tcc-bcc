@@ -54,17 +54,43 @@ CREATE TABLE IF NOT EXISTS relatorios (
   idrelatorio INT NOT NULL AUTO_INCREMENT,
   data DATE NOT NULL,
   hora TIME NOT NULL,
-  temperatura INT NOT NULL,
-  chuva_intensidade FLOAT,
-  chuva_probabilidade INT,
-  vento_velocidade FLOAT,
-  vento_direcao VARCHAR(50),
-  dados_nao_previstos JSON NULL,
+
+  -- Dados Obrigatórios
+  temperatura FLOAT NOT NULL,
+  unidade_tem VARCHAR(5) NOT NULL,
+  
+  umidade FLOAT NOT NULL,
+  unidade_um VARCHAR(5) NOT NULL,
+
+  vento_velocidade FLOAT NOT NULL,
+  unidade_vv VARCHAR(5) NOT NULL,
+  
+  vento_direcao FLOAT NOT NULL,
+  unidade_vd VARCHAR(50) NOT NULL,
+
+  -- Dados Opcionais
+  radiacao_solar FLOAT NULL,
+  unidade_rs VARCHAR(5) NULL,
+
+  pressao_atmos FLOAT NULL,
+  unidade_pa VARCHAR(5) NULL,
+  
+  volume_chuva FLOAT NULL,
+  unidade_vc VARCHAR(5) NULL,
+    
+  frequencia_chuva FLOAT NULL,
+  unidade_fc VARCHAR(5) NULL,
+  
+  -- Dados não previstos serão 
+  -- mantidos e salvos como JSON
+  nao_previstos JSON NULL,
   emas_idema INT,
   emas_usuarios_idusuario INT,
  PRIMARY KEY (idrelatorio, emas_idema, emas_usuarios_idusuario),
     FOREIGN KEY (emas_idema , emas_usuarios_idusuario)
     REFERENCES emas (idema , usuarios_idusuario))
 ENGINE = InnoDB;
+
+INSERT INTO relatorios VALUES(1,CURDATE(),CURTIME(),23.5,'°C',50.0,'%',10.8,'m/s',270.0,'graus o oeste',null,'',null,'',null,'',null,'',null,1,1);
 
 SELECT * FROM relatorios;

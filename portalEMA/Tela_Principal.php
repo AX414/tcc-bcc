@@ -63,15 +63,15 @@ require '../portalEMA/functions/geral.php';
                         var location = locations[i];
                         var popupContent = "";
                         if (location.publica == "1") {
-                            popupContent += "<br><b style='color: blue;'>Esta é uma estação Pública</b>";
+                            popupContent += "<br><b style='color: blue;'>Esta é uma estação pública</b>";
                         } else {
-                            popupContent += "<br><b style='color: red;'>Esta estação é sua</b>";
+                            popupContent += "<br><b style='color: green;'>Esta estação é sua</b>";
                         }
                         popupContent += "<br><b>Nome: </b>" + location.nome;
                         popupContent += "<br><b>Latitude: </b> " + location.latitude;
                         popupContent += "<br><b>Longitude: </b>" + location.longitude;
                         
-                        popupContent += "<br><button style='width: 100%; margin-top: 5%;' class='btn btn-primary btn-block'><i class='fas fa-file'></i> Relatórios</button>";
+                        popupContent += "<br><a href='../portalEMA/Tela_Listar_Relatorios.php?idema=" + location.idema + "'><button style='width: 100%; margin-top: 5%;' class='btn btn-primary btn-block'><i class='fas fa-file'></i> Relatórios</button></a>";
 
                         var LeafIcon = L.Icon.extend({
                             options: {

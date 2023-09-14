@@ -57,7 +57,7 @@ function listarUsuarios() {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nome_usuario = $_POST['nome_usuario'];
 
-        $sql = "SELECT * FROM usuarios WHERE 1 = 1 AND ativo = 1";
+        $sql = "SELECT * FROM usuarios WHERE ativo = 1";
 
         if (!empty($nome_usuario)) {
             $sql .= " AND nome_usuario LIKE '%$nome_usuario%'";

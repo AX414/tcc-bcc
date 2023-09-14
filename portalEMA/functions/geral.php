@@ -40,9 +40,7 @@ function menu() {
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="../portalEMA/Tela_Listar_EMAs.php">Apresentar EMAs</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Efetuar Diagnóstico</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Apresentar Relatórios</a>
+                            <a class="dropdown-item" href="../portalEMA/Tela_Listar_Relatorios.php">Apresentar Relatórios</a>
                         </div>
                     </li>
                <li class="nav-item">

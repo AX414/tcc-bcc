@@ -1,20 +1,13 @@
 <?php
-
 session_start();
-
 require(__DIR__ . '/../functions/banco.php');
-
 $conexao = conectarBanco();
 
-if ($_SESSION['idusuario']!=null) {
-    $idUsuario = $_SESSION['idusuario'];
-    $sql = "SELECT idema, nome, ip, publica, latitude, longitude, usuarios_idusuario FROM emas WHERE usuarios_idusuario = ?";
-    $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("i", $idUsuario); // "i" significa que é um valor inteiro
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-
+// Pega as estações do usuário que está logado (se houver)
+$idUsuario = isset($_SESSION['idusuario']) ? $_SESSION['idusuario'] : null;
+if ($idUsuario != null) {
+    $sql = "SELECT * FROM emas WHERE usuarios_idusuario = '$idUsuario'";
+    $result = $conexao->query($sql);
     $locations = array();
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -23,15 +16,10 @@ if ($_SESSION['idusuario']!=null) {
     }
 }
 
-$flagPublicos = 1;
-$sql = "SELECT idema, nome, ip, publica, latitude, longitude, usuarios_idusuario FROM emas WHERE publica = ?";
-$stmt = $conexao->prepare($sql);
-$stmt->bind_param("i", $flagPublicos); // "i" significa que é um valor inteiro
-$stmt->execute();
-
-$result = $stmt->get_result();
-
-$publicLocations = array(); // Usamos um novo array para armazenar os locais públicos
+// Pega as estações que forem públicas e armazena em um JSON
+$sql = "SELECT * FROM emas WHERE publica = 1";
+$result = $conexao->query($sql);
+$publicLocations = array();
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $publicLocations[] = $row;
@@ -40,9 +28,8 @@ if ($result->num_rows > 0) {
 
 $conexao->close();
 
-// Junte os dois arrays de locais (usuário e públicos)
-$allLocations = array_merge($locations, $publicLocations);
-
+// Junte os dois arrays de locais (usuário e públicos) caso haja um usuário logado
+$allLocations = isset($locations) ? array_merge($locations, $publicLocations) : $publicLocations;
 $locations_json = json_encode($allLocations);
 echo $locations_json;
 ?>
