@@ -45,7 +45,7 @@ function listarRelatorios($idema) {
             echo '<td>' . $row['vento_velocidade'] . $row['unidade_vv'] . '</td>';
             echo '<td>' . $row['vento_direcao'] . ' ' . $row['unidade_vd'] . '</td>';
             echo '<td>';
-            echo '<a href="Tela_Visualizar_Relatório.php?idrelatorio=' . $row['idrelatorio'] . '"><button name="btn-visualizar-relatorio" type="button" class="btn btn-primary btn-sm" onclick="">';
+            echo '<a href="Tela_Visualizar_Relatorio.php?idrelatorio=' . $row['idrelatorio'] . '"><button name="btn-visualizar-relatorio" type="button" class="btn btn-primary btn-sm" onclick="">';
             echo '<i class="fas fa-eye"></i>';
             echo '</button></a>';
             echo '</td>';
@@ -64,6 +64,24 @@ function buscarEMAPorID($idema) {
     $idema = mysqli_real_escape_string($conexao, $idema);
 
     $query = "SELECT * FROM emas WHERE idema = '$idema'";
+    $resultado = mysqli_query($conexao, $query);
+
+    if ($resultado && mysqli_num_rows($resultado) > 0) {
+        $usuario = mysqli_fetch_assoc($resultado);
+        return $usuario;
+    } else {
+        return false;
+    }
+
+    $conexao->close();
+}
+
+function buscarRelatorioPorID($idrelatorio) {
+    $conexao = conectarBanco();
+
+    $idrelatorio = mysqli_real_escape_string($conexao, $idrelatorio);
+
+    $query = "SELECT * FROM relatorios WHERE idrelatorio = '$idrelatorio'";
     $resultado = mysqli_query($conexao, $query);
 
     if ($resultado && mysqli_num_rows($resultado) > 0) {

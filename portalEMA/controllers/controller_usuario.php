@@ -4,6 +4,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
+
 require(__DIR__ . '/../functions/banco.php');
 
 if (isset($_POST['btn-cadastro-usuario'])) {
@@ -37,11 +38,16 @@ function cadastrarUsuario() {
             echo "<script>alert('Nome de usuário, nome de login ou email já existe.');window.location.href='../Tela_Cadastro_Usuario.php';</script>";
             die();
         } else {
-            $query = "INSERT INTO usuarios(nome_usuario, nome_login, email, senha, nivel_acesso) VALUES ('$nome_usuario', '$nome_login', '$email', '$hash', '$nivel_acesso')";
+            $query = "INSERT INTO usuarios(nome_usuario, nome_login, email, senha, nivel_acesso, ativo) "
+                    . "VALUES ('$nome_usuario', '$nome_login', '$email', '$hash', '$nivel_acesso',1)";
             $insert = mysqli_query($conexao, $query);
-
             if ($insert) {
-                echo "<script>alert('Usuário cadastrado com sucesso!');window.location.href='../Tela_Visualizar_Usuario.php';</script>";
+                echo "<script>alert('Usuário cadastrado com sucesso!');</script>";
+                if (session_status() == PHP_SESSION_ACTIVE) {
+                    echo"<script>window.location.href='../Tela_Listar_Usuarios.php';</script>";
+                }else{
+                    echo"<script>window.location.href='../Tela_Principal.php';</script>";
+                }
             } else {
                 echo "<script>alert('Não foi possível cadastrar esse usuário');window.location.href='../Tela_Cadastro_Usuario.php';</script>";
             }

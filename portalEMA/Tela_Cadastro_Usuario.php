@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <?php
 require '../portalEMA/functions/geral.php';
-
 ?>
 <html>
     <head>

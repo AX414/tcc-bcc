@@ -41,7 +41,7 @@ function cadastrarEMA() {
             echo "<script>alert('Estação cadastrada com Sucesso!');window.location.href='../Tela_Listar_EMAs.php';</script>";
         } else {
             echo "Erro do mysqli:" . mysqli_errno($conexao);
-            echo "<script>alert('Não foi possível cadastrar essa estação, algo deu errado.');!');window.location.href='../Tela_Cadastro_EMA.php';</script>";
+            echo "<script>alert('Não foi possível cadastrar essa estação, algo deu errado.');');window.location.href='../Tela_Cadastro_EMA.php';</script>";
         }
 
         $conexao->close();

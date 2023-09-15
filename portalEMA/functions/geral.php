@@ -1,6 +1,6 @@
 <?php
 
-if(session_status() !== PHP_SESSION_ACTIVE) {
+if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
@@ -39,8 +39,6 @@ function menu() {
                             <a class="dropdown-item" href="../portalEMA/Tela_Cadastro_EMA.php">Cadastrar EMA</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="../portalEMA/Tela_Listar_EMAs.php">Apresentar EMAs</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="../portalEMA/Tela_Listar_Relatorios.php">Apresentar Relatórios</a>
                         </div>
                     </li>
                <li class="nav-item">
@@ -52,12 +50,19 @@ function menu() {
             </div>
         </nav>';
     } else {
-        echo '<nav class="navbar navbar-expand-lg bg-light">
+        echo '
+            <nav class="navbar navbar-expand-lg bg-light">
+            <a class="navbar-brand" style="margin-left: 2%" href="../portalEMA/Tela_Principal.php">Portal EMA</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a href="../portalEMA/Tela_Cadastro_Usuario.php" class="nav-link" role="button">
+                        Cadastre-se!
+                    </a>
+                </li>
                 <li class="nav-item">
                 <form action="../portalEMA/Tela_Login.php">
                     <button style="position: absolute; top: 20%; right: 10px; width:8%;" class="btn btn-outline-primary" type="submit"><i style="padding-right: 3%;" class="fas fa-sign-in"></i>Login</button>

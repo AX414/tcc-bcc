@@ -48,10 +48,8 @@ require '../portalEMA/controllers/controller_usuario.php';
         <?php
         menu();
 
-        //Recupere o ID do usuário da URL.
         $userId = $_GET['idusuario'];
 
-        //Suponha que você tenha uma função para buscar os dados do usuário pelo ID (do controlador de usuário).
         $usuario = buscarUsuarioPorId($userId);
 
         if (!$usuario) {
