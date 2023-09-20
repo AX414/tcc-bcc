@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS relatorios (
   -- Dados não previstos serão 
   -- mantidos e salvos como JSON
   nao_previstos JSON NULL,
+  erro INT NULL,
   emas_idema INT,
   emas_usuarios_idusuario INT,
  PRIMARY KEY (idrelatorio, emas_idema, emas_usuarios_idusuario),
@@ -91,6 +92,7 @@ CREATE TABLE IF NOT EXISTS relatorios (
     REFERENCES emas (idema , usuarios_idusuario))
 ENGINE = InnoDB;
 
-INSERT INTO relatorios VALUES(1,CURDATE(),CURTIME(),23.5,'°C',50.0,'%',10.8,'m/s',270.0,'graus o oeste',null,'',null,'',null,'',null,'',null,1,1);
+INSERT INTO relatorios VALUES(1,CURDATE(),CURTIME(),23.5,'°C',50.0,'%',10.8,'m/s',270.0,'graus o oeste',null,'',null,'',null,'',null,'',null,0,1,1);
+INSERT INTO relatorios VALUES(2,CURDATE(),CURTIME(),26,'°C',45.0,'%',12,'m/s',240.0,'graus o oeste',null,'',null,'',null,'',null,'',null,0,1,1);
 
 SELECT * FROM relatorios;

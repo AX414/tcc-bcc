@@ -3,10 +3,11 @@
 require(__DIR__ . '/../functions/banco.php');
 $conexao = conectarBanco();
 
-$idrelatorio = $_GET['idrelatorio'];
-//Filtros + Filtro do erro (tenho que adicionar no BD)
-# Inserir range de cada valor
-$sql = "SELECT * FROM relatorios WHERE idrelatorio = $idrelatorio";
+$idema = $_GET['idema'];
+$nome = $_GET['nome'];
+
+//echo"<script>alert(".$idema.")</script>";
+$sql = "SELECT * FROM relatorios WHERE emas_idema = $idema";
 $result = $conexao->query($sql);
 
 if ($result->num_rows > 0) {
@@ -20,8 +21,7 @@ if ($result->num_rows > 0) {
             . "Pressão Atmosférica, Unidade da Pressão Atmosférica,"
             . "Volume da Chuva, Unidade do Volume da Chuva,"
             . "Frequência da Chuva, Unidade da Frequência da Chuva,"
-            . "Não Previstos,"
-            . "Erro na Leitura\r\n";
+            . "Não Previstos\r\n";
 
     // Loop para obter os dados
     while ($row = $result->fetch_assoc()) {
@@ -45,13 +45,11 @@ if ($result->num_rows > 0) {
                 . $row['unidade_vc'] . ','
                 . $row['frequencia_chuva'] . ','
                 . $row['unidade_fc'] . ','
-                . $row['nao_previstos'] . ','
-                . $row['erro'] . "\r\n";
+                . $row['nao_previstos'] . "\r\n";
         $hora = $row['hora'];
-        $idema = $row['emas_idema'];
     }
 
-    $filename = 'Relatório ' . $idrelatorio . ' de ' . $dataFormatada . ' as ' . $hora . '.csv';
+    $filename = 'Histórico de Relatórios da ' . $nome . '.csv';
 
     $contentType = 'text/csv';
 
@@ -62,7 +60,7 @@ if ($result->num_rows > 0) {
     // Envia os dados do arquivo CSV
     echo $csvData;
 } else {
-    echo '<script>alert("Nenhum dado encontrado.")</script>';
+    echo '<script>alert("Nenhum dado encontrado.");window.location.href="../Tela_Listar_Relatorios.php?idema='.$idema.'";</script>';
 }
 
 // Fecha a conexão com o banco de dados

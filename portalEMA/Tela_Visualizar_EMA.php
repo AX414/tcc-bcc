@@ -80,6 +80,7 @@ require '../portalEMA/controllers/controller_ema.php';
                 echo '<input disabled="true" value="Não" name="publica" type="text" class="form-control">';
             }
             echo '</div>';
+            echo '<a href="../portalEMA/Tela_Listar_Relatorios.php?idema='.$emaId.'" class="btn btn-primary" style="width: 100%;"><i style="padding-right: 1%;" class="fas fa-file"></i>Relatórios da '.$ema['nome'].'</a>';
             echo '<br>';
             echo '</div>';
             echo '</form>';

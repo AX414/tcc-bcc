@@ -31,7 +31,7 @@ $ema = buscarEMAPorID($emaID);
         menu();
         ?>
         <div class="container" style="margin-top: 5%;">
-            <h1>Histórico de Relatórios da <?php echo $ema['nome']?></h1>
+            <h1>Histórico de Relatórios da <?php echo $ema['nome'] ?></h1>
             <form method="POST" action="">
                 <div class="row justify-content-between">
                     <div class="col">
@@ -46,8 +46,16 @@ $ema = buscarEMAPorID($emaID);
                         <label for="hora_leitura">Hora:</label>
                         <input type="time" name="hora_leitura" id="hora" class="form-control">
                     </div>
-                    <div class="col" style="align-self: flex-end;">
-                        <button name="btn-filtrar" type="submit" class="btn btn-primary">Filtrar</button>
+                    <div class="col">
+                        <label></label>
+                        <a href="../portalEMA/functions/download_historico_csv.php?idema=<?php echo $emaID;?>&&nome=<?php echo $ema['nome'];?>" class="btn btn-primary form-control">
+                        <i class="fas fa-download"></i> 
+                            Histórico em CSV
+                        </a>
+                    </div>
+                    <div class="col">
+                        <label></label>
+                        <button name="btn-filtrar" type="submit" class="btn btn-primary form-control">Filtrar</button>
                     </div>
                 </div>
             </form>

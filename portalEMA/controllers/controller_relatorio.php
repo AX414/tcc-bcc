@@ -67,8 +67,8 @@ function buscarEMAPorID($idema) {
     $resultado = mysqli_query($conexao, $query);
 
     if ($resultado && mysqli_num_rows($resultado) > 0) {
-        $usuario = mysqli_fetch_assoc($resultado);
-        return $usuario;
+        $ema = mysqli_fetch_assoc($resultado);
+        return $ema;
     } else {
         return false;
     }

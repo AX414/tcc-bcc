@@ -145,7 +145,7 @@ function alterarUsuario() {
         $update = mysqli_query($conexao, $query);
 
         if ($update) {
-            echo "<script>alert('Usuário alterado com sucesso!');window.location.href='../Tela_Listar_Usuario.php';</script>";
+            echo "<script>alert('Usuário alterado com sucesso!');window.location.href='../Tela_Listar_Usuarios.php';</script>";
             $_SESSION["nome_login"] = $novoLogin;
         } else {
             echo "<script>alert('Erro ao alterar o usuário.');window.location.href='../Tela_Alterar_Usuario.php';</script>";
