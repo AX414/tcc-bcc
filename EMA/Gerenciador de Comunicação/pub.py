@@ -1,19 +1,20 @@
+import json
 import random
 import time
 from queue import Queue
 from datetime import date
 from paho.mqtt import client as mqtt_client
-from geopy.geocoders import Nominatim
-import json
-
+from time import sleep
 
 ### Dados da REDEMET pela API? PP, Maringá, Londrina, Bauru
+arquivo_de_config= open('./jsons/ema02.json', encoding="utf8")
+ema = json.loads(arquivo_de_config.read())
 
 broker = 'localhost'
 port = 1883
-topic = "morrigan1"
-geolocator = Nominatim(user_agent="geolocalização")
+topic = 'topico'
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
+
 fila = Queue()
 
 def connect_mqtt():
@@ -35,19 +36,8 @@ def captar_Dados():
     data_atual = date.today()
     hora_atual = time.strftime('%H:%M:%S', time.localtime())
 
-    # Localização por Latitude e Longitude
-    try:
-        location = geolocator.geocode("R. José Ramos Júnior, 27-50 - Jardim Tropical, Presidente Epitácio - SP, 19470-000") 
-        latitude = location.latitude
-        longitude = location.longitude
-    except AttributeError:
-        latitude = 0
-        longitude = 0
-        print("Problema com os dados ou uma falha com o Geocode.")
-    except GeocoderTimedOut:
-        latitude = 0
-        longitude = 0
-        print("Um erro de timeout ocorreu.")
+    latitude = ema['latitude']
+    longitude = ema['longitude']
 
     # Obrigatórios
     temperatura = round(random.uniform(27.0, 35.0), 2)
