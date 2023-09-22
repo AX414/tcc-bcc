@@ -7,7 +7,7 @@ from paho.mqtt import client as mqtt_client
 from time import sleep
 
 ### Dados da REDEMET pela API? PP, Maringá, Londrina, Bauru
-arquivo_de_config= open('./jsons/ema02.json', encoding="utf8")
+arquivo_de_config= open('./jsons/ema01.json', encoding="utf8")
 ema = json.loads(arquivo_de_config.read())
 
 broker = 'localhost'
@@ -111,7 +111,7 @@ def captar_Dados():
 
 def enviar_fila(client):
     if(client is None):
-        time.sleep(1)
+        time.sleep(300000)
         dados = captar_Dados()
         fila.put(dados)
         print(f"\nArmazenando mensagem para posteriormente enviar ao tópico {topic}:\n\n{dados}\n")
@@ -119,7 +119,7 @@ def enviar_fila(client):
 
 def publicar_dado_atual(client):
     while True:
-        time.sleep(1)
+        time.sleep(300000)
         # Captando os dados atuais
         dados = captar_Dados()
         result = client.publish(topic, dados, qos=1, retain=True)
