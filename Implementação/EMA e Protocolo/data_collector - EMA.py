@@ -109,17 +109,13 @@ def captar_Dados():
     # Retorna a string JSON
     return msg
 
-def enviar_fila(client):
-    if(client is None):
-        time.sleep(300000)
-        dados = captar_Dados()
-        fila.put(dados)
+def armazenar_fila(client, dados):
         print(f"\nArmazenando mensagem para posteriormente enviar ao tópico {topic}:\n\n{dados}\n")
-        return fila
+        return dados
 
 def publicar_dado_atual(client):
     while True:
-        time.sleep(300000)
+        time.sleep(3)
         # Captando os dados atuais
         dados = captar_Dados()
         result = client.publish(topic, dados, qos=1, retain=True)
@@ -129,6 +125,7 @@ def publicar_dado_atual(client):
             print(f"\nEnviando a mensagem para o tópico {topic}:\n\n{dados}\n")
         else:
             print(f"\nO envio da mensagem para o tópico {topic} falhou.\n")
+            armazenar_fila(client, dados)
             return
 
 def publish(client):
