@@ -1,3 +1,0 @@
-cd para c:\Program Files\mosquitto
-inicializar o sub: mosquito_sub -t topico -h localhost
-inicializar o pub e enviar a mensagem por um outro terminal: mosquito_pub -t topico -h localhost -m "temperatura: 30"

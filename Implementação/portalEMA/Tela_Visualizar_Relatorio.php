@@ -48,7 +48,7 @@ require '../portalEMA/controllers/controller_relatorio.php';
             echo "Relatório não encontrado.";
             exit;
         } else {
-            echo '<div id="relatorio">';
+            echo '<div id="relatorio" style="padding-top: 30%; padding-bottom: 10%">';
             echo '<div class="card col-12">';
             echo '<div class="card-header">';
             echo '<div style="display: inline;"><i style="padding-right: 1%;" class="fas fa-file"></i><b>Relatório</b></div>';
@@ -71,22 +71,38 @@ require '../portalEMA/controllers/controller_relatorio.php';
             echo '<div class="row">';
             echo '<div class="col">';
             echo '<label>Temperatura</label>';
-            echo '<input disabled="true" value="' . $relatorio['temperatura'] . ' ' . $relatorio['unidade_tem'] . '" type="text" class="form-control">';
+            if($relatorio['erro_tem'] == false){
+                echo '<input disabled="true" value="' . $relatorio['temperatura'] . ' ' . $relatorio['unidade_tem'] . '" type="text" class="form-control">';
+            }else{
+                echo '<input disabled="true" title="Valor com erro" style="color: red;" value="' . $relatorio['temperatura'] . ' ' . $relatorio['unidade_tem'] . '" type="text" class="form-control">';            
+            }
             echo '</div>';
             echo '<div class="col">';
             echo '<label>Umidade</label>';
-            echo '<input disabled="true" value="' . $relatorio['umidade'] . ' ' . $relatorio['unidade_um'] . '" type="text" class="form-control">';
+            if($relatorio['erro_um'] == false){
+                echo '<input disabled="true" value="' . $relatorio['umidade'] . ' ' . $relatorio['unidade_um'] . '" type="text" class="form-control">';
+            }else{
+                echo '<input disabled="true" title="Valor com erro" style="color: red;" value="' . $relatorio['umidade'] . ' ' . $relatorio['unidade_um'] . '" type="text" class="form-control">';
+            }
             echo '</div>';
             echo '</div>';
             
             echo '<div class="row">';
             echo '<div class="col">';
             echo '<label>Velocidade do Vento</label>';
-            echo '<input disabled="true" value="' . $relatorio['vento_velocidade'] . ' ' . $relatorio['unidade_vv'] . '" type="text" class="form-control">';
+            if($relatorio['erro_vv'] == false){
+                echo '<input disabled="true" value="' . $relatorio['vento_velocidade'] . ' ' . $relatorio['unidade_vv'] . '" type="text" class="form-control">';
+            }else{
+                echo '<input disabled="true" title="Valor com erro" style="color: red;" value="' . $relatorio['vento_velocidade'] . ' ' . $relatorio['unidade_vv'] . '" type="text" class="form-control">';
+            }
             echo '</div>';
             echo '<div class="col">';
             echo '<label>Direção do Vento</label>';
-            echo '<input disabled="true" value="' . $relatorio['vento_direcao'] . ' ' . $relatorio['unidade_vd'] . '" type="text" class="form-control">';
+            if($relatorio['erro_vd'] == false){
+                echo '<input disabled="true" value="' . $relatorio['vento_direcao'] . ' ' . $relatorio['unidade_vd'] . '" type="text" class="form-control">';
+            }else{
+                echo '<input disabled="true" title="Valor com erro" style="color: red;" value="' . $relatorio['vento_direcao'] . ' ' . $relatorio['unidade_vd'] . '" type="text" class="form-control">';
+            }
             echo '</div>';
             echo '</div>';
             
@@ -94,25 +110,43 @@ require '../portalEMA/controllers/controller_relatorio.php';
             echo '<div class="row">';
             echo '<div class="col">';
             echo '<label>Radiação Solar</label>';
-            echo '<input disabled="true" value="' . $relatorio['radiacao_solar'] . ' ' . $relatorio['unidade_rs'] . '" type="text" class="form-control">';
+            if($relatorio['erro_rs'] == false){
+                echo '<input disabled="true" value="' . $relatorio['radiacao_solar'] . ' ' . $relatorio['unidade_rs'] . '" type="text" class="form-control">';
+            }else{
+                echo '<input disabled="true" title="Valor com erro" style="color: red;" value="' . $relatorio['radiacao_solar'] . ' ' . $relatorio['unidade_rs'] . '" type="text" class="form-control">';
+            }
             echo '</div>';
             echo '<div class="col">';
             echo '<label>Pressão Atmosférica</label>';
-            echo '<input disabled="true" value="' . $relatorio['pressao_atmos'] . ' ' . $relatorio['unidade_pa'] . '" type="text" class="form-control">';
+            if($relatorio['erro_pa'] == false){
+                echo '<input disabled="true" value="' . $relatorio['pressao_atmos'] . ' ' . $relatorio['unidade_pa'] . '" type="text" class="form-control">';
+            }else{
+                echo '<input disabled="true" title="Valor com erro" style="color: red;" value="' . $relatorio['pressao_atmos'] . ' ' . $relatorio['unidade_pa'] . '" type="text" class="form-control">';
+            }
             echo '</div>';
             echo '</div>';
             echo '<div class="row">';
             echo '<div class="col">';
             echo '<label>Volume de Chuva</label>';
-            echo '<input disabled="true" value="' . $relatorio['volume_chuva'] . ' ' . $relatorio['unidade_vc'] . '" type="text" class="form-control">';
+            if($relatorio['erro_vc'] == false){
+                echo '<input disabled="true" value="' . $relatorio['volume_chuva'] . ' ' . $relatorio['unidade_vc'] . '" type="text" class="form-control">';
+            }else{
+                echo '<input disabled="true" title="Valor com erro" style="color: red;" value="' . $relatorio['volume_chuva'] . ' ' . $relatorio['unidade_vc'] . '" type="text" class="form-control">';
+            }
             echo '</div>';
             echo '<div class="col">';
             echo '<label>Frequência de Chuva</label>';
-            echo '<input disabled="true" value="' . $relatorio['frequencia_chuva'] . ' ' . $relatorio['unidade_fc'] . '" type="text" class="form-control">';
+            if($relatorio['erro_vc'] == false){
+                echo '<input disabled="true" value="' . $relatorio['frequencia_chuva'] . ' ' . $relatorio['unidade_fc'] . '" type="text" class="form-control">';
+            }else{
+                echo '<input disabled="true" title="Valor com erro" style="color: red;" value="' . $relatorio['frequencia_chuva'] . ' ' . $relatorio['unidade_fc'] . '" type="text" class="form-control">';
+            }
             echo '</div>';
             echo '</div>';
             echo '<br><h3><b>Dados Não Previstos</b></h3><br>';
             echo '<textarea style="font-family: "Courier New";" value="' . $relatorio['nao_previstos'] .'" class="form-control"></textarea>';
+            echo '<br><h3><b>Erros do Relatório</b></h3><br>';
+            echo '<textarea style="font-family: "Courier New";" value="' . $relatorio['erros'] .'" class="form-control"></textarea>';
             echo '</form>';
             echo '</div>';
             echo '</div>';

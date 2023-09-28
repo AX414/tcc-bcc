@@ -40,10 +40,26 @@ function listarRelatorios($idema) {
             echo '<td>' . $row['idrelatorio'] . '</td>';
             echo '<td>' . $row['data'] . '</td>';
             echo '<td>' . $row['hora'] . '</td>';
-            echo '<td>' . $row['temperatura'] . $row['unidade_tem'] . '</td>';
-            echo '<td>' . $row['umidade'] . $row['unidade_um'] . '</td>';
-            echo '<td>' . $row['vento_velocidade'] . $row['unidade_vv'] . '</td>';
-            echo '<td>' . $row['vento_direcao'] . ' ' . $row['unidade_vd'] . '</td>';
+            if($row['erro_tem'] == false){
+                echo '<td>' . $row['temperatura'] . $row['unidade_tem'] . '</td>';
+            }else{
+                echo '<td title="Valor com erro" style="color: red;">' . $row['temperatura'] . $row['unidade_tem'] . '</td>';
+            }
+            if($row['erro_um'] == false){
+                echo '<td>' . $row['umidade'] . $row['unidade_um'] . '</td>';
+            }else{
+                echo '<td title="Valor com erro" style="color: red;">' . $row['umidade'] . $row['unidade_um'] . '</td>';
+            }
+            if($row['erro_vv'] == false){
+                echo '<td>' . $row['vento_velocidade'] . $row['unidade_vv'] . '</td>';
+            }else{
+                echo '<td title="Valor com erro" style="color: red;">' . $row['vento_velocidade'] . $row['unidade_vv'] . '</td>';
+            }
+            if($row['erro_vd'] == false){
+                echo '<td>' . $row['vento_direcao'] . ' ' . $row['unidade_vd'] . '</td>';
+            }else{
+                echo '<td title="Valor com erro" style="color: red;">' . $row['vento_direcao'] . ' ' . $row['unidade_vd'] . '</td>';
+            }
             echo '<td>';
             echo '<a href="Tela_Visualizar_Relatorio.php?idrelatorio=' . $row['idrelatorio'] . '"><button name="btn-visualizar-relatorio" type="button" class="btn btn-primary btn-sm" onclick="">';
             echo '<i class="fas fa-eye"></i>';

@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS emas (
   latitude VARCHAR(45) NOT NULL,
   longitude VARCHAR(45) NOT NULL,
   usuarios_idusuario INT NOT NULL,
-  certificado_ssl BLOB NULL,
   ativa INT NOT NULL,
   topico_kafka VARCHAR (45) NOT NULL,
   PRIMARY KEY (idema, usuarios_idusuario),
@@ -42,8 +41,8 @@ CREATE TABLE IF NOT EXISTS emas (
     REFERENCES usuarios (idusuario))
 ENGINE = InnoDB;
 
-INSERT INTO emas VALUES (1, "Morrigan 1","192.168.0.1",1,"-21.78526685","-52.111628826598704", 1, "",1,"morrigan-1");
-INSERT INTO emas VALUES (2, "Morrigan 2","192.168.0.1",0,"-21.78","-52.13", 2,"",1,"morrigan-2");
+INSERT INTO emas VALUES (1, "Morrigan 1","192.168.0.1",1,"-21.78526685","-52.111628826598704", 1,1,"morrigan1");
+INSERT INTO emas VALUES (2, "Morrigan 2","192.168.0.1",0,"-21.78","-52.13", 2,1,"morrigan2");
 SELECT * FROM emas;
 -- -----------------------------------------------------
 -- Table relatorio
@@ -58,33 +57,39 @@ CREATE TABLE IF NOT EXISTS relatorios (
   -- Dados Obrigatórios
   temperatura FLOAT NOT NULL,
   unidade_tem VARCHAR(5) NOT NULL,
+  erro_tem BOOLEAN NOT NULL,
   
   umidade FLOAT NOT NULL,
   unidade_um VARCHAR(5) NOT NULL,
+  erro_um BOOLEAN NOT NULL,
 
   vento_velocidade FLOAT NOT NULL,
   unidade_vv VARCHAR(5) NOT NULL,
+  erro_vv BOOLEAN NOT NULL,
   
   vento_direcao FLOAT NOT NULL,
   unidade_vd VARCHAR(50) NOT NULL,
-
+  erro_vd BOOLEAN NOT NULL,
   -- Dados Opcionais
   radiacao_solar FLOAT NULL,
   unidade_rs VARCHAR(5) NULL,
+  erro_rs BOOLEAN NOT NULL,
 
   pressao_atmos FLOAT NULL,
   unidade_pa VARCHAR(5) NULL,
+  erro_pa BOOLEAN NOT NULL,
   
   volume_chuva FLOAT NULL,
   unidade_vc VARCHAR(5) NULL,
-    
+  erro_vc BOOLEAN NOT NULL,
+  
   frequencia_chuva FLOAT NULL,
   unidade_fc VARCHAR(5) NULL,
-  
+  erro_fc BOOLEAN NOT NULL,
   -- Dados não previstos serão 
   -- mantidos e salvos como JSON
   nao_previstos JSON NULL,
-  erro INT NULL,
+  erros TEXT NULL,
   emas_idema INT,
   emas_usuarios_idusuario INT,
  PRIMARY KEY (idrelatorio, emas_idema, emas_usuarios_idusuario),
@@ -92,7 +97,6 @@ CREATE TABLE IF NOT EXISTS relatorios (
     REFERENCES emas (idema , usuarios_idusuario))
 ENGINE = InnoDB;
 
-INSERT INTO relatorios VALUES(1,CURDATE(),CURTIME(),23.5,'°C',50.0,'%',10.8,'m/s',270.0,'graus',null,'',null,'',null,'',null,'',null,0,1,1);
-INSERT INTO relatorios VALUES(2,CURDATE(),CURTIME(),26,'°C',45.0,'%',12,'m/s',240.0,'graus',null,'',null,'',null,'',null,'',null,0,1,1);
-
+INSERT INTO relatorios VALUES(1,CURDATE(),CURTIME(),23.5,'°C',false,50.0,'%',false,10.8,'m/s',false,270.0,'graus',false,null,'',false,null,'',false,null,'',false,null,'',false,null,0,1,1);
+INSERT INTO relatorios VALUES(2,CURDATE(),CURTIME(),26,'°C',false,45.0,'%',false,12,'m/s',false,240.0,'graus',false,null,'',false,null,'',false,null,'',false,null,'',false,null,0,1,1);
 SELECT * FROM relatorios;

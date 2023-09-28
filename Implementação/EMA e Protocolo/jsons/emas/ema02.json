@@ -3,5 +3,7 @@
     "ip": "192.168.0.1",
     "latitude": "-20.78",
     "longitude": "-51.12",
-    "topico": "morrigan2"
+    "topico": "morrigan2",
+    "emas_idema": 1,
+    "usuarios_idusuario": 1
 }

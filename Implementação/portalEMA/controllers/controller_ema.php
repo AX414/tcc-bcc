@@ -28,13 +28,11 @@ function cadastrarEMA() {
         $latitude = $_POST['latitude'];
         $longitude = $_POST['longitude'];
         $id_dono = $_SESSION['idusuario'];
-        //Ainda tenho que configurar o certificado ssl e tenho que criar um tópico no kafka novo para cada ema.
-        //$certificado_ssl = gerarCertificadoSSL($nome);
-
+        $topico_kafka = $nome . $longitude . $longitude;
         $conexao = conectarBanco();
 
-        $query = "INSERT INTO emas(nome, ip, publica, latitude, longitude, usuarios_idusuario, certificado_ssl, ativa, topico_kafka) "
-                . "VALUES ('$nome', '$ip', '$publica', '$latitude', '$longitude', '$id_dono', '', 1, '')";
+        $query = "INSERT INTO emas(nome, ip, publica, latitude, longitude, usuarios_idusuario,ativa, topico_kafka) "
+                . "VALUES ('$nome', '$ip', '$publica', '$latitude', '$longitude', '$id_dono', 1, '$topico_kafka')";
         $insert = mysqli_query($conexao, $query);
 
         if ($insert) {
@@ -96,8 +94,6 @@ function listarEMAs() {
             } else {
                 echo '<td>Erro na consulta</td>';
             }
-
-            echo '<td>' . $row['certificado_ssl'] . '</td>';
             echo '<td>';
             echo '<button name="btn-excluir-ema" type="button" class="btn btn-danger btn-sm" onclick="excluirEMA(' . $row['idema'] . ')">';
             echo '<i class="fas fa-trash"></i>';

@@ -57,7 +57,8 @@ require '../portalEMA/controllers/controller_ema.php';
             echo "Estação não encontrada.";
             exit;
         } else {
-            echo '<div class="card col-6">';
+            echo '<div class= "col-8" style="margin-top: 20%; padding-bottom: 5%">';
+            echo '<div class="card">';
             echo '<div class="card-header">';
             echo '<i style="padding-right: 1%;" class="fas fa-microchip"></i><b>Dados da EMA</b>';
             echo '</div>';
@@ -79,11 +80,16 @@ require '../portalEMA/controllers/controller_ema.php';
             }else{
                 echo '<input disabled="true" value="Não" name="publica" type="text" class="form-control">';
             }
+            if($_SESSION['nivel_acesso'] == 1 || $_SESSION['idusuario'] == $ema['usuarios_idusuario']){
+                echo '<label>Tópico do Kafka</label>';
+                echo '<input disabled="true" value="' . $ema['topico_kafka'] . '" name="topico_kafka" type="text" class="form-control" placeholder="Tópico do Kafka da EMA.">';
+            }
             echo '</div>';
             echo '<a href="../portalEMA/Tela_Listar_Relatorios.php?idema='.$emaId.'" class="btn btn-primary" style="width: 100%;"><i style="padding-right: 1%;" class="fas fa-file"></i>Relatórios da '.$ema['nome'].'</a>';
             echo '<br>';
             echo '</div>';
             echo '</form>';
+            echo '</div>';
             echo '</div>';
             echo '</div>';
         }

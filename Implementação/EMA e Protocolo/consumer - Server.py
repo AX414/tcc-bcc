@@ -88,6 +88,8 @@ def persistir_msg(aux):
     # Dados não previstos
     nao_previstos = json.dumps(relatorio['nao_previstos'])
     erros = ""
+    idema = ema['idema']
+    usuarios_idusuario = ema['usuarios_idusuario']
 
     if(validar_mensagem(relatorio)):
         print("\nMensagem válida de acordo com o JSON Schema.")
@@ -105,7 +107,7 @@ def persistir_msg(aux):
     query += 'pressao_atmos, unidade_pa, erro_pa, volume_chuva, unidade_vc, erro_vc,'
     query += 'frequencia_chuva, unidade_fc, erro_fc, nao_previstos, erros,'
     query += 'emas_idema, emas_usuarios_idusuario) '
-    query += f'VALUES("{data_leitura}", "{hora_leitura}", {temperatura}, "{unidade_tem}", {erro_tem}, {umidade}, "{unidade_um}", {erro_um},{velocidade_vento}, "{unidade_vv}", {erro_vv}, {direcao_vento}, "{unidade_dv}", {erro_dv}, {radiacao_solar}, "{unidade_rs}", {erro_rs}, {pressao_atmos}, "{unidade_pa}", {erro_pa}, {volume_chuva}, "{unidade_vc}", {erro_vc},{frequencia_chuva}, "{unidade_fc}", {erro_fc}, \'{nao_previstos}\',"{erros}", 0, 1, 1)'
+    query += f'VALUES("{data_leitura}", "{hora_leitura}", {temperatura}, "{unidade_tem}", {erro_tem}, {umidade}, "{unidade_um}", {erro_um},{velocidade_vento}, "{unidade_vv}", {erro_vv}, {direcao_vento}, "{unidade_dv}", {erro_dv}, {radiacao_solar}, "{unidade_rs}", {erro_rs}, {pressao_atmos}, "{unidade_pa}", {erro_pa}, {volume_chuva}, "{unidade_vc}", {erro_vc},{frequencia_chuva}, "{unidade_fc}", {erro_fc}, \'{nao_previstos}\',"{erros}", {idema}, {usuarios_idusuario})'
     cursor.execute(query)
     connection.commit()
 

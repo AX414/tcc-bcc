@@ -48,7 +48,6 @@ require '../portalEMA/controllers/controller_ema.php';
                             <th>Latitude</th> 
                             <th>Logitude</th>
                             <th>Nome do Dono</th>
-                            <th>Certificado SSL</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
