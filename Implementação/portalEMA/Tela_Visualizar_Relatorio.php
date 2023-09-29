@@ -136,7 +136,7 @@ require '../portalEMA/controllers/controller_relatorio.php';
             echo '</div>';
             echo '<div class="col">';
             echo '<label>Frequência de Chuva</label>';
-            if($relatorio['erro_vc'] == false){
+            if($relatorio['erro_fc'] == false){
                 echo '<input disabled="true" value="' . $relatorio['frequencia_chuva'] . ' ' . $relatorio['unidade_fc'] . '" type="text" class="form-control">';
             }else{
                 echo '<input disabled="true" title="Valor com erro" style="color: red;" value="' . $relatorio['frequencia_chuva'] . ' ' . $relatorio['unidade_fc'] . '" type="text" class="form-control">';

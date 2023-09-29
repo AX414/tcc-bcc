@@ -53,50 +53,42 @@ CREATE TABLE IF NOT EXISTS relatorios (
   idrelatorio INT NOT NULL AUTO_INCREMENT,
   data DATE NOT NULL,
   hora TIME NOT NULL,
-
   -- Dados Obrigatórios
   temperatura FLOAT NOT NULL,
   unidade_tem VARCHAR(5) NOT NULL,
   erro_tem BOOLEAN NOT NULL,
-  
   umidade FLOAT NOT NULL,
   unidade_um VARCHAR(5) NOT NULL,
   erro_um BOOLEAN NOT NULL,
-
   vento_velocidade FLOAT NOT NULL,
   unidade_vv VARCHAR(5) NOT NULL,
   erro_vv BOOLEAN NOT NULL,
-  
   vento_direcao FLOAT NOT NULL,
   unidade_vd VARCHAR(50) NOT NULL,
   erro_vd BOOLEAN NOT NULL,
   -- Dados Opcionais
-  radiacao_solar FLOAT NULL,
-  unidade_rs VARCHAR(5) NULL,
-  erro_rs BOOLEAN NOT NULL,
-
-  pressao_atmos FLOAT NULL,
-  unidade_pa VARCHAR(5) NULL,
-  erro_pa BOOLEAN NOT NULL,
-  
-  volume_chuva FLOAT NULL,
-  unidade_vc VARCHAR(5) NULL,
-  erro_vc BOOLEAN NOT NULL,
-  
-  frequencia_chuva FLOAT NULL,
-  unidade_fc VARCHAR(5) NULL,
-  erro_fc BOOLEAN NOT NULL,
+  radiacao_solar FLOAT NULL DEFAULT NULL,
+  unidade_rs VARCHAR(5) NULL DEFAULT NULL,
+  erro_rs BOOLEAN NULL,
+  pressao_atmos FLOAT NULL DEFAULT NULL,
+  unidade_pa VARCHAR(5) NULL DEFAULT NULL,
+  erro_pa BOOLEAN NULL,
+  volume_chuva FLOAT NULL DEFAULT NULL,
+  unidade_vc VARCHAR(5) NULL DEFAULT NULL,
+  erro_vc BOOLEAN NULL,
+  frequencia_chuva FLOAT NULL DEFAULT NULL,
+  unidade_fc VARCHAR(5) NULL DEFAULT NULL,
+  erro_fc BOOLEAN NULL,
   -- Dados não previstos serão 
   -- mantidos e salvos como JSON
-  nao_previstos JSON NULL,
-  erros TEXT NULL,
-  emas_idema INT,
-  emas_usuarios_idusuario INT,
- PRIMARY KEY (idrelatorio, emas_idema, emas_usuarios_idusuario),
-    FOREIGN KEY (emas_idema , emas_usuarios_idusuario)
-    REFERENCES emas (idema , usuarios_idusuario))
+  nao_previstos JSON NULL DEFAULT NULL,
+  erros TEXT NULL DEFAULT NULL,
+  emas_idema INT NOT NULL,
+  PRIMARY KEY (idrelatorio, emas_idema),
+    FOREIGN KEY (emas_idema)
+    REFERENCES awsmqtt.emas (idema))
 ENGINE = InnoDB;
 
-INSERT INTO relatorios VALUES(1,CURDATE(),CURTIME(),23.5,'°C',false,50.0,'%',false,10.8,'m/s',false,270.0,'graus',false,null,'',false,null,'',false,null,'',false,null,'',false,null,0,1,1);
-INSERT INTO relatorios VALUES(2,CURDATE(),CURTIME(),26,'°C',false,45.0,'%',false,12,'m/s',false,240.0,'graus',false,null,'',false,null,'',false,null,'',false,null,'',false,null,0,1,1);
+INSERT INTO relatorios VALUES(1,CURDATE(),CURTIME(),23.5,'°C',false,50.0,'%',false,10.8,'m/s',false,270.0,'graus',false,null,'',false,null,'',false,null,'',false,null,'',false,null,null,1);
+INSERT INTO relatorios VALUES(2,CURDATE(),CURTIME(),26,'°C',false,45.0,'%',false,12,'m/s',false,240.0,'graus',false,null,'',false,null,'',false,null,'',false,null,'',false,null,null,1);
 SELECT * FROM relatorios;
