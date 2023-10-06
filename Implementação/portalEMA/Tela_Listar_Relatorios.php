@@ -67,8 +67,8 @@ $ema = buscarEMAPorID($emaID);
                         <th>ID</th>
                         <th>Data da Leitura</th>
                         <th>Hora da Leitura</th>
+                        <th>Temperatura</th>
                         <th>Umidade</th>
-                        <th>Chuva</th>
                         <th>Velocidade do Vento</th>
                         <th>Direção do Vento</th>
                         <th>Visualizar a Leitura</th>

@@ -61,9 +61,9 @@ def captar_Dados():
 
     # Criar a estrutura JSON
     dados_json = {
-        "idema": 0,
+        "topico": ema['topico'],
         "data_leitura": str(data_atual),
-        "hora_leitura": hora_atual,
+        #"hora_leitura": hora_atual,
         "obrigatorio": {
             "temperatura": {
                 "unidade": unidade_tem,
@@ -100,7 +100,7 @@ def captar_Dados():
                 "valor": frequencia_chuva
             }
         },
-        "nao_previstos": {}
+        "nao_previstos":{}
     }
 
     # Converte a estrutura JSON em uma string JSON

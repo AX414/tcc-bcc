@@ -101,8 +101,8 @@ function buscarRelatorioPorID($idrelatorio) {
     $resultado = mysqli_query($conexao, $query);
 
     if ($resultado && mysqli_num_rows($resultado) > 0) {
-        $usuario = mysqli_fetch_assoc($resultado);
-        return $usuario;
+        $relatorio = mysqli_fetch_assoc($resultado);
+        return $relatorio;
     } else {
         return false;
     }

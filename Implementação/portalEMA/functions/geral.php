@@ -52,7 +52,7 @@ function menu() {
     } else {
         echo '
             <nav class="navbar navbar-expand-lg bg-light">
-            <a class="navbar-brand" style="margin-left: 2%" href="../portalEMA/Tela_Principal.php">Portal EMA</a>
+            <a class="navbar-brand" style="margin-left: 2%" href="../portalEMA/Tela_Principal.php">Sistema de Gerenciamento</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

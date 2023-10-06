@@ -28,7 +28,7 @@ function cadastrarEMA() {
         $latitude = $_POST['latitude'];
         $longitude = $_POST['longitude'];
         $id_dono = $_SESSION['idusuario'];
-        $topico_kafka = $nome . $longitude . $longitude;
+        $topico_kafka = $_SESSION['nome_usuario']. $nome . $longitude . $longitude;
         $conexao = conectarBanco();
 
         $query = "INSERT INTO emas(nome, ip, publica, latitude, longitude, usuarios_idusuario,ativa, topico_kafka) "
@@ -36,7 +36,17 @@ function cadastrarEMA() {
         $insert = mysqli_query($conexao, $query);
 
         if ($insert) {
-            echo "<script>alert('Estação cadastrada com Sucesso!');window.location.href='../Tela_Listar_EMAs.php';</script>";
+            /*$conf = new RdKafka\Conf();
+            $producer = new RdKafka\Producer($conf);
+            $producer->addBrokers('localhost:9092');
+
+            // Aqui eu estou criando o tópico do kafka com o exato mesmo 
+            // nome que é gerado para a estação quando cadastrada.
+            $topic = $producer->newTopic($topico_kafka);
+            // Produzindo uma mensagem vazia só para criar o tópico de fato
+            $topic->produce(RD_KAFKA_PARTITION_UA, 0);
+            */
+            echo "<script>alert('Estação cadastrada com Sucesso!');window.location.href='../Tela_Listar_EMAs.php';</script>"; 
         } else {
             echo "Erro do mysqli:" . mysqli_errno($conexao);
             echo "<script>alert('Não foi possível cadastrar essa estação, algo deu errado.');');window.location.href='../Tela_Cadastro_EMA.php';</script>";

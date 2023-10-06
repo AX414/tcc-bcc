@@ -1,0 +1,16 @@
+{
+    "name": "user/portal-ema",
+    "autoload": {
+        "psr-4": {
+            "User\\PortalEma\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Joao Victor Lisboa Porcel"
+        }
+    ],
+    "require": {
+        "php-enqueue/rdkafka": "*"
+    }
+}

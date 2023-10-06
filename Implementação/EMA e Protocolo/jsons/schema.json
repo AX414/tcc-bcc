@@ -2,8 +2,8 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "properties": {
-        "idema": {
-            "type": "integer"
+        "topico": {
+            "type": "string"
         },
         "data_leitura": {
             "type": "string",
@@ -120,5 +120,5 @@
             "type": "object"
         }
     },
-    "required": ["idema", "data_leitura", "hora_leitura", "obrigatorio"]
+    "required": ["topico", "data_leitura", "hora_leitura", "obrigatorio"]
 }
