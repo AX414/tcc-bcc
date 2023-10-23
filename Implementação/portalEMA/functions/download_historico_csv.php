@@ -7,7 +7,7 @@ $idema = $_GET['idema'];
 $nome = $_GET['nome'];
 
 //echo"<script>alert(".$idema.")</script>";
-$sql = "SELECT * FROM relatorios WHERE emas_idema = $idema";
+$sql = "SELECT * FROM observacoes WHERE emas_idema = $idema";
 $result = $conexao->query($sql);
 
 if ($result->num_rows > 0) {
@@ -59,7 +59,7 @@ if ($result->num_rows > 0) {
             $erro_fc = "Erro no sensor de Frequência de Chuva.";
         }
         // Adiciona os dados formatados ao arquivo CSV
-        $csvData .= $row['idrelatorio'] . ','
+        $csvData .= $row['idobservacao'] . ','
                 . $dataFormatada . ','
                 . $row['hora'] . ','
                 . $row['temperatura'] . ','
@@ -83,12 +83,12 @@ if ($result->num_rows > 0) {
                 . $row['frequencia_chuva'] . ','
                 . $row['unidade_fc'] . ','
                 . $erro_fc . ','
-                . $row['nao_previstos'] . ','
+                . $row['observacoes_nao_previstas'] . ','
                 . $row['erros'] . "\r\n";
         $hora = $row['hora'];
     }
 
-    $filename = 'Histórico de Relatórios da ' . $nome . '.csv';
+    $filename = 'Histórico de Observações Meteorológicas da ' . $nome . '.csv';
 
     $contentType = 'text/csv';
 
@@ -99,7 +99,7 @@ if ($result->num_rows > 0) {
     // Envia os dados do arquivo CSV
     echo $csvData;
 } else {
-    echo '<script>alert("Nenhum dado encontrado.");window.location.href="../Tela_Listar_Relatorios.php?idema='.$idema.'";</script>';
+    echo '<script>alert("Nenhum dado encontrado.");window.location.href="../Tela_Listar_Observacoes.php?idema='.$idema.'";</script>';
 }
 
 // Fecha a conexão com o banco de dados

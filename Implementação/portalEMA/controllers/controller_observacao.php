@@ -7,14 +7,14 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 require(__DIR__ . '/../functions/banco.php');
 
 
-function listarRelatorios($idema) {
+function listarObservacoes($idema) {
     $conexao = conectarBanco();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dataInicial = $_POST['data_inicial'];
         $dataFinal = $_POST['data_final'];
         $horaLeitura = $_POST['hora_leitura'];
         
-        $sql = "SELECT * FROM relatorios WHERE 1=1 AND emas_idema = '$idema'";
+        $sql = "SELECT * FROM observacoes WHERE 1=1 AND emas_idema = '$idema'";
 
         if (!empty($dataInicial)) {
             $sql .= " AND data >= '$dataInicial'";
@@ -30,14 +30,14 @@ function listarRelatorios($idema) {
 
         $result = $conexao->query($sql);
     } else {
-        $sql = "SELECT * FROM relatorios WHERE 1 = 1 AND emas_idema = '$idema'";
+        $sql = "SELECT * FROM observacoes WHERE 1 = 1 AND emas_idema = '$idema'";
         $result = $conexao->query($sql);
     }
 
     if ($result->num_rows >= 0) {
         while ($row = $result->fetch_assoc()) {
-            echo '<tr id="row-' . $row['idrelatorio'] . '">';
-            echo '<td>' . $row['idrelatorio'] . '</td>';
+            echo '<tr id="row-' . $row['idobservacao'] . '">';
+            echo '<td>' . $row['idobservacao'] . '</td>';
             echo '<td>' . $row['data'] . '</td>';
             echo '<td>' . $row['hora'] . '</td>';
             if($row['erro_tem'] == false){
@@ -61,7 +61,7 @@ function listarRelatorios($idema) {
                 echo '<td title="Valor com erro" style="color: red;">' . $row['vento_direcao'] . ' ' . $row['unidade_vd'] . '</td>';
             }
             echo '<td>';
-            echo '<a href="Tela_Visualizar_Relatorio.php?idrelatorio=' . $row['idrelatorio'] . '"><button name="btn-visualizar-relatorio" type="button" class="btn btn-primary btn-sm" onclick="">';
+            echo '<a href="Tela_Visualizar_Observacao.php?idobservacao=' . $row['idobservacao'] . '"><button name="btn-visualizar-relatorio" type="button" class="btn btn-primary btn-sm" onclick="">';
             echo '<i class="fas fa-eye"></i>';
             echo '</button></a>';
             echo '</td>';
@@ -92,17 +92,17 @@ function buscarEMAPorID($idema) {
     $conexao->close();
 }
 
-function buscarRelatorioPorID($idrelatorio) {
+function buscarObservacaoPorID($idobservacao) {
     $conexao = conectarBanco();
 
-    $idrelatorio = mysqli_real_escape_string($conexao, $idrelatorio);
+    $idobservacao = mysqli_real_escape_string($conexao, $idobservacao);
 
-    $query = "SELECT * FROM relatorios WHERE idrelatorio = '$idrelatorio'";
+    $query = "SELECT * FROM observacoes WHERE idobservacao = '$idobservacao'";
     $resultado = mysqli_query($conexao, $query);
 
     if ($resultado && mysqli_num_rows($resultado) > 0) {
-        $relatorio = mysqli_fetch_assoc($resultado);
-        return $relatorio;
+        $observacao = mysqli_fetch_assoc($resultado);
+        return $observacao;
     } else {
         return false;
     }

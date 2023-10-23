@@ -162,7 +162,8 @@ def persistir_msg(aux):
         erros+="\nErro no JSON, ele não estava de acordo com o JSON Schema utilizado."
         erros+=f"\nRelatório errado:\n\n{relatorio}"
         data_leitura = datetime.date.today()
-        hora_leitura = str(f"{datetime.time()}")
+        hora_atual = datetime.datetime.now().time()
+        hora_leitura = hora_atual.strftime("%H:%M:%S")
         print(hora_leitura)
         if idema is not None:
             query = 'INSERT INTO relatorios (data, hora, erros, emas_idema) '

@@ -63,7 +63,7 @@ def captar_Dados():
     dados_json = {
         "topico": ema['topico'],
         "data_leitura": str(data_atual),
-        #"hora_leitura": hora_atual,
+        "hora_leitura": hora_atual,
         "obrigatorio": {
             "temperatura": {
                 "unidade": unidade_tem,
@@ -105,13 +105,8 @@ def captar_Dados():
 
     # Converte a estrutura JSON em uma string JSON
     msg = json.dumps(dados_json)
-
     # Retorna a string JSON
     return msg
-
-def armazenar_fila(client, dados):
-        print(f"\nArmazenando mensagem para posteriormente enviar ao tópico {topic}:\n\n{dados}\n")
-        return dados
 
 def publicar_dado_atual(client):
     while True:
@@ -125,7 +120,6 @@ def publicar_dado_atual(client):
             print(f"\nEnviando a mensagem para o tópico {topic}:\n\n{dados}\n")
         else:
             print(f"\nO envio da mensagem para o tópico {topic} falhou.\n")
-            armazenar_fila(client, dados)
             return
 
 def publish(client):

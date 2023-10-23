@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 require '../portalEMA/functions/geral.php';
-require '../portalEMA/controllers/controller_relatorio.php';
+require '../portalEMA/controllers/controller_observacao.php';
 $emaID = $_GET['idema'];
 $ema = buscarEMAPorID($emaID);
 ?>
@@ -32,7 +32,7 @@ $ema = buscarEMAPorID($emaID);
         menu();
         ?>
         <div class="container" style="margin-top: 5%;">
-            <h1>Histórico de Relatórios da <?php echo $ema['nome'] ?></h1>
+            <h1>Histórico de Observações Meteorológicas da <?php echo $ema['nome'] ?></h1>
             <form method="POST" action="">
                 <div class="row justify-content-between">
                     <div class="col">
@@ -76,7 +76,7 @@ $ema = buscarEMAPorID($emaID);
                 </thead>
                 <tbody>
                     <?php
-                    listarRelatorios($ema['idema']);
+                    listarObservacoes($ema['idema']);
                     ?>
                 </tbody>
             </table>

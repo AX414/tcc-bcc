@@ -36,21 +36,33 @@ CREATE TABLE IF NOT EXISTS emas (
   usuarios_idusuario INT NOT NULL,
   ativa INT NOT NULL,
   topico_kafka VARCHAR (45) NOT NULL,
+  -- Dados referente ao diagnostico
+  status_ema VARCHAR (10) NULL,
+  carga_bateria FLOAT NULL, 
+  uptime VARCHAR(50) NULL,
+  diagnostico_nao_previsto JSON NULL,
   PRIMARY KEY (idema, usuarios_idusuario),
     FOREIGN KEY (usuarios_idusuario)
     REFERENCES usuarios (idusuario))
 ENGINE = InnoDB;
 
-INSERT INTO emas VALUES (1, "Morrigan 1","192.168.0.1",1,"-21.78526685","-52.111628826598704", 1,1,"morrigan1");
-INSERT INTO emas VALUES (2, "Morrigan 2","192.168.0.1",0,"-21.78","-52.13", 2,1,"morrigan2");
+-- IF de Epitácio
+INSERT INTO emas VALUES (1, "EMA de Epitácio","192.168.0.1",1,"-21.78526685","-52.111628826598704", 1,1,"epitacio1", "Online", 78.6, "3 dia(s), 4 hora(s), 55 min", null);
+-- Bataguassu
+INSERT INTO emas VALUES (2, "EMA de Bataguassu","192.168.0.1",0,"-21.7155","-52.4196", 1,1,"bataguassu2", "Online", 88.3, "1 dia(s), 8 hora(s), 15 min", null);
+-- Venceslau
+INSERT INTO emas VALUES (3, "EMA de Venceslau","192.168.0.1",1,"-21.8754","-51.8447", 2,1,"venceslau3", "Online", 95.0, "0 dia(s), 18 hora(s), 45 min", null);
+-- Prudente
+INSERT INTO emas VALUES (4, "EMA de Prudente","192.168.0.1",0,"-22.1207","-51.3852", 2,1,"prudente4", "Online", 88.2, "1 dia(s), 8 hora(s), 20 min", null);
+
 SELECT * FROM emas;
 -- -----------------------------------------------------
 -- Table relatorio
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS relatorios ;
+DROP TABLE IF EXISTS observacoes;
 
-CREATE TABLE IF NOT EXISTS relatorios (
-  idrelatorio INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS observacoes (
+  idobservacao INT NOT NULL AUTO_INCREMENT,
   data DATE NULL,
   hora TIME NULL,
   -- Dados Obrigatórios
@@ -81,14 +93,14 @@ CREATE TABLE IF NOT EXISTS relatorios (
   erro_fc BOOLEAN NULL,
   -- Dados não previstos serão 
   -- mantidos e salvos como JSON
-  nao_previstos JSON NULL,
+  observacoes_nao_previstas JSON NULL,
   erros TEXT NULL,
   emas_idema INT NOT NULL,
-  PRIMARY KEY (idrelatorio, emas_idema),
+  PRIMARY KEY (idobservacao, emas_idema),
     FOREIGN KEY (emas_idema)
     REFERENCES awsmqtt.emas (idema))
 ENGINE = InnoDB;
 
-INSERT INTO relatorios VALUES(1,CURDATE(),CURTIME(),23.5,'°C',false,50.0,'%',false,10.8,'m/s',false,270.0,'graus',false,null,'',false,null,'',false,null,'',false,null,'',false,null,null,1);
-INSERT INTO relatorios VALUES(2,CURDATE(),CURTIME(),26,'°C',false,45.0,'%',false,12,'m/s',false,240.0,'graus',false,null,'',false,null,'',false,null,'',false,null,'',false,null,null,1);
-SELECT * FROM relatorios;
+INSERT INTO observacoes VALUES(1,CURDATE(),CURTIME(),23.5,'°C',false,50.0,'%',false,10.8,'m/s',false,270.0,'graus',false,null,'',false,null,'',false,null,'',false,null,'',false,null,null,1);
+INSERT INTO observacoes VALUES(2,CURDATE(),CURTIME(),26,'°C',false,45.0,'%',false,12,'m/s',false,240.0,'graus',false,null,'',false,null,'',false,null,'',false,null,'',false,null,null,1);
+SELECT * FROM observacoes;

@@ -3,10 +3,10 @@
 require(__DIR__ . '/../functions/banco.php');
 $conexao = conectarBanco();
 
-$idrelatorio = $_GET['idrelatorio'];
+$idobservacao = $_GET['idobservacao'];
 //Filtros + Filtro do erro (tenho que adicionar no BD)
 # Inserir range de cada valor
-$sql = "SELECT * FROM relatorios WHERE idrelatorio = $idrelatorio";
+$sql = "SELECT * FROM observacoes WHERE idobservacao = $idobservacao";
 $result = $conexao->query($sql);
 
 if ($result->num_rows > 0) {
@@ -59,7 +59,7 @@ if ($result->num_rows > 0) {
             $erro_fc = "Erro no sensor de Frequência de Chuva.";
         }
         // Adiciona os dados formatados ao arquivo CSV
-        $csvData .= $row['idrelatorio'] . ','
+        $csvData .= $row['idobservacao'] . ','
                 . $dataFormatada . ','
                 . $row['hora'] . ','
                 . $row['temperatura'] . ','
@@ -83,13 +83,13 @@ if ($result->num_rows > 0) {
                 . $row['frequencia_chuva'] . ','
                 . $row['unidade_fc'] . ','
                 . $erro_fc . ','
-                . $row['nao_previstos'] . ','
+                . $row['observacoes_nao_previstas'] . ','
                 . $row['erros'] . "\r\n";
         $hora = $row['hora'];
         $idema = $row['emas_idema'];
     }
 
-    $filename = 'Relatório ' . $idrelatorio . ' de ' . $dataFormatada . ' as ' . $hora . '.csv';
+    $filename = 'Observação Meteorológica ' . $idobservacao . ' de ' . $dataFormatada . ' as ' . $hora . '.csv';
 
     $contentType = 'text/csv';
 
