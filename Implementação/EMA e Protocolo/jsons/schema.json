@@ -2,123 +2,151 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "properties": {
-        "topico": {
-            "type": "string"
-        },
-        "data_leitura": {
-            "type": "string",
-            "format": "date"
-        },
-        "hora_leitura": {
-            "type": "string",
-            "format": "time"
-        },
-        "obrigatorio": {
+        "observacao": {
             "type": "object",
             "properties": {
-                "temperatura": {
-                    "type": "object",
-                    "properties": {
-                        "unidade": {
-                            "type": "string"
-                        },
-                        "valor": {
-                            "type": "number"
-                        }
-                    },
-                    "required": ["unidade", "valor"]
+                "topico": {
+                    "type": "string"
                 },
-                "umidade": {
-                    "type": "object",
-                    "properties": {
-                        "unidade": {
-                            "type": "string"
-                        },
-                        "valor": {
-                            "type": "number"
-                        }
-                    },
-                    "required": ["unidade", "valor"]
+                "data_leitura": {
+                    "type": "string"
                 },
-                "velocidade_vento": {
-                    "type": "object",
-                    "properties": {
-                        "unidade": {
-                            "type": "string"
-                        },
-                        "valor": {
-                            "type": "number"
-                        }
-                    },
-                    "required": ["unidade", "valor"]
+                "hora_leitura": {
+                    "type": "string"
                 },
-                "direcao_vento": {
+                "obrigatorio": {
                     "type": "object",
                     "properties": {
-                        "unidade": {
-                            "type": "string"
+                        "temperatura": {
+                            "type": "object",
+                            "properties": {
+                                "unidade": {
+                                    "type": "string"
+                                },
+                                "valor": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": ["unidade", "valor"]
                         },
-                        "valor": {
-                            "type": "number"
+                        "umidade": {
+                            "type": "object",
+                            "properties": {
+                                "unidade": {
+                                    "type": "string"
+                                },
+                                "valor": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": ["unidade", "valor"]
+                        },
+                        "velocidade_vento": {
+                            "type": "object",
+                            "properties": {
+                                "unidade": {
+                                    "type": "string"
+                                },
+                                "valor": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": ["unidade", "valor"]
+                        },
+                        "direcao_vento": {
+                            "type": "object",
+                            "properties": {
+                                "unidade": {
+                                    "type": "string"
+                                },
+                                "valor": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": ["unidade", "valor"]
                         }
                     },
-                    "required": ["unidade", "valor"]
+                    "required": ["temperatura", "umidade", "velocidade_vento", "direcao_vento"]
+                },
+                "opcional": {
+                    "type": "object",
+                    "properties": {
+                        "radiacao_solar": {
+                            "type": "object",
+                            "properties": {
+                                "unidade": {
+                                    "type": "string"
+                                },
+                                "valor": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": ["unidade", "valor"]
+                        },
+                        "pressao_atmos": {
+                            "type": "object",
+                            "properties": {
+                                "unidade": {
+                                    "type": "string"
+                                },
+                                "valor": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": ["unidade", "valor"]
+                        },
+                        "volume_chuva": {
+                            "type": "object",
+                            "properties": {
+                                "unidade": {
+                                    "type": "string"
+                                },
+                                "valor": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": ["unidade", "valor"]
+                        },
+                        "frequencia_chuva": {
+                            "type": "object",
+                            "properties": {
+                                "unidade": {
+                                    "type": "string"
+                                },
+                                "valor": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": ["unidade", "valor"]
+                        }
+                    }
+                },
+                "observacoes_nao_previstas": {
+                    "type": "object",
+                    "additionalProperties": true
                 }
             },
-            "required": ["temperatura", "umidade", "velocidade_vento", "direcao_vento"]
+            "required": ["topico", "data_leitura", "hora_leitura", "obrigatorio", "opcional"]
         },
-        "opcional": {
+        "diagnostico": {
             "type": "object",
             "properties": {
-                "radiacao_solar": {
-                    "type": "object",
-                    "properties": {
-                        "unidade": {
-                            "type": "string"
-                        },
-                        "valor": {
-                            "type": "number"
-                        }
-                    }
+                "status_ema": {
+                    "type": "string"
                 },
-                "pressao_atmos": {
-                    "type": "object",
-                    "properties": {
-                        "unidade": {
-                            "type": "string"
-                        },
-                        "valor": {
-                            "type": "number"
-                        }
-                    }
+                "carga_bateria": {
+                    "type": "number"
                 },
-                "volume_chuva": {
-                    "type": "object",
-                    "properties": {
-                        "unidade": {
-                            "type": "string"
-                        },
-                        "valor": {
-                            "type": "number"
-                        }
-                    }
+                "uptime": {
+                    "type": "string"
                 },
-                "frequencia_chuva": {
+                "diagnosticos_nao_previstos": {
                     "type": "object",
-                    "properties": {
-                        "unidade": {
-                            "type": "string"
-                        },
-                        "valor": {
-                            "type": "number"
-                        }
-                    }
+                    "additionalProperties": true
                 }
-            }
-        },
-        "nao_previstos": {
-            "type": "object"
+            },
+            "required": ["status_ema", "carga_bateria", "uptime"]
         }
     },
-    "required": ["topico", "data_leitura", "hora_leitura", "obrigatorio"]
+    "required": ["observacao", "diagnostico"]
 }

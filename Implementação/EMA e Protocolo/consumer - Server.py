@@ -69,90 +69,89 @@ def encontrar_idema(topico_kafka):
 
 
 def persistir_msg(aux):
-    relatorio = json.loads(aux)
+    observacao = json.loads(aux)
     erros = ""
     # Pegando a EMA pelo Tópico dela TEM QUE SER DO RELATÓRIO, PEGAR PELO ID DA EMA
-    idema = encontrar_idema(relatorio['topico'])
+    idema = encontrar_idema(ema['topico'])
 
-    if(validar_mensagem(relatorio)):
-        data_leitura = relatorio['data_leitura']
-        hora_leitura = relatorio['hora_leitura']
+    if(validar_mensagem(observacao)):
+        data_leitura = observacao['observacao']['data_leitura']
+        hora_leitura = observacao['observacao']['hora_leitura']
         
         # Campos Obrigatórios
-        temperatura = relatorio['obrigatorio']['temperatura']['valor']
-        unidade_tem = relatorio['obrigatorio']['temperatura']['unidade']
+        temperatura = observacao['observacao']['obrigatorio']['temperatura']['valor']
+        unidade_tem = observacao['observacao']['obrigatorio']['temperatura']['unidade']
         erro_tem = False
         if(temperatura<-20 or temperatura>45):
             erro_tem = True
             erros += "\nErro no sensor de Temperatura."
 
-        umidade = relatorio['obrigatorio']['umidade']['valor']
-        unidade_um = relatorio['obrigatorio']['umidade']['unidade']
+        umidade = observacao['observacao']['obrigatorio']['umidade']['valor']
+        unidade_um = observacao['observacao']['obrigatorio']['umidade']['unidade']
         erro_um = False
         if(umidade<0 or umidade>100):
             erro_um = True
             erros+= "\nErro no sensor de Umidade."
 
-        velocidade_vento = relatorio['obrigatorio']['velocidade_vento']['valor']
-        unidade_vv = relatorio['obrigatorio']['velocidade_vento']['unidade']
+        velocidade_vento = observacao['observacao']['obrigatorio']['velocidade_vento']['valor']
+        unidade_vv = observacao['observacao']['obrigatorio']['velocidade_vento']['unidade']
         erro_vv = False
         if(velocidade_vento<0 or velocidade_vento>50):
             erro_vv = True
             erros+= "\nErro no sensor de Velocidade do Vento."
 
-        direcao_vento = relatorio['obrigatorio']['direcao_vento']['valor']
-        unidade_dv = relatorio['obrigatorio']['direcao_vento']['unidade']
+        direcao_vento = observacao['observacao']['obrigatorio']['direcao_vento']['valor']
+        unidade_dv = observacao['observacao']['obrigatorio']['direcao_vento']['unidade']
         erro_dv = False
         if(direcao_vento<0 or direcao_vento>360):
             erro_dv = True
             erros+= "\nErro no sensor de Direção do Vento."
 
         # Campos Opcionais
-        radiacao_solar = relatorio['opcional']['radiacao_solar']['valor']
-        unidade_rs = relatorio['opcional']['radiacao_solar']['unidade']
+        radiacao_solar = observacao['observacao']['opcional']['radiacao_solar']['valor']
+        unidade_rs = observacao['observacao']['opcional']['radiacao_solar']['unidade']
         erro_rs = False
         if(radiacao_solar<0 or velocidade_vento>1500):
             erro_rs = True
             erros+= "\nErro no sensor de Radiação Solar."
         
-        pressao_atmos = relatorio['opcional']['pressao_atmos']['valor']
-        unidade_pa = relatorio['opcional']['pressao_atmos']['unidade']
+        pressao_atmos = observacao['observacao']['opcional']['pressao_atmos']['valor']
+        unidade_pa = observacao['observacao']['opcional']['pressao_atmos']['unidade']
         erro_pa = False
         if(pressao_atmos<800 and pressao_atmos>1100):
             erro_pa = True
             erros+= "\nErro no sensor de Pressão Atmosférica."
         
-        volume_chuva = relatorio['opcional']['volume_chuva']['valor']
-        unidade_vc = relatorio['opcional']['radiacao_solar']['unidade']
+        volume_chuva = observacao['observacao']['opcional']['volume_chuva']['valor']
+        unidade_vc = observacao['observacao']['opcional']['radiacao_solar']['unidade']
         erro_vc = False
         if(volume_chuva<0 and volume_chuva>100):
             erro_vc = True
             erros+= "\nErro no sensor de Volume da Chuva."
         
-        frequencia_chuva = relatorio['opcional']['frequencia_chuva']['valor']
-        unidade_fc = relatorio['opcional']['frequencia_chuva']['unidade']
+        frequencia_chuva = observacao['observacao']['opcional']['frequencia_chuva']['valor']
+        unidade_fc = observacao['observacao']['opcional']['frequencia_chuva']['unidade']
         erro_fc = False
         if(frequencia_chuva<0 and frequencia_chuva>100):
             erro_fc = True
             erros+= "\nErro no sensor de Frequência da Chuva."
 
         # Dados não previstos
-        nao_previstos = json.dumps(relatorio['nao_previstos'])
-        erros = ""
+        observacoes_nao_previstas = json.dumps(observacao['observacao']['observacoes_nao_previstas'])
 
         print(f"Mensagem consumida pelo tópico: {topic}.")
         print("================================================================================================")
-        print(f"Mensagem recebida: {relatorio}")
+        print(f"Mensagem recebida: {observacao}")
         print("================================================================================================\n")
 
         if idema is not None:
-            query = 'INSERT INTO relatorios(data, hora, temperatura, unidade_tem, erro_tem,'
+            query = 'INSERT INTO observacoes(data, hora, temperatura, unidade_tem, erro_tem,'
             query += 'umidade, unidade_um, erro_um, vento_velocidade, unidade_vv, erro_vv,'
             query += 'vento_direcao, unidade_vd, erro_vd, radiacao_solar, unidade_rs, erro_rs,'
             query += 'pressao_atmos, unidade_pa, erro_pa, volume_chuva, unidade_vc, erro_vc,'
-            query += 'frequencia_chuva, unidade_fc, erro_fc, nao_previstos, erros,'
+            query += 'frequencia_chuva, unidade_fc, erro_fc, observacoes_nao_previstas, erros,'
             query += 'emas_idema) '
-            query += f'VALUES("{data_leitura}", "{hora_leitura}", {temperatura}, "{unidade_tem}", {erro_tem}, {umidade}, "{unidade_um}", {erro_um},{velocidade_vento}, "{unidade_vv}", {erro_vv}, {direcao_vento}, "{unidade_dv}", {erro_dv}, {radiacao_solar}, "{unidade_rs}", {erro_rs}, {pressao_atmos}, "{unidade_pa}", {erro_pa}, {volume_chuva}, "{unidade_vc}", {erro_vc},{frequencia_chuva}, "{unidade_fc}", {erro_fc}, \'{nao_previstos}\',"{erros}", {idema})'
+            query += f'VALUES("{data_leitura}", "{hora_leitura}", {temperatura}, "{unidade_tem}", {erro_tem}, {umidade}, "{unidade_um}", {erro_um},{velocidade_vento}, "{unidade_vv}", {erro_vv}, {direcao_vento}, "{unidade_dv}", {erro_dv}, {radiacao_solar}, "{unidade_rs}", {erro_rs}, {pressao_atmos}, "{unidade_pa}", {erro_pa}, {volume_chuva}, "{unidade_vc}", {erro_vc},{frequencia_chuva}, "{unidade_fc}", {erro_fc}, \'{observacoes_nao_previstas}\',"{erros}", {idema})'
             cursor.execute(query)
             connection.commit()
         else:
@@ -160,13 +159,13 @@ def persistir_msg(aux):
     else:
         print("\nMensagem inválida de acordo com o JSON Schema. Persistindo com valores de erro.")
         erros+="\nErro no JSON, ele não estava de acordo com o JSON Schema utilizado."
-        erros+=f"\nRelatório errado:\n\n{relatorio}"
+        erros+=f"\nObservação errada:\n\n{observacao}"
         data_leitura = datetime.date.today()
         hora_atual = datetime.datetime.now().time()
         hora_leitura = hora_atual.strftime("%H:%M:%S")
         print(hora_leitura)
         if idema is not None:
-            query = 'INSERT INTO relatorios (data, hora, erros, emas_idema) '
+            query = 'INSERT INTO observacoes (data, hora, erros, emas_idema) '
             query += f'VALUES("{data_leitura}", "{hora_leitura}","{erros}", {idema})'
             cursor.execute(query)
             connection.commit()

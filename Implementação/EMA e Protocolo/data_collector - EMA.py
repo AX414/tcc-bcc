@@ -60,7 +60,8 @@ def captar_Dados():
     unidade_fc = "mm/h"
 
     # Criar a estrutura JSON
-    dados_json = {
+    dados_json =  {
+        "observacao":{
         "topico": ema['topico'],
         "data_leitura": str(data_atual),
         "hora_leitura": hora_atual,
@@ -100,8 +101,16 @@ def captar_Dados():
                 "valor": frequencia_chuva
             }
         },
-        "nao_previstos":{}
+        "observacoes_nao_previstas":{}
+    },
+    "diagnostico":{
+        "status_ema":ema['status_ema'],
+        "carga_bateria": ema['carga_bateria'],
+        "uptime":ema['uptime'],
+        "diagnosticos_nao_previstos":{ }
     }
+}
+
 
     # Converte a estrutura JSON em uma string JSON
     msg = json.dumps(dados_json)
@@ -113,7 +122,7 @@ def publicar_dado_atual(client):
         time.sleep(3)
         # Captando os dados atuais
         dados = captar_Dados()
-        result = client.publish(topic, dados, qos=1, retain=True)
+        result = client.publish(topic, dados, qos=2)
         result: [0, 1]
         status = result[0]
         if status == 0:

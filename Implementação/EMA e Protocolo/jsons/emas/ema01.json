@@ -1,7 +1,9 @@
 {
-    "nome": "Morrigan1",
-    "ip": "177.168.79.85",
+    "nome": "EMA Epitácio",
     "latitude": "-21.78526685",
     "longitude": "-52.111628826598704",
-    "topico": "morrigan1"
+    "topico": "epitacio1",
+    "status_ema": "Online",
+    "carga_bateria": 78.6,
+    "uptime": "3 dia(s), 4 hora(s), 60 min"
 }
