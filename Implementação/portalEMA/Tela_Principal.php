@@ -43,13 +43,13 @@ require '../portalEMA/functions/geral.php';
         .leaflet-control-zoom {
             display: none;
         }
-        
-        
+
+
     </style>
-   <body>
+    <body>
         <div id="map-container">
             <?php
-                menu();
+            menu();
             ?>
             <div id="map"></div>
         </div>
@@ -74,9 +74,14 @@ require '../portalEMA/functions/geral.php';
                         if (location.publica == "1") {
                             popupContent += "<br><b style='color: blue;'>Esta é uma estação pública</b>";
                         } else {
-                            popupContent += "<br><b style='color: green;'>Esta estação é sua</b>";
+                            if (location.iddono == <?php echo $_SESSION['idusuario']; ?>) {
+                                popupContent += "<br><b style='color: green;'>Esta estação é sua</b>";
+                            } else {
+                                popupContent += "<br><b style='color: red;'>Esta estação não é sua</b>";
+                            }
                         }
-                        popupContent += "<br><b>Nome: </b>" + location.nome;
+                        popupContent += "<br><b>Nome da EMA: </b>" + location.nome;
+                        popupContent += "<br><b>Proprietário: </b>" + location.nome_usuario;
                         popupContent += "<br><b>Latitude: </b> " + location.latitude;
                         popupContent += "<br><b>Longitude: </b>" + location.longitude;
 
@@ -93,12 +98,15 @@ require '../portalEMA/functions/geral.php';
                                 shadowSize: [41, 41]
                             }
                         });
-                        var greenIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/blue.png'});
+                        var blueIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/blue.png'});
                         var redIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/red.png'});
+                        var greenIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/green.png'});
 
                         if (location.publica === "1") {
+                            L.marker([location.latitude, location.longitude], {icon: blueIcon}).bindPopup(popupContent).addTo(map);
+                        } else if(location.iddono == <?php echo $_SESSION['idusuario']; ?>){
                             L.marker([location.latitude, location.longitude], {icon: greenIcon}).bindPopup(popupContent).addTo(map);
-                        } else {
+                        }else {
                             L.marker([location.latitude, location.longitude], {icon: redIcon}).bindPopup(popupContent).addTo(map);
                         }
                     }
@@ -117,26 +125,24 @@ require '../portalEMA/functions/geral.php';
                 var uptime = location.uptime;
                 var diagnostico_nao_previsto = location.diagnostico_nao_previsto;
 
-                if (diagnostico_nao_previsto === null) {
-                    diagnostico_nao_previsto = "Nenhum";
-                }
+                diagnostico_nao_previsto = diagnostico_nao_previsto !== undefined ? diagnostico_nao_previsto : "Nada";
 
                 // Preenche o conteúdo do modal com o status da bateria
                 $('#diagnosticoModal .modal-body').html('<b>Status da EMA:</b> ' + statusEma + '.<br>\n\
                                                          <b>Carga da Bateria:</b> ' + carga + '%<br>\n\
                                                          <b>Tempo Online:</b> ' + uptime + '.<br>\n\
                                                          <b>Dados não previstos:</b> ' + diagnostico_nao_previsto + '.<br>');
-
+                $('#diagnosticoModal .modal-title').html('Diagnóstico da ' + location.nome + ':');
             });
         </script>
 
 
         <!-- Modal -->
-        <div class="modal fade" id="diagnosticoModal" tabindex="-1" role="dialog" aria-labelledby="diagnosticoModalLabel" aria-hidden="true">
+        <div style="margin-top: 10%;" class="modal fade" id="diagnosticoModal" tabindex="-1" role="dialog" aria-labelledby="diagnosticoModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="diagnosticoModalLabel">Diagnóstico</h5>
+                        <h5 class="modal-title" id="diagnosticoModalLabel">Diagnóstico da Ema</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -144,7 +150,7 @@ require '../portalEMA/functions/geral.php';
                     <div class="modal-body">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>

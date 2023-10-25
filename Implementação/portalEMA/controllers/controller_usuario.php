@@ -20,14 +20,19 @@ if (isset($_POST['btn-alterar-usuario'])) {
 }
 
 function cadastrarUsuario() {
-    if (isset($_POST['nome_usuario']) && isset($_POST['nome_login']) && isset($_POST['email']) && isset($_POST['senha']) && isset($_POST['nivel_acesso'])
-    ) {
+    if (isset($_POST['nome_usuario']) && isset($_POST['nome_login']) && isset($_POST['email'])) {
         $nome_usuario = $_POST['nome_usuario'];
         $nome_login = $_POST['nome_login'];
         $email = $_POST['email'];
         $senha = $_POST['senha'];
         $hash = password_hash($senha, PASSWORD_ARGON2ID);
-        $nivel_acesso = $_POST['nivel_acesso'];
+        //Se quem tiver cadastrando for o adm, vai ter as opçoes 
+        //de cadastro no form, se não, sempre será um Cliente (nível 2)
+        if(isset($_SESSION['nivel_acesso']) == 1){
+            $nivel_acesso = $_POST['nivel_acesso'];
+        }else{
+            $nivel_acesso = 2;
+        }
 
         $conexao = conectarBanco();
 
@@ -43,7 +48,7 @@ function cadastrarUsuario() {
             $insert = mysqli_query($conexao, $query);
             if ($insert) {
                 echo "<script>alert('Usuário cadastrado com sucesso!');</script>";
-                if (session_status() == PHP_SESSION_ACTIVE) {
+                if (isset($_SESSION['nivel_acesso']) == 1) {
                     echo"<script>window.location.href='../Tela_Listar_Usuarios.php';</script>";
                 }else{
                     echo"<script>window.location.href='../Tela_Principal.php';</script>";

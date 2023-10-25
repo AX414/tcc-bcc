@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
   PRIMARY KEY (idusuario))
 ENGINE = InnoDB;
 
-INSERT INTO usuarios VALUES(1,"JP","J.Porcel","adm","$argon2id$v=19$m=65536,t=4,p=1$anpJLmVTUDBhQ0xKVWIxdQ$x5XpaCmcJojWWcLn8Cy9z8Xxn9MvRlmyIycPSad/ZR8",1,1);
-INSERT INTO usuarios VALUES(2,"Dark","Dark","cli","$argon2id$v=19$m=65536,t=4,p=1$UTAyaWhkbjVJQzlFYjlPVA$EvIWZJh+o5Wp4cqOm6l2nYCocAJYq78nFwUp/BHoGzI",2,1);
+INSERT INTO usuarios VALUES(1,"Administrador","adm","adm","$argon2id$v=19$m=65536,t=4,p=1$anpJLmVTUDBhQ0xKVWIxdQ$x5XpaCmcJojWWcLn8Cy9z8Xxn9MvRlmyIycPSad/ZR8",1,1);
+INSERT INTO usuarios VALUES(2,"Cliente","cli","cli","$argon2id$v=19$m=65536,t=4,p=1$UTAyaWhkbjVJQzlFYjlPVA$EvIWZJh+o5Wp4cqOm6l2nYCocAJYq78nFwUp/BHoGzI",2,1);
 SELECT * FROM usuarios;
 -- -----------------------------------------------------
 -- Table emas
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS emas (
   status_ema VARCHAR (10) NULL,
   carga_bateria FLOAT NULL, 
   uptime VARCHAR(50) NULL,
-  diagnostico_nao_previsto JSON NULL,
+  diagnosticos_nao_previstos JSON NULL,
   PRIMARY KEY (idema, usuarios_idusuario),
     FOREIGN KEY (usuarios_idusuario)
     REFERENCES usuarios (idusuario))

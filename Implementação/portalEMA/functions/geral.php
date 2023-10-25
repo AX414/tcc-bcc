@@ -43,7 +43,7 @@ function menu() {
                     </li>
                <li class="nav-item">
                 <form action="../portalEMA/functions/logout.php">
-                    <button style="position: absolute; top: 20%; right: 10px; width:8%;" class="btn btn-outline-danger" type="submit"><i style="padding-right: 3%;" class="fas fa-sign-out"></i></button>
+                    <button style="position: absolute; top: 20%; right: 10px; width:8%;" class="btn btn-outline-danger" type="submit"><i style="padding-right: 3%;" class="fas fa-sign-out"></i>Logout</button>
                 </form>
                 </li>
                 </ul>

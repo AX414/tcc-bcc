@@ -31,7 +31,7 @@ $ema = buscarEMAPorID($emaID);
         <?php
         menu();
         ?>
-        <div class="container" style="margin-top: 5%;">
+        <div style="margin-top: 10%;padding-bottom: auto; position: fixed; margin-bottom: 10%;">
             <h1>Histórico de Observações Meteorológicas da <?php echo $ema['nome'] ?></h1>
             <form method="POST" action="">
                 <div class="row justify-content-between">

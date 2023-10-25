@@ -139,12 +139,19 @@ def persistir_msg(aux):
         # Dados não previstos
         observacoes_nao_previstas = json.dumps(observacao['observacao']['observacoes_nao_previstas'])
 
+        # Dados de diagnóstico
+        status_ema = observacao['diagnostico']['status_ema']
+        carga_bateria = observacao['diagnostico']['carga_bateria']
+        uptime = observacao['diagnostico']['uptime']
+        diagnosticos_nao_previstos = json.dumps(observacao['diagnostico']['diagnosticos_nao_previstos'])
+
         print(f"Mensagem consumida pelo tópico: {topic}.")
         print("================================================================================================")
         print(f"Mensagem recebida: {observacao}")
         print("================================================================================================\n")
 
         if idema is not None:
+            # Envia os dados da Observação Meteorológica. 
             query = 'INSERT INTO observacoes(data, hora, temperatura, unidade_tem, erro_tem,'
             query += 'umidade, unidade_um, erro_um, vento_velocidade, unidade_vv, erro_vv,'
             query += 'vento_direcao, unidade_vd, erro_vd, radiacao_solar, unidade_rs, erro_rs,'
@@ -153,6 +160,11 @@ def persistir_msg(aux):
             query += 'emas_idema) '
             query += f'VALUES("{data_leitura}", "{hora_leitura}", {temperatura}, "{unidade_tem}", {erro_tem}, {umidade}, "{unidade_um}", {erro_um},{velocidade_vento}, "{unidade_vv}", {erro_vv}, {direcao_vento}, "{unidade_dv}", {erro_dv}, {radiacao_solar}, "{unidade_rs}", {erro_rs}, {pressao_atmos}, "{unidade_pa}", {erro_pa}, {volume_chuva}, "{unidade_vc}", {erro_vc},{frequencia_chuva}, "{unidade_fc}", {erro_fc}, \'{observacoes_nao_previstas}\',"{erros}", {idema})'
             cursor.execute(query)
+            connection.commit()
+
+            # Envia os dados do diagnóstico para a EMA.
+            query = 'UPDATE emas SET status_ema = %s, carga_bateria = %s, uptime = %s, diagnosticos_nao_previstos = %s WHERE idema = %s'
+            cursor.execute(query, (status_ema, carga_bateria, uptime, diagnosticos_nao_previstos, idema))
             connection.commit()
         else:
             print("Não foi possível encontrar a EMA correspondente.")

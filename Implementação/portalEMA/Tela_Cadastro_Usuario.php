@@ -45,7 +45,7 @@ require '../portalEMA/functions/geral.php';
     </style>
     <body>
         <?php
-           menu(); 
+        menu();
         ?>
 
         <div class="card col-6">
@@ -67,16 +67,17 @@ require '../portalEMA/functions/geral.php';
 
                             <label>Senha</label>
                             <input name="senha" type="password" class="form-control" placeholder="Senha">
-
-                            <label>Nível de Acesso</label>
-                            <select name="nivel_acesso" class="form-control form-select">
-                                <?php
-                                if ($_SESSION['nivel_acesso'] == 1) {
-                                    echo '<option value="1" selected>Administrador</option>';
-                                }
-                                ?>
-                                <option value="2">Cliente</option>
-                            </select>
+                            <?php
+                            if (isset($_SESSION['nivel_acesso']) == 1) {
+                                echo'<label>Nível de Acesso</label>';
+                                echo'<select name="nivel_acesso" class="form-control form-select">';
+                                echo '<option value="1" selected>Administrador</option>';
+                                echo '<option value="2">Cliente</option>';
+                                echo '</select>';
+                            }else{
+                                echo '';
+                            }
+                            ?>
                         </div>
                         <br>
                         <button name="btn-cadastro-usuario" style="width: 100%" class="btn btn-primary btn-block" type="submit"><i style="padding-right: 1%;" class="fas fa-circle-plus"></i>Cadastrar</button>
@@ -84,6 +85,5 @@ require '../portalEMA/functions/geral.php';
                 </form>
             </div>
         </div>
-
     </body>
 </html>
