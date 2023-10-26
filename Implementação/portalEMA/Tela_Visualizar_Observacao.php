@@ -41,7 +41,7 @@ require '../portalEMA/controllers/controller_observacao.php';
         menu();
 
         $observacaoId = $_GET['idobservacao'];
-
+        
         $observacao = buscarObservacaoPorId($observacaoId);
 
         if (!$observacao) {

@@ -85,7 +85,7 @@ require '../portalEMA/controllers/controller_ema.php';
                 echo '<input disabled="true" value="' . $ema['topico_kafka'] . '" name="topico_kafka" type="text" class="form-control" placeholder="Tópico do Kafka da EMA.">';
             }
             echo '</div>';
-            echo '<a href="../portalEMA/Tela_Listar_Relatorios.php?idema='.$emaId.'" class="btn btn-primary" style="width: 100%;"><i style="padding-right: 1%;" class="fas fa-file"></i>Relatórios da '.$ema['nome'].'</a>';
+            echo '<a href="../portalEMA/Tela_Listar_Observacoes.php?idema='.$emaId.'" class="btn btn-primary" style="width: 100%;"><i style="padding-right: 1%;" class="fas fa-file"></i>Relatórios da '.$ema['nome'].'</a>';
             echo '<br>';
             echo '</div>';
             echo '</form>';

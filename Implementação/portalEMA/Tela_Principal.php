@@ -54,95 +54,96 @@ require '../portalEMA/functions/geral.php';
             <div id="map"></div>
         </div>
         <script>
-            var map = L.map('map').setView([-21.7583, -52.1153], 13);
+            var map = L.map('map').setView([ - 21.7583, - 52.1153], 13);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            maxZoom: 19,
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
             var locations; // Variável para armazenar os dados das estações
 
             $.ajax({
-                url: '../portalEMA/functions/plotar_mapa.php',
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
+            url: '../portalEMA/functions/plotar_mapa.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
                     locations = data; // Armazena os dados das estações na variável locations
                     console.log(locations);
                     for (var i = 0; i < locations.length; i++) {
-                        var location = locations[i];
-                        var popupContent = "";
-                        if (location.publica == "1") {
-                            popupContent += "<br><b style='color: blue;'>Esta é uma estação pública</b>";
-                        } else {
-                            if (location.iddono == <?php echo $_SESSION['idusuario']; ?>) {
-                                popupContent += "<br><b style='color: green;'>Esta estação é sua</b>";
-                            } else {
-                                popupContent += "<br><b style='color: red;'>Esta estação não é sua</b>";
-                            }
-                        }
-                        popupContent += "<br><b>Nome da EMA: </b>" + location.nome;
-                        popupContent += "<br><b>Proprietário: </b>" + location.nome_usuario;
-                        popupContent += "<br><b>Latitude: </b> " + location.latitude;
-                        popupContent += "<br><b>Longitude: </b>" + location.longitude;
-
-                        popupContent += "<br><a href='../portalEMA/Tela_Listar_Observacoes.php?idema=" + location.idema + "'><button style='width: 100%; margin-top: 5%;' class='btn btn-primary btn-block'><i class='fas fa-file'></i> Relatórios</button></a>";
-
-                        // Adiciona o botão de Diagnóstico
-                        popupContent += "<button id='diagnosticoBtn' style='width: 100%; margin-top: 5%;' class='btn btn-primary btn-block' data-toggle='modal' data-target='#diagnosticoModal' data-location-index='" + i + "'><i class='fas fa-stethoscope'></i> Diagnóstico</button";
-
-                        var LeafIcon = L.Icon.extend({
-                            options: {
-                                iconSize: [48, 48],
-                                iconAnchor: [16, 37],
-                                popupAnchor: [8, -34],
-                                shadowSize: [41, 41]
-                            }
-                        });
-                        var blueIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/blue.png'});
-                        var redIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/red.png'});
-                        var greenIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/green.png'});
-
-                        if (location.publica === "1") {
-                            L.marker([location.latitude, location.longitude], {icon: blueIcon}).bindPopup(popupContent).addTo(map);
-                        } else if(location.iddono == <?php echo $_SESSION['idusuario']; ?>){
-                            L.marker([location.latitude, location.longitude], {icon: greenIcon}).bindPopup(popupContent).addTo(map);
-                        }else {
-                            L.marker([location.latitude, location.longitude], {icon: redIcon}).bindPopup(popupContent).addTo(map);
-                        }
+                    var location = locations[i];
+                    var popupContent = "";
+                    var idAutenticado = <?php echo isset($_SESSION['idusuario']) ? $_SESSION['idusuario'] : 0; ?>;
+                    if (location.iddono == idAutenticado) {
+                    popupContent += "<br><b style='color: green;'>Esta estação é sua</b>";
+                    } else {
+                    if (location.publica == "1") {
+                    popupContent += "<br><b style='color: blue;'>Esta é uma estação pública</b>";
+                    } else if (location.publica == "0"){
+                    popupContent += "<br><b style='color: red;'>Esta estação não é sua</b>";
                     }
-                },
-                error: function (xhr, status, error) {
+                    }
+                    popupContent += "<br><b>Nome da EMA: </b>" + location.nome;
+                    popupContent += "<br><b>Proprietário: </b>" + location.nome_usuario;
+                    if (location.publica == "1"){
+                    popupContent += "<br><b>Pública: </b>Sim";
+                    } else{
+                    popupContent += "<br><b>Pública: </b>Não";
+                    }
+                    popupContent += "<br><b>Latitude: </b> " + location.latitude;
+                    popupContent += "<br><b>Longitude: </b>" + location.longitude;
+                    popupContent += "<br><a href='../portalEMA/Tela_Listar_Observacoes.php?idema=" + location.idema + "'><button style='width: 100%; margin-top: 5%;' class='btn btn-primary btn-block'><i class='fas fa-file'></i> Relatórios</button></a>";
+                    popupContent += "<button id='diagnosticoBtn' style='width: 100%; margin-top: 5%;' class='btn btn-primary btn-block' data-toggle='modal' data-target='#diagnosticoModal' data-location-index='" + i + "'><i class='fas fa-stethoscope'></i> Diagnóstico</button";
+                    var LeafIcon = L.Icon.extend({
+                    options: {
+                    iconSize: [48, 48],
+                            iconAnchor: [16, 37],
+                            popupAnchor: [8, - 34],
+                            shadowSize: [41, 41]
+                    }
+                    });
+                    var blueIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/blue.png'});
+                    var redIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/red.png'});
+                    var greenIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/green.png'});
+                    if (location.iddono == idAutenticado){
+                    L.marker([location.latitude, location.longitude], {icon: greenIcon}).bindPopup(popupContent).addTo(map);
+                    }
+                    else if (location.publica === "1") {
+                    L.marker([location.latitude, location.longitude], {icon: blueIcon}).bindPopup(popupContent).addTo(map);
+                    } else if (location.publica === "0") {
+                    L.marker([location.latitude, location.longitude], {icon: redIcon}).bindPopup(popupContent).addTo(map);
+                    }
+                    }
+                    },
+                    error: function (xhr, status, error) {
                     console.error(error);
-                }
+                    }
             });
-
             // Define um evento de clique para o botão de diagnóstico
             $('#map').on('click', '#diagnosticoBtn', function () {
-                var locationIndex = $(this).data('location-index');
-                var location = locations[locationIndex];
-                var statusEma = location.status_ema;
-                var carga = location.carga_bateria;
-                var uptime = location.uptime;
-                var diagnostico_nao_previsto = location.diagnostico_nao_previsto;
-
-                diagnostico_nao_previsto = diagnostico_nao_previsto !== undefined ? diagnostico_nao_previsto : "Nada";
-
-                // Preenche o conteúdo do modal com o status da bateria
-                $('#diagnosticoModal .modal-body').html('<b>Status da EMA:</b> ' + statusEma + '.<br>\n\
+            var locationIndex = $(this).data('location-index');
+            var location = locations[locationIndex];
+            var statusEma = location.status_ema;
+            var carga = location.carga_bateria;
+            var uptime = location.uptime;
+            var diagnosticos_nao_previstos = location.diagnosticos_nao_previstos;
+            diagnosticos_nao_previstos = diagnosticos_nao_previstos !== undefined ? diagnosticos_nao_previstos : "Nada.";
+            diagnosticos_nao_previstos = diagnosticos_nao_previstos !== null ? diagnosticos_nao_previstos : "Nada.";
+            // Preenche o conteúdo do modal com o status da bateria
+            $('#diagnosticoModal .modal-body').html('<b>Status da EMA:</b> ' + statusEma + '.<br>\n\
                                                          <b>Carga da Bateria:</b> ' + carga + '%<br>\n\
                                                          <b>Tempo Online:</b> ' + uptime + '.<br>\n\
-                                                         <b>Dados não previstos:</b> ' + diagnostico_nao_previsto + '.<br>');
-                $('#diagnosticoModal .modal-title').html('Diagnóstico da ' + location.nome + ':');
+                                                         <b>Dados não previstos:</b><br>\n\
+                                                         <textareatype="text" disabled="true" style="font-family: "Courier New";width: 80%;">' + diagnosticos_nao_previstos + '</textarea>');
+                    $('#diagnosticoModal .modal-title').html('Diagnóstico da ' + location.nome + ':');
             });
         </script>
 
 
         <!-- Modal -->
-        <div style="margin-top: 10%;" class="modal fade" id="diagnosticoModal" tabindex="-1" role="dialog" aria-labelledby="diagnosticoModalLabel" aria-hidden="true">
+        <div style="margin-top: 10%; height: auto;" class="modal fade" id="diagnosticoModal" tabindex="-1" role="dialog" aria-labelledby="diagnosticoModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="diagnosticoModalLabel">Diagnóstico da Ema</h5>
+                    <div class="modal-header bg-primary">
+                        <h5 class="modal-title" id="diagnosticoModalLabel" style="color: white;">Diagnóstico</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                             <span aria-hidden="true">&times;</span>
                         </button>

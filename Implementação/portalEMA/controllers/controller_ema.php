@@ -57,72 +57,96 @@ function cadastrarEMA() {
 }
 
 function listarEMAs() {
-    $conexao = conectarBanco();
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $nome = $_POST['nome'];
-        
-        $sql = "SELECT * FROM emas WHERE 1 = 1 AND ativa = 1";
-
-        if (!empty($nome)) {
-            $sql .= " AND nome LIKE '%$nome%'";
-        }
-
-        $result = $conexao->query($sql);
-    } else {
-        $sql = 'SELECT * FROM emas WHERE ativa = 1';
-        $result = $conexao->query($sql);
+    // Certifique-se de iniciar a sessão se ainda não estiver iniciada
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
     }
 
-    if ($result->num_rows >= 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo '<tr id="row-' . $row['idema'] . '">';
-            echo '<td>' . $row['idema'] . '</td>';
-            echo '<td>' . $row['nome'] . '</td>';
-            echo '<td>' . $row['ip'] . '</td>';
-            if ($row['publica'] == 0) {
-                echo '<td>Não</td>';
-            } else {
-                echo'<td>Sim</td>';
+    // Verifique se o usuário está logado
+    if (isset($_SESSION['nivel_acesso'])) {
+        $conexao = conectarBanco();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nome = $_POST['nome'];
+
+            $sql = "SELECT * FROM emas WHERE 1 = 1 AND ativa = 1";
+
+            if (!empty($nome)) {
+                $sql .= " AND nome LIKE '%$nome%'";
             }
-            echo '<td>' . $row['latitude'] . '</td>';
-            echo '<td>' . $row['longitude'] . '</td>';
-            
-            $iddono = $row['usuarios_idusuario'];
-            $query = "SELECT nome_usuario FROM usuarios WHERE idusuario = '$iddono'";
-            $resultado = $conexao->query($query);
-            if (!$resultado) {
-                die("Erro na consulta: " . $conexao->error);
-            }else if ($resultado) {
-                $rowDono = $resultado->fetch_assoc(); 
-                
-                if ($rowDono) {
-                    $nome_dono = $rowDono['nome_usuario'];
-                    echo '<td>' . $nome_dono . '</td>';
+
+            $result = $conexao->query($sql);
+        } else {
+            // Verifique o nível de acesso do usuário
+            $nivelAcesso = $_SESSION['nivel_acesso'];
+
+            if ($nivelAcesso == 1) {
+                // Administrador pode ver todas as EMAs ativas
+                $sql = 'SELECT * FROM emas WHERE ativa = 1';
+            } elseif ($nivelAcesso == 2) {
+                // Cliente com nível de acesso 2
+                $idUsuario = $_SESSION['idusuario'];
+                // Consulta para EMAs do usuário atual e EMAs públicas ativas
+                $sql = "SELECT * FROM emas WHERE (usuarios_idusuario = $idUsuario OR publica = 1) AND ativa = 1";
+            }
+
+            $result = $conexao->query($sql);
+        }
+
+        if ($result->num_rows >= 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo '<tr id="row-' . $row['idema'] . '">';
+                echo '<td>' . $row['idema'] . '</td>';
+                echo '<td>' . $row['nome'] . '</td>';
+                echo '<td>' . $row['ip'] . '</td>';
+                if ($row['publica'] == 0) {
+                    echo '<td>Não</td>';
                 } else {
-                    echo '<td>Não encontrado</td>';
+                    echo'<td>Sim</td>';
                 }
-            } else {
-                echo '<td>Erro na consulta</td>';
-            }
-            echo '<td>';
-            echo '<button name="btn-excluir-ema" type="button" class="btn btn-danger btn-sm" onclick="excluirEMA(' . $row['idema'] . ')">';
-            echo '<i class="fas fa-trash"></i>';
-            echo '</button>';
-            echo '<a href="Tela_Alterar_EMA.php?idema=' . $row['idema'] . '"><button name="btn-alterar-ema" type="button" class="btn btn-warning btn-sm" onclick="">';
-            echo '<i class="fas fa-pencil"></i>';
-            echo '</button>';
-            echo '<a href="Tela_Visualizar_EMA.php?idema=' . $row['idema'] . '"><button name="btn-visualizar-ema" type="button" class="btn btn-primary btn-sm" onclick="">';
-            echo '<i class="fas fa-eye"></i>';
-            echo '</button></a>';
-            echo '</td>';
-            echo '</tr>';
-        }
-    } else {
-        echo '<tr><td colspan="7">Nenhum dado encontrado.</td></tr>';
-    }
+                echo '<td>' . $row['latitude'] . '</td>';
+                echo '<td>' . $row['longitude'] . '</td>';
 
-    $conexao->close();
+                $iddono = $row['usuarios_idusuario'];
+                $query = "SELECT nome_usuario FROM usuarios WHERE idusuario = '$iddono'";
+                $resultado = $conexao->query($query);
+                if (!$resultado) {
+                    die("Erro na consulta: " . $conexao->error);
+                } else if ($resultado) {
+                    $rowDono = $resultado->fetch_assoc();
+
+                    if ($rowDono) {
+                        $nome_dono = $rowDono['nome_usuario'];
+                        echo '<td>' . $nome_dono . '</td>';
+                    } else {
+                        echo '<td>Não encontrado</td>';
+                    }
+                } else {
+                    echo '<td>Erro na consulta</td>';
+                }
+                echo '<td>';
+                echo '<button name="btn-excluir-ema" type="button" class="btn btn-danger btn-sm" onclick="excluirEMA(' . $row['idema'] . ')">';
+                echo '<i class="fas fa-trash"></i>';
+                echo '</button>';
+                echo '<a href="Tela_Alterar_EMA.php?idema=' . $row['idema'] . '"><button name="btn-alterar-ema" type="button" class="btn btn-warning btn-sm" onclick="">';
+                echo '<i class="fas fa-pencil"></i>';
+                echo '</button>';
+                echo '<a href="Tela_Visualizar_EMA.php?idema=' . $row['idema'] . '"><button name="btn-visualizar-ema" type="button" class="btn btn-primary btn-sm" onclick="">';
+                echo '<i class="fas fa-eye"></i>';
+                echo '</button></a>';
+                echo '</td>';
+                echo '</tr>';
+            }
+        } else {
+            echo '<tr><td colspan="7">Nenhum dado encontrado.</td></tr>';
+        }
+
+        $conexao->close();
+    } else {
+        echo 'Usuário não está logado ou não tem nível de acesso definido.';
+    }
 }
+
+
 
 function excluirEMA() {
     if (isset($_POST['idema'])) {

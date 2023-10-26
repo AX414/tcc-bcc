@@ -25,7 +25,7 @@ function menu() {
                             Usuários
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="../portalEMA/Tela_Cadastro_Usuario.php">Cadastrar Usuário</a>
+                            <a class="dropdown-item " href="../portalEMA/Tela_Cadastro_Usuario.php">Cadastrar Usuário</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="../portalEMA/Tela_Listar_Usuarios.php">Listar Usuários</a>
                         </div>

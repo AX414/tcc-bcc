@@ -10,12 +10,14 @@ require(__DIR__ . '/../functions/banco.php');
 function listarObservacoes($idema) {
     $conexao = conectarBanco();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        /*
         $dataInicial = $_POST['data_inicial'];
         $dataFinal = $_POST['data_final'];
         $horaLeitura = $_POST['hora_leitura'];
-        
+        */
         $sql = "SELECT * FROM observacoes WHERE 1=1 AND emas_idema = '$idema'";
 
+        /*
         if (!empty($dataInicial)) {
             $sql .= " AND data >= '$dataInicial'";
         }
@@ -27,7 +29,7 @@ function listarObservacoes($idema) {
         if (!empty($horaLeitura)) {
             $sql .= " AND hora >= '$horaLeitura'";
         }
-
+        */
         $result = $conexao->query($sql);
     } else {
         $sql = "SELECT * FROM observacoes WHERE 1 = 1 AND emas_idema = '$idema'";
