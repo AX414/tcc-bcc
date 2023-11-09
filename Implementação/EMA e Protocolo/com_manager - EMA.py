@@ -10,7 +10,7 @@ broker = 'localhost'
 port = 1883
 topic = 'topico'
 client_id = f'python-mqtt-{random.randint(0, 100)}'
-producer = KafkaProducer(bootstrap_servers='localhost:9092')
+producer = KafkaProducer(bootstrap_servers='192.168.1.6:9092')
 
 def connect_mqtt():
     def on_connect(client, userdata, flags, rc):

@@ -84,9 +84,9 @@ require '../portalEMA/functions/geral.php';
                     popupContent += "<br><b>Nome da EMA: </b>" + location.nome;
                     popupContent += "<br><b>Proprietário: </b>" + location.nome_usuario;
                     if (location.publica == "1"){
-                    popupContent += "<br><b>Pública: </b>Sim";
+                    popupContent += "<br><b>Tipo: </b>Pública";
                     } else{
-                    popupContent += "<br><b>Pública: </b>Não";
+                    popupContent += "<br><b>Tipo: </b>Privada";
                     }
                     popupContent += "<br><b>Latitude: </b> " + location.latitude;
                     popupContent += "<br><b>Longitude: </b>" + location.longitude;
@@ -103,12 +103,13 @@ require '../portalEMA/functions/geral.php';
                     var blueIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/blue.png'});
                     var redIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/red.png'});
                     var greenIcon = new LeafIcon({iconUrl: '../portalEMA/resources/imgs/green.png'});
-                    if (location.iddono == idAutenticado){
+                    
+                    if (location.iddono == idAutenticado && (location.publica === "1" || location.publica === "0")){
                     L.marker([location.latitude, location.longitude], {icon: greenIcon}).bindPopup(popupContent).addTo(map);
                     }
-                    else if (location.publica === "1") {
+                    else if (location.iddono != idAutenticado && location.publica === "1") {
                     L.marker([location.latitude, location.longitude], {icon: blueIcon}).bindPopup(popupContent).addTo(map);
-                    } else if (location.publica === "0") {
+                    } else if (location.iddono != idAutenticado && location.publica === "0") {
                     L.marker([location.latitude, location.longitude], {icon: redIcon}).bindPopup(popupContent).addTo(map);
                     }
                     }
