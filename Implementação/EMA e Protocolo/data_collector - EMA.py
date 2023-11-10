@@ -6,7 +6,6 @@ from datetime import date
 from paho.mqtt import client as mqtt_client
 from time import sleep
 
-### Dados da REDEMET pela API? PP, Maringá, Londrina, Bauru
 arquivo_de_config= open('./jsons/emas/ema01.json', encoding="utf8")
 ema = json.loads(arquivo_de_config.read())
 
