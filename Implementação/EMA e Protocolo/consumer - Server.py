@@ -8,21 +8,63 @@ from mysql.connector import Error
 from datetime import date, time
 from paho.mqtt import client as mqtt_client
 from kafka import KafkaConsumer
+from kafka.admin import KafkaAdminClient, NewTopic
 
-arquivo_de_config= open('./jsons/emas/ema01.json', encoding="utf8")
-ema = json.loads(arquivo_de_config.read())
 
-broker = 'localhost'
-port = 1883
-topic = ema['topico']
-client_id = f'python-mqtt-{random.randint(0, 100)}'
-consumer = KafkaConsumer(ema['topico'], bootstrap_servers='localhost:9092')
+# Client Admin
+admin_client = KafkaAdminClient(bootstrap_servers=['localhost:9092'])
+
+# Configurando o consumer
+consumer = KafkaConsumer(bootstrap_servers='localhost:9092')
+topicos = consumer.topics()
+print(topicos)
+consumer.subscribe(topicos)
+
+# Configurando o DB
 connection = mysql.connector.connect(host='localhost', database='awsmqtt', user='root', password='ifsp')
 cursor = connection.cursor()
 
+# JSON Schema
 with open('./jsons/schema.json', encoding="utf8") as schema:
     json_schema = json.load(schema)
 
+# Comandos para deletar e criar tópicos, se necessário
+def delete_topic(topico):
+    topicos_existentes = consumer.topics()
+    print(list(topicos_existentes))
+    try:
+        if topico in topicos_existentes:
+            admin_client.delete_topics(topics=topico)
+            print("Tópico deletado.")
+        else:
+            print("Este tópico não existe.")
+    except Exception as error:
+        print(error)
+
+def create_topic(topico):
+    topicos_existentes = consumer.topics()
+    lista_topicos = []
+    if topico not in topicos_existentes:
+        #print(f'Topico: {topico} adicionado na lista.')
+        lista_topicos.append(NewTopic(name=topico, num_partitions=1, replication_factor=1))
+    #else:
+        #print(f'O tópico {topico}, já existe na lista')
+    try:
+        if lista_topicos:
+            admin_client.create_topics(new_topics = lista_topicos, validate_only=False,)
+            print("Tópico criado com sucesso")
+        #else:
+            #print("Tópico já existe")
+    except Exception as error:
+        print(error)
+
+# Cria os principais tópicos
+create_topic("epitacio1")
+create_topic("bataguassu2")
+create_topic("venceslau3")
+create_topic("prudente4")
+
+# Conecta no banco de dados
 def connect_database():
     try:
         if connection.is_connected():
@@ -35,6 +77,7 @@ def connect_database():
     except Exception as e:
         print(f"Erro: {e}")
 
+# Desconecta do banco de dados
 def disconnect_database():
     cursor = connection.cursor()
     if connection.is_connected():
@@ -42,6 +85,7 @@ def disconnect_database():
         connection.close()
         print("Conexão encerrada")
 
+# Pega a mensagem por parâmetro e compara com o JSON Schema para ver se é válida
 def validar_mensagem(mensagem):
     try:
         validate(instance=mensagem, schema=json_schema)
@@ -51,6 +95,7 @@ def validar_mensagem(mensagem):
         print(f"A mensagem não é válida de acordo com o JSON Schema: {e}")
         return False
 
+# Encontra o id da EMA de acordo com o tópico do kafka que ela têm no banco de dados
 def encontrar_idema(topico_kafka):
     try:
         cursor = connection.cursor()
@@ -67,12 +112,12 @@ def encontrar_idema(topico_kafka):
         print(f"Erro ao encontrar EMA: {e}")
         return None
 
-
+# Persiste as mensagens no banco de dados
 def persistir_msg(aux):
     observacao = json.loads(aux)
     erros = ""
-    # Pegando a EMA pelo Tópico dela TEM QUE SER DO RELATÓRIO, PEGAR PELO ID DA EMA
-    idema = encontrar_idema(ema['topico'])
+    
+    idema = encontrar_idema(observacao['observacao']['topico'])
 
     if(validar_mensagem(observacao)):
         data_leitura = observacao['observacao']['data_leitura']
@@ -145,7 +190,7 @@ def persistir_msg(aux):
         uptime = observacao['diagnostico']['uptime']
         diagnosticos_nao_previstos = json.dumps(observacao['diagnostico']['diagnosticos_nao_previstos'])
 
-        print(f"Mensagem consumida pelo tópico: {topic}.")
+        print(f"Mensagem consumida pelo tópico: {observacao['observacao']['topico']}.")
         print("================================================================================================")
         print(f"Mensagem recebida: {observacao}")
         print("================================================================================================\n")
@@ -187,6 +232,7 @@ def persistir_msg(aux):
 def run():
     connect_database()
     for msg in consumer:
+        #print(f"{msg.topic} -> {msg.value.decode('utf-8')}")
         aux = msg.value.decode('utf-8')
         persistir_msg(aux)
     consumer.close()

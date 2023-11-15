@@ -3,7 +3,7 @@ import json
 from paho.mqtt import client as mqtt_client
 from kafka import KafkaProducer
 
-arquivo_de_config= open('./jsons/emas/ema01.json', encoding="utf8")
+arquivo_de_config= open('./jsons/emas/ema03.json', encoding="utf8")
 ema = json.loads(arquivo_de_config.read())
 
 broker = 'localhost'
