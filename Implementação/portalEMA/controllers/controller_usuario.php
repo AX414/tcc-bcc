@@ -144,8 +144,21 @@ function alterarUsuario() {
         $novoLogin = $_POST['nome_login'];
         $novoEmail = $_POST['email'];
 
+        $usuario = buscarUsuarioPorId($userId);
+        
         $conexao = conectarBanco();
 
+        // Verificar se o novo e-mail já está sendo usado por outro usuário do mesmo nível de acesso
+        $queryVerificarEmail = "SELECT idusuario FROM usuarios WHERE email = '$novoEmail' AND nivel_acesso = " . $usuario['nivel_acesso'];
+        $resultVerificarEmail = mysqli_query($conexao, $queryVerificarEmail);
+
+        if ($resultVerificarEmail && mysqli_num_rows($resultVerificarEmail) > 0) {
+            echo "<script>alert('O e-mail já está sendo usado por outro usuário do mesmo nível de acesso.');window.location.href='../Tela_Alterar_Usuario.php?idusuario=" . $usuario['idusuario'] . "';</script>";
+            return;
+        }
+
+        // Proceder com a atualização do usuário
+        
         $query = "UPDATE usuarios SET nome_usuario = '$novoNome', nome_login = '$novoLogin', email = '$novoEmail' WHERE idusuario = '$userId'";
         $update = mysqli_query($conexao, $query);
 
@@ -153,7 +166,7 @@ function alterarUsuario() {
             echo "<script>alert('Usuário alterado com sucesso!');window.location.href='../Tela_Listar_Usuarios.php';</script>";
             $_SESSION["nome_login"] = $novoLogin;
         } else {
-            echo "<script>alert('Erro ao alterar o usuário.');window.location.href='../Tela_Alterar_Usuario.php';</script>";
+            echo "<script>alert('Erro ao alterar o usuário.');window.location.href='../Tela_Alterar_Usuario.php?idusuario=" . $usuario['idusuario'] . "';</script>";
         }
 
         $conexao->close();

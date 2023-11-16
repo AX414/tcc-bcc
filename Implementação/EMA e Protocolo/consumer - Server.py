@@ -16,9 +16,6 @@ admin_client = KafkaAdminClient(bootstrap_servers=['localhost:9092'])
 
 # Configurando o consumer
 consumer = KafkaConsumer(bootstrap_servers='localhost:9092')
-topicos = consumer.topics()
-print(topicos)
-consumer.subscribe(topicos)
 
 # Configurando o DB
 connection = mysql.connector.connect(host='localhost', database='awsmqtt', user='root', password='ifsp')
@@ -58,18 +55,24 @@ def create_topic(topico):
     except Exception as error:
         print(error)
 
-# Cria os principais tópicos
-create_topic("epitacio1")
-create_topic("bataguassu2")
-create_topic("venceslau3")
-create_topic("prudente4")
+# Pega todos os tópicos e se inscreve neles
+def atualiza_topicos(consumer):
+    query = 'SELECT topico_kafka FROM emas'
+    cursor.execute(query)
+    result = cursor.fetchall()
+    topicos = [row[0] for row in result]  # Extracting the topics from the result set
+
+    # Check and create topics if they don't exist
+    for topico in topicos:
+        if topico not in consumer.topics():
+            create_topic(topico)
+
+    consumer.subscribe(topicos)
 
 # Conecta no banco de dados
 def connect_database():
     try:
         if connection.is_connected():
-            db_info = connection.get_server_info()
-            print(f"\nConectado ao MySQL Server {db_info}")
             cursor = connection.cursor()
             cursor.execute("select database();")
             record = cursor.fetchone()
@@ -231,10 +234,13 @@ def persistir_msg(aux):
 
 def run():
     connect_database()
+    atualiza_topicos(consumer)
+    print(consumer.topics())
     for msg in consumer:
         #print(f"{msg.topic} -> {msg.value.decode('utf-8')}")
         aux = msg.value.decode('utf-8')
         persistir_msg(aux)
+    
     consumer.close()
 
 if __name__ == '__main__':

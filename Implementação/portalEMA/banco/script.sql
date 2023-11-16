@@ -47,13 +47,13 @@ CREATE TABLE IF NOT EXISTS emas (
 ENGINE = InnoDB;
 
 -- IF de Epitácio
-INSERT INTO emas VALUES (1, "EMA de Epitácio","192.168.0.1",1,"-21.78526685","-52.111628826598704", 1,1,"epitacio1", "Online", 78.6, "3 dia(s), 4 hora(s), 55 min", null);
+INSERT INTO emas VALUES (1, "Epitácio","192.168.0.1",1,"-21.78526685","-52.111628826598704", 1,1,"epitacio1", "Online", 78.6, "3 dia(s), 4 hora(s), 55 min", null);
 -- Bataguassu
-INSERT INTO emas VALUES (2, "EMA de Bataguassu","192.168.0.1",0,"-21.7155","-52.4196", 1,1,"bataguassu2", "Online", 88.3, "1 dia(s), 8 hora(s), 15 min", null);
+INSERT INTO emas VALUES (2, "Bataguassu","192.168.0.1",0,"-21.7155","-52.4196", 1,1,"bataguassu2", "Online", 88.3, "1 dia(s), 8 hora(s), 15 min", null);
 -- Venceslau
-INSERT INTO emas VALUES (3, "EMA de Venceslau","192.168.0.1",1,"-21.8754","-51.8447", 2,1,"venceslau3", "Online", 95.0, "0 dia(s), 18 hora(s), 45 min", null);
+INSERT INTO emas VALUES (3, "Venceslau","192.168.0.1",1,"-21.8754","-51.8447", 2,1,"venceslau3", "Online", 95.0, "0 dia(s), 18 hora(s), 45 min", null);
 -- Prudente
-INSERT INTO emas VALUES (4, "EMA de Prudente","192.168.0.1",0,"-22.1207","-51.3852", 2,1,"prudente4", "Online", 88.2, "1 dia(s), 8 hora(s), 20 min", null);
+INSERT INTO emas VALUES (4, "Prudente","192.168.0.1",0,"-22.1207","-51.3852", 2,1,"prudente4", "Online", 88.2, "1 dia(s), 8 hora(s), 20 min", null);
 
 SELECT * FROM emas;
 -- -----------------------------------------------------

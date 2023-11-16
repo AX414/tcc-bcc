@@ -109,7 +109,8 @@ require '../portalEMA/functions/geral.php';
                     }
                     else if (location.iddono != idAutenticado && location.publica === "1") {
                     L.marker([location.latitude, location.longitude], {icon: blueIcon}).bindPopup(popupContent).addTo(map);
-                    } else if (location.iddono != idAutenticado && location.publica === "0") {
+                    } 
+                    else if (location.iddono != idAutenticado && location.publica === "0") {
                     L.marker([location.latitude, location.longitude], {icon: redIcon}).bindPopup(popupContent).addTo(map);
                     }
                     }
