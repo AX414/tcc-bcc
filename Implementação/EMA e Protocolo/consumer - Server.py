@@ -12,10 +12,13 @@ from kafka.admin import KafkaAdminClient, NewTopic
 
 
 # Client Admin
-admin_client = KafkaAdminClient(bootstrap_servers=['localhost:9092'])
+#admin_client = KafkaAdminClient(bootstrap_servers=['192.168.1.6:9092'])
+admin_client = KafkaAdminClient(bootstrap_servers=['10.117.73.251:9092'])
 
 # Configurando o consumer
-consumer = KafkaConsumer(bootstrap_servers='localhost:9092')
+#consumer = KafkaConsumer(bootstrap_servers='192.168.1.6:9092')
+consumer = KafkaConsumer(bootstrap_servers='10.117.73.251:9092')
+
 
 # Configurando o DB
 connection = mysql.connector.connect(host='localhost', database='awsmqtt', user='root', password='ifsp')
