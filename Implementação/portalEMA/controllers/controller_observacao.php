@@ -6,18 +6,17 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 
 require(__DIR__ . '/../functions/banco.php');
 
-
 function listarObservacoes($idema) {
     $conexao = conectarBanco();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        /*
+        
         $dataInicial = $_POST['data_inicial'];
         $dataFinal = $_POST['data_final'];
         $horaLeitura = $_POST['hora_leitura'];
-        */
+        
         $sql = "SELECT * FROM observacoes WHERE 1=1 AND emas_idema = '$idema'";
 
-        /*
+        
         if (!empty($dataInicial)) {
             $sql .= " AND data >= '$dataInicial'";
         }
@@ -29,7 +28,7 @@ function listarObservacoes($idema) {
         if (!empty($horaLeitura)) {
             $sql .= " AND hora >= '$horaLeitura'";
         }
-        */
+        
         $result = $conexao->query($sql);
     } else {
         $sql = "SELECT * FROM observacoes WHERE 1 = 1 AND emas_idema = '$idema'";
@@ -40,7 +39,7 @@ function listarObservacoes($idema) {
         while ($row = $result->fetch_assoc()) {
             echo '<tr id="row-' . $row['idobservacao'] . '">';
             echo '<td>' . $row['idobservacao'] . '</td>';
-            echo '<td>' . $row['data'] . '</td>';
+            echo '<td>' . date('d/m/Y', strtotime($row['data'])) . '</td>'; // Formata a data
             echo '<td>' . $row['hora'] . '</td>';
             if($row['erro_tem'] == false){
                 echo '<td>' . $row['temperatura'] . $row['unidade_tem'] . '</td>';

@@ -39,22 +39,45 @@ $ema = buscarEMAPorID($emaID);
         ?>
         <div class="container" style="height: 100%;margin-top: 10%;">
             <h1 class="mb-4">Histórico de Observações Meteorológicas da:<br> <?php echo $ema['nome'] ?></h1>
-                <div class="row justify-content-between">
-                    <div class="col" style="margin-bottom: 30px">
-                        <a href="../portalEMA/functions/download_historico_csv.php?idema=<?php echo $emaID; ?>&&nome=<?php echo $ema['nome']; ?>"
-                           class="btn btn-primary">
-                            <i class="fas fa-download"></i>
-                            Histórico em CSV
-                        </a>
-                    </div>
+            <div class="row justify-content-between">
+                <div class="col" style="margin-bottom: 30px">
+                    <a href="../portalEMA/functions/download_historico_csv.php?idema=<?php echo $emaID; ?>&&nome=<?php echo $ema['nome']; ?>"
+                       class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        Histórico em CSV
+                    </a>
                 </div>
-
+            </div>
+            <!--
+            <div class="row justify-content-between">
+                <div class="col-3">
+                    <label for="data_inicial" class="form-label">Data Inicial:</label>
+                    <input type="date" id="min" name="min" class="form-control">
+                </div>
+                <div class="col-3">
+                    <label for="data_final" class="form-label">Data Final:</label>
+                    <input type="date" id="max" name="max" class="form-control">
+                </div>
+                <div class="col-3">
+                    <label for="hora_leitura" class="form-label">Hora Leitura:</label>
+                    <input type="time" class="form-control" id="hora_leitura">
+                </div>
+                <div class="col-3">
+                    <label for="hora_leitura" class="form-label" style="color:white;">.</label>
+                    <button class="btn btn-primary form-control" id="filter-btn">
+                        <i class="fas fa-search"></i> Filtrar
+                    </button>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>-->
             <table id="observacoesDT" class="table table-hover" style="width:100%;">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Data da Leitura</th>
-                        <th> Hora da Leitura</th>
+                        <th>Hora da Leitura</th>
                         <th>Temperatura</th>
                         <th>Umidade</th>
                         <th>Velocidade do Vento</th>
@@ -71,7 +94,7 @@ $ema = buscarEMAPorID($emaID);
         </div>
         <script>
             $(document).ready(function () {
-                $('#observacoesDT').DataTable({
+                var dataTable = $('#observacoesDT').DataTable({
                     "language": {
                         "lengthMenu": "Exibir _MENU_ registros por página",
                         "paginate": {
