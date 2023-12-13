@@ -6,7 +6,7 @@ from datetime import date
 from paho.mqtt import client as mqtt_client
 from time import sleep
 
-arquivo_de_config= open('./jsons/emas/ema01.json', encoding="utf8")
+arquivo_de_config= open('./jsons/emas/ema04.json', encoding="utf8")
 ema = json.loads(arquivo_de_config.read())
 
 broker = 'localhost'
@@ -118,7 +118,6 @@ def captar_Dados():
         "diagnosticos_nao_previstos":{ }
     }
 }
-
 
     # Converte a estrutura JSON em uma string JSON
     msg = json.dumps(dados_json)
