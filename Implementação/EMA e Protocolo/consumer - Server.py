@@ -65,9 +65,8 @@ def atualiza_topicos(consumer):
     query = 'SELECT topico_kafka FROM emas'
     cursor.execute(query)
     result = cursor.fetchall()
-    topicos = [row[0] for row in result]  # Extracting the topics from the result set
+    topicos = [row[0] for row in result]
 
-    # Check and create topics if they don't exist
     for topico in topicos:
         if topico not in consumer.topics():
             create_topic(topico)
@@ -81,7 +80,7 @@ def connect_database():
             cursor = connection.cursor()
             cursor.execute("select database();")
             record = cursor.fetchone()
-            print(f"Conectado ao banco de dados {record}")
+            print(f"Conectado ao banco de dados")
     except Exception as e:
         print(f"Erro: {e}")
 
@@ -164,7 +163,7 @@ def persistir_msg(aux):
         radiacao_solar = observacao['observacao']['opcional']['radiacao_solar']['valor']
         unidade_rs = observacao['observacao']['opcional']['radiacao_solar']['unidade']
         erro_rs = False
-        if(radiacao_solar<0 or velocidade_vento>1500):
+        if(radiacao_solar<0 or radiacao_solar>1500):
             erro_rs = True
             erros+= "\nErro no sensor de Radiação Solar."
         
@@ -242,6 +241,7 @@ def run():
     atualiza_topicos(consumer)
     print(consumer.topics())
     for msg in consumer:
+        atualiza_topicos(consumer)
         #print(f"{msg.topic} -> {msg.value.decode('utf-8')}")
         aux = msg.value.decode('utf-8')
         persistir_msg(aux)

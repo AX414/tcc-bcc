@@ -4,7 +4,7 @@ import time
 from paho.mqtt import client as mqtt_client
 from kafka import KafkaProducer, errors
 
-arquivo_de_config = open('./jsons/emas/ema03.json', encoding="utf8")
+arquivo_de_config = open('./jsons/emas/ema01.json', encoding="utf8")
 ema = json.loads(arquivo_de_config.read())
 
 broker = 'localhost'
@@ -16,7 +16,7 @@ producer = None
 def connect_kafka():
     while True:
         try:
-            producer = KafkaProducer(bootstrap_servers='localhost:9092')
+            producer = KafkaProducer(bootstrap_servers='192.168.1.6:9092')
             print("Conectado ao Broker Kafka!")
             return producer
         except errors.NoBrokersAvailable:

@@ -6,7 +6,7 @@ from datetime import date
 from paho.mqtt import client as mqtt_client
 from time import sleep
 
-arquivo_de_config= open('./jsons/emas/ema03.json', encoding="utf8")
+arquivo_de_config= open('./jsons/emas/ema01.json', encoding="utf8")
 ema = json.loads(arquivo_de_config.read())
 
 broker = 'localhost'
@@ -39,24 +39,33 @@ def captar_Dados():
     longitude = ema['longitude']
 
     # Obrigatórios
-    temperatura = round(random.uniform(27.0, 35.0), 2)
+    temperatura = round(random.uniform(27.0, 46.0), 2)
     unidade_tem = "°C"
-    umidade = round(random.uniform(47.0, 55.0), 2)
+    umidade = round(random.uniform(47.0, 101.0), 2)
     unidade_um = "%"
-    vento_velocidade = round(random.uniform(1.0, 10.0), 2)
+    vento_velocidade = round(random.uniform(1.0, 51.0), 2)
     unidade_vv = "m/s"
     vento_direcao = random.randint(0, 360)
     unidade_vd = "graus"
 
     # Opcionais
-    radiacao_solar = round(random.uniform(100.0, 1000.0), 2)
+    radiacao_solar = round(random.uniform(100.0, 1501.0), 2)
     unidade_rs = "W/m²"
-    pressao_atmos = round(random.uniform(970.0, 1030.0), 2)
+    pressao_atmos = round(random.uniform(970.0, 1101.0), 2)
     unidade_pa = "hPa"
-    volume_chuva = round(random.uniform(0.0, 20.0), 2)
+    volume_chuva = round(random.uniform(0.0, 101.0), 2)
     unidade_vc = "mm"
-    frequencia_chuva = round(random.uniform(0.0, 50.0), 2)
+    frequencia_chuva = round(random.uniform(0.0, 101.0), 2)
     unidade_fc = "mm/h"
+
+    status_ema = 'Online'
+    carga_bateria = round(random.uniform(0.0, 100.0), 2)
+
+    dias = random.randint(0, 10)  # Substitua 10 pelo máximo desejado
+    horas = random.randint(1, 24)
+    minutos = random.randint(1, 60)
+    # Formatar a string de uptime
+    uptime = f'{dias} dia(s), {horas} hora(s), {minutos} min'
 
     # Criar a estrutura JSON
     dados_json =  {
@@ -103,9 +112,9 @@ def captar_Dados():
         "observacoes_nao_previstas":{}
     },
     "diagnostico":{
-        "status_ema":ema['status_ema'],
-        "carga_bateria": ema['carga_bateria'],
-        "uptime":ema['uptime'],
+        "status_ema": status_ema,
+        "carga_bateria": carga_bateria,
+        "uptime":uptime,
         "diagnosticos_nao_previstos":{ }
     }
 }
