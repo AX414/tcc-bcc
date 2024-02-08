@@ -175,7 +175,7 @@ def persistir_msg(aux):
             erros+= "\nErro no sensor de Pressão Atmosférica."
         
         volume_chuva = observacao['observacao']['opcional']['volume_chuva']['valor']
-        unidade_vc = observacao['observacao']['opcional']['radiacao_solar']['unidade']
+        unidade_vc = observacao['observacao']['opcional']['volume_chuva']['unidade']
         erro_vc = False
         if(volume_chuva<0 and volume_chuva>100):
             erro_vc = True
