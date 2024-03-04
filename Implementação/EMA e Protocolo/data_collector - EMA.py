@@ -6,7 +6,7 @@ from datetime import date
 from paho.mqtt import client as mqtt_client
 from time import sleep
 
-arquivo_de_config= open('./jsons/emas/ema04.json', encoding="utf8")
+arquivo_de_config= open('./jsons/emas/ema02.json', encoding="utf8")
 ema = json.loads(arquivo_de_config.read())
 
 broker = 'localhost'
