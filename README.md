@@ -7,7 +7,19 @@
 <details>
 <summary><b>Sobre o trabalho</b></summary>
 
-... Ainda irei escrever
+Devido às constantes mudanças climáticas e do tempo, o monitoramento das variáveis meteorológicas para o estudo sobre o efeito dessas alterações climáticas se tornou necessário para elaboração de ações preditivas, adaptativas e corretivas. Nesse contexto, são utilizadas diversas abordagens, sendo o uso de imagens de satélites o método mais amplo e conhecido, permitindo a análise de massas de ar, temperatura e a possibilidade de chuvas. Contudo, para um monitoramento mais preciso de cada região, podem ser utilizado diversas estações meteorológicas automáticas (EMAs), que além de oferecer as variáveis climáticas já citadas, podem fornecer dados sobre materiais particulados como a fuligem, dióxido e monóxido de carbono, direção e velocidade do vento, radiação solar, entre outros.
+
+Nesse sentido, este trabalho tem como objetivo desenvolver e implementar um sistemade informação distribuído e aberto para gerenciamento de estações meteorológicas automáticas (EMA) de forma a facilitar o acesso aos dados coletados por essas estações. Os objetivos específicos deste trabalho, são:
+
+- Desenvolver uma arquitetura de software e implementar um protocolo de
+comunicação capaz de realizar a comunicação entre EMAs e o Servidor.
+- Desenvolver uma EMA simulada e um sistema Web de gerenciamento dos das EMAs.
+- Construir conhecimento sobre o assunto para motivar o desenvolvimento de trabalhos futuros.
+
+O sistema desenvolvido deve permitir acesso às informações coletadas pelas referidas estações, possibilitando o conhecimento da situação climática de um determinado local, bem como, das informações meteorológicas armazenadas ao longo do tempo, via sistema Web de gerenciamento, permitindo a realização de estudos mais aprofundados sobre o comportamento do clima local. É importante ressaltar que nenhuma estação meteorológica foi desenvolvida, pois o trabalho em questão faz uso de estações meteorológicas automáticas simuladas, implementadas em máquinas virtuais utilizando o sistema operacional Raspbian, do hardware Raspberry Pi.
+
+Com essa breve introdução, se quiser se aprofundar mais no trabalho e ver mais sobre o desenvolvimento dele, sinta-se livre para consultar o meu <a href="https://github.com/AX414/tcc-bcc/blob/main/Artigos/Levantamento%20Bibliogr%C3%A1fico%20Final%20-%20Porcel.pdf">Levantamento Bibliográfico Final</a> 📖.
+
 
 </details>
 
@@ -24,7 +36,10 @@ Para aqueles que ainda não conhecem sobre, o Mosquitto é um broker do protocol
 Este trabalho também faz uso do Apache Kafka, que é uma plataforma de
 transmissão de dados capaz de publicar, assinar, armazenar e processar fluxos de registro em tempo real. O Apache Kafka foi desenvolvido para efetuar o processamento de fluxos de dados provenientes de diversas fontes e entregá-los a uma grande variedade de clientes. A ferramenta é capaz de não só movimentar grandes volumes de um ponto A ao ponto B, mas também de A até Z e para qualquer outro local que for necessário simultaneamente, tornando essa tecnologia excelente para dimensionamento
 
-Sabendo disso, aqui está os links de download, não é necessário uma versão específica deles, a mais atual já serve: <a href="https://mosquitto.org/download/">Mosquitto</a> | <a href="https://kafka.apache.org/downloads"> Apache Kafka</a> | <a href="https://www.apachefriends.org/pt_br/download.html">XAMPP</a>
+Também será necessário utilizar o virtual box para emular o sistema operacional Linux, eu pessoalmente vou utilizar o sistema operacional Raspbian, do hardware Raspberry Pi, a versão pode ser a mais atual.
+
+Sabendo disso, aqui está os links de download, não é necessário uma versão específica deles, a mais atual já serve: <a href="https://mosquitto.org/download/">Mosquitto</a> | <a href="https://kafka.apache.org/downloads"> Apache Kafka</a> | <a href="https://www.apachefriends.org/pt_br/download.html">XAMPP</a> | <a href="https://www.virtualbox.org/wiki/Downloads">
+Virtual Box</a> | <a href="https://www.raspberrypi.com/software/raspberry-pi-desktop/">Raspberry Pi Desktop</a>
 
 
 <details>

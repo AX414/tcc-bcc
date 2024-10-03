@@ -1,6 +1,4 @@
-
-<details>
-<summary><b>Implementação</b></summary>
+# <b>Implementação</b>
 
 A implementação está dividida entre EMA e Protocolo, Modelagem do Banco e portalEMA.
 
@@ -11,5 +9,3 @@ A pasta de <a href="https://github.com/AX414/tcc-bcc/tree/main/Implementa%C3%A7%
 A pasta do <a href="https://github.com/AX414/tcc-bcc/tree/main/Implementa%C3%A7%C3%A3o">portalEMA</a> é o projeto em PHP contendo todo o código em PHP do sistema de gerenciamento web que irá apresentar os dados das EMAs cadastradas e suas respectivas observações meteorológicas automáticas.
 
 Para retornar à página inicial clique <a href="https://github.com/AX414/tcc-bcc/">aqui</a>.
-
-</details>
