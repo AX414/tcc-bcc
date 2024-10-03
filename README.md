@@ -26,7 +26,7 @@ Com essa breve introdução, se quiser se aprofundar mais no trabalho e ver mais
 <details>
 <summary><b>Instalações necessárias</b></summary>
 
-Para executar o portal web, você pode tanto executar ele utilizando uma IDE como o Apache Netbeans, servidor MySQL, Composer para bibliotecas PHP e utilize o XAMPP, pois é um ambiente de desenvolvimento de código aberto e gratuito que permite instalar e configurar rapidamente um servidor web local. Ele é composto por uma distribuição do Apache, MySQL, PHP e Perl, e é considerado o ambiente de desenvolvimento PHP mais popular. 
+Para executar o portal web, você pode utilizar o XAMPP, pois é um ambiente de desenvolvimento de código aberto e gratuito que permite instalar e configurar rapidamente um servidor web local. Ele é composto por uma distribuição do Apache, MySQL, PHP e Perl, e é considerado o ambiente de desenvolvimento PHP mais popular. Enfim, instale ele, coloque o projeto do portalEMA dentro da pasta ``htdocs`` dele e inicie o servidor.
 
 O broker MQTT utilizado neste trabalho é o Mosquitto. Seu uso se deve ao
 fato dele ser leve e adequado para o uso em diversos dispositivos, desde computadores de baixa potência com placa única até em servidores completos. Sua instalação também é simples e ele é muito indicado para utilização com sensores (residenciais e industriais). Além disso, seu código é aberto e está disponível gratuitamente
