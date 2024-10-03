@@ -1,18 +1,70 @@
-# Desenvolvimento e implementação de um sistema distribuído aberto para gerenciamento de estações meteorológicas
+<html>
 
-Este é o repositório do meu Trabalho de Conclusão de Curso que realizei durante meu curso de Bacharelado de Ciência da Computação. Nele é possível ver alguns exemplos em python de uma arquitetura que desenvolvi que é utilizada para tratar dos dados recebidos de estações meteorológicas automáticas, a pasta contém alguns exemplos em python e um sistema feito em PHP. Eu utilizei o protocolo MQTT, o broker Mosquitto e o Kafka durante este desenvolvimento. A primeiro momento eu desenvolvi em um sistema Linux e posteriormente em um Windows, devido a isso, segue em anexo sobre a configuração e instalação que realizei nestes sistemas durante os meus testes.
+<h1>Desenvolvimento e implementação de um sistema distribuído aberto para gerenciamento de estações meteorológicas</h1>
 
-# Linux:
+> O repositório a seguir consta com meu Trabalho de Conclusão de Curso de Bacharelado de Ciência da Computação 👨‍💻. O repositório está dividido em 3 partes: <a href="https://github.com/AX414/tcc-bcc/tree/main/Artigos">Artigos</a>, <a href="https://github.com/AX414/tcc-bcc/tree/main/Implementação">Implementação</a> e <a href="https://github.com/AX414/tcc-bcc/tree/main/Kafka">Kafka</a>.
 
-## 1. Instalações necessárias para o teste:
+<details>
+<summary><b>Sobre o trabalho</b></summary>
+
+... Ainda irei escrever
+
+</details>
+
+<details>
+<summary><b>Instalações necessárias</b></summary>
+
+Para executar o portal web, você pode tanto executar ele utilizando uma IDE como o Apache Netbeans, servidor MySQL, Composer para bibliotecas PHP e utilize o XAMPP, pois é um ambiente de desenvolvimento de código aberto e gratuito que permite instalar e configurar rapidamente um servidor web local. Ele é composto por uma distribuição do Apache, MySQL, PHP e Perl, e é considerado o ambiente de desenvolvimento PHP mais popular. 
+
+O broker MQTT utilizado neste trabalho é o Mosquitto. Seu uso se deve ao
+fato dele ser leve e adequado para o uso em diversos dispositivos, desde computadores de baixa potência com placa única até em servidores completos. Sua instalação também é simples e ele é muito indicado para utilização com sensores (residenciais e industriais). Além disso, seu código é aberto e está disponível gratuitamente
+
+Para aqueles que ainda não conhecem sobre, o Mosquitto é um broker do protocolo IoT chamado MQTT, com ele podemos utilizar o broker para realizar a publicação de nossas mensagens de um módulo da arquitetura de software proposta pelo trabalho. Para maiores informações sobre como isso irá ocorrer, aconselho fortemente ler meus levantamentos bibliográficos.
+
+Este trabalho também faz uso do Apache Kafka, que é uma plataforma de
+transmissão de dados capaz de publicar, assinar, armazenar e processar fluxos de registro em tempo real. O Apache Kafka foi desenvolvido para efetuar o processamento de fluxos de dados provenientes de diversas fontes e entregá-los a uma grande variedade de clientes. A ferramenta é capaz de não só movimentar grandes volumes de um ponto A ao ponto B, mas também de A até Z e para qualquer outro local que for necessário simultaneamente, tornando essa tecnologia excelente para dimensionamento
+
+Sabendo disso, aqui está os links de download, não é necessário uma versão específica deles, a mais atual já serve: <a href="https://mosquitto.org/download/">Mosquitto</a> | <a href="https://kafka.apache.org/downloads"> Apache Kafka</a> | <a href="https://www.apachefriends.org/pt_br/download.html">XAMPP</a>
+
+
+<details>
+<summary><b>Como utilizar</b></summary>
+
+Eu utilizei o Windows e o Linux para o desenvolvimento deste trabalho, então é necessário ressaltar a forma correta de instalar, configurar e inicializar essas ferramentas também.
+
+<details>
+<summary><b>Windows</b></summary>
+
+##### Mosquitto no Windows:
+
+Após sua instalação, vá até sua pasta e execute cada um desses comandos para testar:
+
+Inicializar o sub: ``mosquito_sub -t topico -h localhost``
+
+Inicializar o pub em outro terminal e enviar a mensagem para teste: ``mosquito_pub -t topico -h localhost -m "temperatura: 30"``
+
+#### Kafka no Windows:
+
+Após efetuar o download do kafka, extraia ele na pasta raiz do computador, abra o prompt de comando do windows, vá até a pasta do kafka e você deverá iniciar o zookeeper: ``bin\windows\zookeeper-server-start.bat config\zookeeper.properties``
+
+Espere o zookeeper inicializar e depois inicie o kafka: ``bin\windows\kafka-server-start.bat config\server.properties``
+
+Com esses comandos o kafka já irá estar funcionando. Eu adicionei na pasta alguns códigos .BAT para agilizar esse processo, então você poderá abrir eles como um arquivo de texto e editar o que for necessário para você rodar tudo de forma mais rápida sem a necessidade de abrir o prompt e digitar tudo isso.
+
+</details>
+
+<details>
+<summary><b>(Máquina Virtual) Linux</b></summary>
+
+#### Instalando o mosquitto e bibliotecas do python:
 
 Estes comandos devem ser executados no terminal do Linux, vale ressaltar que a minha máquina possui o ``Python v3.10.6`` e o ``pip v23.0.1``.
 
-- sudo apt-get install mosquitto
-- sudo apt-get install mosquitto-clients
-- pip install paho-mqtt mysql-connector-python geopy pykafka kafka-python pymongo
+- ``sudo apt-get install mosquitto``
+- ``sudo apt-get install mosquitto-clients``
+- ``pip install paho-mqtt mysql-connector-python geopy pykafka kafka-python pymongo``
 
-## 2. Configurações do mosquitto.conf:
+#### Configurações do mosquitto.conf:
 
 Após instalar o broker ``Mosquitto``, é necessário configurar ele, geralmente ele ficará localizado na pasta ``etc``, porém, se não encontrá-lo, utilize o comando ``whereis mosquitto``, este comando deve ajudar a encontrar a pasta do broker baixado. Dentro da pasta dele, deve haver um arquivo de configuração chamado ``conf.d``, altere ele para que ele se assemelhe ao conteúdo abaixo.
 
@@ -33,12 +85,12 @@ allow_anonymous true
 listener 1883
 ```
 
-OBS.: Aconselho ligar e desligar o serviço do mosquito para toda configuração efetuada aqui, inclusive logo após sua instalação com:
-sudo service mosquitto stop -> sudo service mosquitto start -> sudo service mosquitto status.
+> <b>OBS.:</b> Aconselho ligar e desligar o serviço do mosquito para toda configuração efetuada aqui, inclusive logo após sua instalação com:
+``sudo service mosquitto stop`` -> ``sudo service mosquitto start`` -> ``sudo service mosquitto status``.
 
-## 3. Comandos para rodar o Kafka no Linux:
+#### Kafka no Linux:
 
-É necessário estar na pasta do kafka que foi baixado, no meu caso utilizei o kafka 3.5.1, você pode baixá-lo a partir de [aqui](https://kafka.apache.org/downloads). Após isso, extraia o arquivo e dentro da pasta do kafka que foi baixado, utilize estes comandos:
+É necessário estar na pasta do kafka que foi baixado e extraído, após isso, utilize estes comandos:
 
 Entre como super usuário: ``sudo su``
 
@@ -46,28 +98,9 @@ Inicializar o zookeeper: ``bin/zookeeper-server-start.sh config/zookeeper.proper
 
 Inicializar o kafka: ``bin/kafka-server-start.sh config/server.properties``.
 
-Para visualizar as mensagens que chegam em um tópico do kafka e apresentar todas as mensagens deste tópico: ``bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic nome_do_topico --from-beginning``.
+</details>
+</details>
+</details>
 
-# Windows:
 
-## 1. Como rodar o Mosquitto no Windows:
-
-Após sua instalação, vá até sua pasta e execute cada um desses comandos para testar:
-
-Inicializar o sub: ``mosquito_sub -t topico -h localhost``
-
-Inicializar o pub e enviar a mensagem por um outro terminal: ``mosquito_pub -t topico -h localhost -m "temperatura: 30"``
-
-## 2. Como rodar o Kafka no Windows:
-
-Após sua instalação, vá até sua pasta e execute cada um desses comandos para testar:
-
-Iniciar zookeeper: ``bin\windows\zookeeper-server-start.bat ..\..\config\zookeeper.properties``
-
-Iniciar servidor kafka: ``bin\windows\kafka-server-start.bat ..\..\config\server.properties``
-
-Criar um tópico no kafka: ``bin\windows\kafka-topics.bat --create --topic my-topic --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3``
-
-Enviar mensagem para o tópico: ``bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic my-topic``
-
-Visualizar mensagens do tópico: ``bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic my-topic --from-beginning``
+</html>
