@@ -1,6 +1,6 @@
 # <b>Implementação</b>
 
-A implementação está dividida entre EMA e Protocolo, Modelagem do Banco e portalEMA.
+A implementação está dividida entre EMA e Protocolo, Modelagem do Banco, portalEMA e Imagens.
 
 Na pasta de <a href="https://github.com/AX414/tcc-bcc/tree/main/Implementação/EMA%20e%20Protocolo">EMA e Protocolo</a>, você terá acesso aos códigos que irão ser executados na Máquina Virtual Linux com o Python, se certifique de verificar os códigos e modificar os endereços IP se necessário.
 
