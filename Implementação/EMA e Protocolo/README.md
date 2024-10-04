@@ -124,9 +124,9 @@ está inválido de acordo com o Schema.
 </details>
 
 <details>
-  <summary>Instalar bibliotecas</summary>
+  <summary><b>Instalar bibliotecas</b></summary></summary>
 
-  ``pip install paho-mqtt mysql-connector-python geopy pykafka kafka-python pymongo jsonschema``
+  - ``pip install paho-mqtt mysql-connector-python geopy pykafka kafka-python pymongo jsonschema``
 
 </details>
 
