@@ -62,5 +62,6 @@ a seguir.
 ![portalEMA-05](https://github.com/AX414/tcc-bcc/blob/main/Implementa%C3%A7%C3%A3o/Imagens/portalEMA05.png)
 > Exemplo de Relatório com erro na Temperatura .
 
+Para retornar à página inicial clique <a href="https://github.com/AX414/tcc-bcc/">aqui</a>.
 
 </html>

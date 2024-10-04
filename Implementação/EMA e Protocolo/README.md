@@ -123,4 +123,6 @@ está inválido de acordo com o Schema.
 
 </details>
 
+Para retornar à página inicial clique <a href="https://github.com/AX414/tcc-bcc/">aqui</a>.
+
 </html>
