@@ -123,6 +123,13 @@ está inválido de acordo com o Schema.
 
 </details>
 
+<details>
+  <summary>Instalar bibliotecas</summary>
+
+  ``pip install paho-mqtt mysql-connector-python geopy pykafka kafka-python pymongo jsonschema``
+
+</details>
+
 Para retornar à página inicial clique <a href="https://github.com/AX414/tcc-bcc/">aqui</a>.
 
 </html>

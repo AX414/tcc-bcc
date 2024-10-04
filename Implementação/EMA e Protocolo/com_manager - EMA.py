@@ -16,8 +16,7 @@ producer = None
 def connect_kafka():
     while True:
         try:
-            producer = KafkaProducer(bootstrap_servers='10.117.10.158:9092')
-            #producer = KafkaProducer(bootstrap_servers=['10.117.73.251:9092'])
+            producer = KafkaProducer(bootstrap_servers='localhost:9092')
             print("Conectado ao Broker Kafka!")
             return producer
         except errors.NoBrokersAvailable:
@@ -32,18 +31,22 @@ def publish_message(producer, msg):
         print(f"\nErro ao enviar a mensagem para o Kafka: {e}")
 
 def connect_mqtt():
-    def on_connect(client, userdata, flags, rc):
-        if rc == 0:
+    # Usando a versão mais recente do callback (com 'properties')
+    def on_connect(client, userdata, flags, reason_code, properties=None):
+        if reason_code == 0:
             print("Conectado ao Broker MQTT!")
         else:
-            print("Conexão falhou, código: %d\n", rc)
+            print(f"Conexão falhou, código: {reason_code}")
+
     try:
-        client = mqtt_client.Client(client_id, clean_session=True)
+        # Criando o cliente MQTT sem o uso da versão deprecated
+        client = mqtt_client.Client(mqtt_client.CallbackAPIVersion.VERSION2)
         client.on_connect = on_connect
         client.connect(broker, port)
         return client
     except Exception as error:
-        print(f"Erro: {error}")
+        print(f"Erro ao conectar ao MQTT: {error}")
+        return None
 
 def subscribe(client: mqtt_client, producer):
     def on_message(client, userdata, msg):
@@ -70,8 +73,11 @@ def run():
     producer = connect_kafka()
 
     client = connect_mqtt()
-    subscribe(client, producer)
-    client.loop_forever()
+    if client:  # Verifica se o cliente MQTT foi criado com sucesso
+        subscribe(client, producer)
+        client.loop_forever()
+    else:
+        print("Não foi possível conectar ao broker MQTT.")
 
 if __name__ == '__main__':
     run()

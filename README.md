@@ -77,7 +77,7 @@ Estes comandos devem ser executados no terminal do Linux, vale ressaltar que a m
 
 - ``sudo apt-get install mosquitto``
 - ``sudo apt-get install mosquitto-clients``
-- ``pip install paho-mqtt mysql-connector-python geopy pykafka kafka-python pymongo``
+- ``pip install paho-mqtt mysql-connector-python geopy pykafka kafka-python pymongo jsonschema``
 
 #### Configurações do mosquitto.conf:
 
