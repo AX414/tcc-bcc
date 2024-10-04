@@ -73,7 +73,7 @@ Com esses comandos o kafka já irá estar funcionando. Eu adicionei na pasta alg
 
 #### Instalando o mosquitto e bibliotecas do python:
 
-Estes comandos devem ser executados no terminal do Linux, vale ressaltar que a minha máquina possui o ``Python v3.10.6`` e o ``pip v23.0.1``.
+Estes comandos devem ser executados no terminal do Linux, vale ressaltar que a minha máquina possui o ``Python v3.12.2`` e o ``pip v24.2``.
 
 - ``sudo apt-get install mosquitto``
 - ``sudo apt-get install mosquitto-clients``
